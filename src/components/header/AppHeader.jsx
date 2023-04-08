@@ -27,7 +27,7 @@ export default function AppHeader() {
 			<div className={`${styles.div} ${styles.mr}`}>
 				<a href="#" className={styles.a}>
 					<ProfileIcon type="secondary" />
-					<p text text_type_main-default className="pr-5 pl-2">
+					<p className="text text_type_main-default pr-5 pl-2">
 						Личный кабинет
 					</p>
 				</a>
