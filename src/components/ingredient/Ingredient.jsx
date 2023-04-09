@@ -3,7 +3,6 @@ import styles from "./ingredient.module.css";
 import PropTypes from "prop-types";
 
 export default function Ingredient(props) {
-	console.log(props);
 	const element = props.item;
 	const elementId = props.item._id;
 

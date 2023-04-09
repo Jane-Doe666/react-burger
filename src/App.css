@@ -4,16 +4,13 @@
 	max-width: 1240px;
 
 	height: 100vh;
-	border: 1px solid red;
 }
-
 .main {
 	margin: auto;
 	max-width: 100%;
 	display: grid;
 	grid-template-columns: repeat(2, 600px);
 	column-gap: 40px;
-	border: 1px solid rgb(47, 0, 255);
 }
 
 @media screen and (max-width: 1200px) {
