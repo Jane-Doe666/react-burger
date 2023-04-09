@@ -1,14 +1,10 @@
-import {
-	Box,
-	CurrencyIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient.module.css";
 
 export default function Ingredient(props) {
 	const element = props.item;
 	const elementId = props.item._id;
 
-	// console.log(666, props);
 	return (
 		<li id={elementId}>
 			<img src={element.image} alt="element" />

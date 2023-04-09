@@ -3,19 +3,53 @@
 	max-width: 100%;
 	padding-top: 100px;
 	border: 1px solid green;
+	height: 100vh;
+}
+
+/* .list {
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+
+	display: grid;
+	grid-template-columns: repeat(1, 600px);
+	grid-template-rows: repeat();
+} */
+
+.element {
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	min-width: 0;
+	scroll-snap-align: start;
+	flex-wrap: nowrap;
+
+	/* overflow-y: auto; */
+}
+
+.elementTop {
+	cursor: pointer;
+	overflow: hidden;
+	overflow-wrap: break-word;
+	hyphens: auto;
+}
+
+.elementBottom {
+	cursor: pointer;
+	overflow: hidden;
+}
+
+.total {
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+	align-items: center;
 }
 
 .scrollbar {
 	max-height: 464px;
 	overflow: auto;
-}
-
-.total {
-	display: flex;
-	margin-right: 10px;
-	flex-direction: row;
-	justify-content: end;
-	align-items: center;
 }
 
 ::-webkit-scrollbar {
@@ -35,7 +69,6 @@
 
 @media screen and (max-width: 850px) {
 	.total {
-		/* flex-direction: row; */
 		justify-content: center;
 		align-items: center;
 	}

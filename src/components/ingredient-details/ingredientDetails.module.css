@@ -1,0 +1,28 @@
+.form {
+	position: relative;
+	width: 720px;
+	background: #1c1c21;
+	border-radius: 40px;
+	text-align: center;
+}
+
+.productName {
+	font-size: 24px;
+	line-height: 30px;
+}
+
+.calories {
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 20px;
+	color: #8585ad;
+}
+
+.p {
+	margin: 0;
+	padding-bottom: 8px;
+	font-size: 16px;
+	line-height: 24px;
+}
