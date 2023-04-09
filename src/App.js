@@ -10,12 +10,15 @@ function App() {
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		const getStateData = async () => {
-			const res = await fetch(burgerURL);
-			const result = await res.json();
-			setState(result.data);
-			setIsLoading(false);
-			//add catch
+		const getStateData = async function () {
+			try {
+				const res = await fetch(burgerURL);
+				const result = await res.json();
+				setState(result.data);
+				setIsLoading(false);
+			} catch (err) {
+				console.log("Err");
+			}
 		};
 		getStateData();
 	}, []);

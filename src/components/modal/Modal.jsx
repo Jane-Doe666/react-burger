@@ -1,17 +1,18 @@
 import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import ModalOverlayTest from "../modal-overlay/ModalOverlayTest";
+import ModalOverlay from "../modal-overlay/ModalOverlay";
 import { createPortal } from "react-dom";
 import OrderDetails from "../order-details/OrderDetails";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
+import { PropTypes } from "prop-types";
 const portalModalOverLay = document.querySelector("#portalOverlay");
 
 export default function Modal({ open, onClose, modalInfo }) {
-	console.log(modalInfo);
 	const headerText = modalInfo === "Order" ? "" : "Детали ингредиента";
+
 	if (open) {
 		return createPortal(
-			<ModalOverlayTest>
+			<ModalOverlay onClose={onClose}>
 				<div className={styles.form}>
 					<div>
 						<h2
@@ -36,9 +37,15 @@ export default function Modal({ open, onClose, modalInfo }) {
 						</>
 					</div>
 				</div>
-			</ModalOverlayTest>,
+			</ModalOverlay>,
 			portalModalOverLay
 		);
 	}
 	return null;
 }
+
+Modal.propTypes = {
+	open: PropTypes.bool.isRequired,
+	onClose: PropTypes.func.isRequired,
+	modalInfo: PropTypes.any.isRequired,
+};

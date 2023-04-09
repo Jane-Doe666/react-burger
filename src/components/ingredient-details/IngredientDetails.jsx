@@ -1,4 +1,5 @@
 import styles from "./ingredientDetails.module.css";
+import PropTypes from "prop-types";
 
 export default function IngredientDetails({ details }) {
 	const {
@@ -12,14 +13,17 @@ export default function IngredientDetails({ details }) {
 	return (
 		<div className={styles.form}>
 			<div>
-				<img src={image} alt="picture dnld"></img>
+				<img
+					className={styles.image}
+					src={image}
+					alt="картинка ингредиента"></img>
 				<p className={styles.productName + " text text_type_main-default mt-4"}>
 					{name}
 				</p>
 				<ul
 					className={styles.calories + " text text_type_main-small mt-8 pb-15"}>
 					<li>
-						<p className={styles.p}>Калории,ккал </p>
+						<p className={styles.p}>Калории, ккал </p>
 						<span className="text text_type_digits-default">{calories}</span>
 					</li>
 					<li>
@@ -41,3 +45,7 @@ export default function IngredientDetails({ details }) {
 		</div>
 	);
 }
+
+IngredientDetails.propTypes = {
+	details: PropTypes.object.isRequired,
+};

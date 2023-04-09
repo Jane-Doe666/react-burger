@@ -1,9 +1,15 @@
 .form {
 	position: relative;
-	width: 720px;
+	max-width: 720px;
 	background: #1c1c21;
 	border-radius: 40px;
 	text-align: center;
+	padding-left: 120px;
+	padding-right: 120px;
+}
+
+.image {
+	max-width: 100%;
 }
 
 .productName {
@@ -25,4 +31,21 @@
 	padding-bottom: 8px;
 	font-size: 16px;
 	line-height: 24px;
+}
+
+@media screen and (max-width: 850px) {
+	.form {
+		max-width: 360px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	.calories {
+		margin-top: 15px;
+		padding-bottom: 30px;
+	}
+
+	.p {
+		font-size: 15px;
+	}
 }
