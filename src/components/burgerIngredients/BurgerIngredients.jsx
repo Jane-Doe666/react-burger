@@ -1,125 +1,122 @@
-import {
-	ConstructorElement,
-	Button,
-	CurrencyIcon,
-	DragIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./burgerIngredients.module.css";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import Modal from "../../components/modal/Modal.jsx";
+import Ingredient from "../ingredient/Ingredient";
+import styles from "./burgerIngredients.module.css";
+import Modal from "../modal/Modal";
+import IngredientDetails from "../ingredient-details/IngredientDetails";
 import PropTypes from "prop-types";
 
-export default function BurgerIngredients({ data }) {
-	const [openModal, setOpenModal] = useState(false);
-	const [modalInfo, setModalInfo] = useState("");
+export default function BurgerIngredients(props) {
+	const elements = props.data;
+	const arrayBun = elements.filter((item) => item.type === "bun");
+	const arrayMain = elements.filter((item) => item.type === "main");
+	const arraySouse = elements.filter((item) => item.type === "sauce");
 
-	const elements = data.filter((item) => item.type !== "bun");
-	const someBun = data.filter((item) => item.type === "bun");
+	const [current, setCurrent] = useState("one");
+	const [open, setModal] = useState(false);
+	const [productDetails, setProductDetails] = useState();
 
-	function closeModal(evt) {
-		setOpenModal(false);
+	function handleProductDetails(item) {
+		setProductDetails(item);
 	}
 
-	function closeModalByEscape(evt) {
-		if (evt.key === "Escape") {
-			closeModal();
-		}
+	function openModal() {
+		setModal(true);
 	}
 
-	document.addEventListener("keydown", (evt) => {
-		closeModalByEscape(evt);
-	});
+	function closeModal() {
+		setModal(false);
+	}
 
 	return (
 		<section className={styles.section}>
-			<div
-				className={styles.list}
-				style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-				<div
-					className={styles.elementTop}
-					onClick={() => {
-						setOpenModal(true);
-						setModalInfo(someBun[0]);
-					}}>
-					<ConstructorElement
-						type="top"
-						isLocked={true}
-						id={someBun[0]._id}
-						key={someBun[0]._id}
-						text={someBun[0].name}
-						price={someBun[0].price}
-						thumbnail={someBun[0].image}
-					/>
+			<h2 className={styles.h2 + ` text text_type_main-large pt-10 pb-5`}>
+				Соберите бургер
+			</h2>
+			<nav className={styles.nav + " mb-10"}>
+				<Tab value="one" active={current === "one"} onClick={setCurrent}>
+					Булки
+				</Tab>
+				<Tab value="two" active={current === "two"} onClick={setCurrent}>
+					Соусы
+				</Tab>
+				<Tab value="three" active={current === "three"} onClick={setCurrent}>
+					Начинки
+				</Tab>
+			</nav>
+			<div className={styles.scrollbar}>
+				<div className={styles.div}>
+					<h2 className={styles.h2 + ` text text_type_main-medium pb-5`}>
+						Булки
+					</h2>
+					<ul className={styles.ul}>
+						{arrayBun.map((item) => {
+							return (
+								<Ingredient
+									item={item}
+									id={item._id}
+									key={item._id}
+									onClick={() => {
+										handleProductDetails(item);
+										openModal();
+									}}
+								/>
+							);
+						})}
+					</ul>
 				</div>
-
-				<div
-					className={styles.scrollbar}
-					style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-					{elements.map((element) => (
-						<div
-							className={styles.element}
-							onClick={() => {
-								setOpenModal(true);
-								setModalInfo(element);
-							}}>
-							<DragIcon type="primary" />
-							<ConstructorElement
-								id={element._id}
-								key={element._id}
-								text={element.name}
-								price={element.price}
-								thumbnail={element.image}
-							/>
-						</div>
-					))}
+				<div className={styles.div}>
+					<h2 className={styles.h2 + ` text text_type_main-medium pt-10 pb-5`}>
+						Соусы
+					</h2>
+					<ul className={styles.ul}>
+						{arraySouse.map((item) => {
+							return (
+								<Ingredient
+									item={item}
+									id={item._id}
+									key={item._id}
+									onClick={() => {
+										handleProductDetails(item);
+										openModal();
+									}}
+								/>
+							);
+						})}
+					</ul>
 				</div>
-				<div
-					className={styles.elementBottom}
-					onClick={() => {
-						setOpenModal(true);
-						setModalInfo(someBun[0]);
-					}}>
-					<ConstructorElement
-						id={someBun[0]._id}
-						key={someBun[0]._id}
-						type="bottom"
-						isLocked={true}
-						text={someBun[0].name}
-						price={someBun[0].price}
-						thumbnail={someBun[0].image}
-					/>
-				</div>
-			</div>
-
-			<div className={styles.total + " mt-10 mr-4"}>
-				<span>
-					{" "}
-					<span className={styles.span + " text text_type_digits-medium mr-2"}>
-						666
-					</span>
-					<CurrencyIcon type="primary" />
-				</span>
-
-				<div
-					className={styles.button + " ml-10"}
-					onClick={() => {
-						setOpenModal(true);
-						setModalInfo("Order");
-					}}>
-					<div className={styles.but}>
-						{" "}
-						<Button htmlType="button" type="primary" size="large">
-							Оформить заказ
-						</Button>
-					</div>
+				<div className={styles.div}>
+					<h2 className={styles.h2 + ` text text_type_main-medium pt-10 pb-5`}>
+						Начинки
+					</h2>
+					<ul className={styles.ul}>
+						{arrayMain.map((item) => {
+							return (
+								<Ingredient
+									item={item}
+									id={item._id}
+									key={item._id}
+									onClick={() => {
+										handleProductDetails(item);
+										openModal();
+									}}
+								/>
+							);
+						})}
+					</ul>
 				</div>
 			</div>
-
-			<Modal open={openModal} onClose={closeModal} modalInfo={modalInfo} />
+			<>
+				{open && (
+					<Modal onClose={closeModal} headerText="Детали ингредиента">
+						<IngredientDetails details={productDetails} />
+					</Modal>
+				)}
+			</>
 		</section>
 	);
 }
 
 BurgerIngredients.propTypes = {
-	data: PropTypes.arrayOf(PropTypes.object).isRequired,
+	data: PropTypes.array.isRequired,
 };

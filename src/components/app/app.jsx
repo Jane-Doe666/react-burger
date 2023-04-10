@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import styles from "./App.css";
-import BurgerConstructor from "./components/burger-constructor/BurgerConstructor";
-import BurgerIngredients from "./components/burgerIngredients/BurgerIngredients";
-import AppHeader from "./components/header/AppHeader";
+import styles from "./app.module.css";
+import BurgerIngredientsRight from "../burgerIngredients/BurgerIngredients";
+import BurgerIngredients from "../burger-constructor/Burger-constructor";
+import AppHeader from "../header/AppHeader";
 const burgerURL = "https://norma.nomoreparties.space/api/ingredients";
 
 function App() {
@@ -28,10 +28,10 @@ function App() {
 			{isLoading ? (
 				<h2>...is loading</h2>
 			) : (
-				<div className="App">
+				<div className={styles.App}>
 					<AppHeader />
-					<main className="main">
-						<BurgerConstructor data={state} />
+					<main className={styles.main}>
+						<BurgerIngredientsRight data={state} />
 						<BurgerIngredients data={state} />
 					</main>
 				</div>
