@@ -27,12 +27,7 @@ export default function Modal({ onClose, headerText = "", children }) {
 
 	return createPortal(
 		<ModalOverlay onClose={onClose}>
-			<div
-				id={"Modal"}
-				// onClick={(e) => {
-				// 	console.log(1, e.target);
-				// }}
-				className={styles.form}>
+			<div className={styles.form}>
 				<div>
 					<h2
 						className={
