@@ -5,28 +5,24 @@ import styles from "./burgerIngredients.module.css";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { OPEN_INGREDIENT } from "../../services/reducers/ingredientDetails";
 
 export default function BurgerIngredients(props) {
+	const dispatch = useDispatch();
+	const data = useSelector((state) => state.ingredientDetails.info);
+	const openedModal = useSelector((state) => state.ingredientDetails.setModal);
+
+	const openIngredient = (item) => {
+		dispatch({ type: OPEN_INGREDIENT, info: item });
+	};
+
 	const elements = props.data;
 	const arrayBun = elements.filter((item) => item.type === "bun");
 	const arrayMain = elements.filter((item) => item.type === "main");
 	const arraySouse = elements.filter((item) => item.type === "sauce");
 
 	const [current, setCurrent] = useState("one");
-	const [open, setModal] = useState(false);
-	const [productDetails, setProductDetails] = useState();
-
-	function handleProductDetails(item) {
-		setProductDetails(item);
-	}
-
-	function openModal() {
-		setModal(true);
-	}
-
-	function closeModal() {
-		setModal(false);
-	}
 
 	return (
 		<section className={styles.section}>
@@ -57,8 +53,7 @@ export default function BurgerIngredients(props) {
 									id={item._id}
 									key={item._id}
 									onClick={() => {
-										handleProductDetails(item);
-										openModal();
+										openIngredient(item);
 									}}
 								/>
 							);
@@ -77,8 +72,7 @@ export default function BurgerIngredients(props) {
 									id={item._id}
 									key={item._id}
 									onClick={() => {
-										handleProductDetails(item);
-										openModal();
+										openIngredient(item);
 									}}
 								/>
 							);
@@ -97,8 +91,7 @@ export default function BurgerIngredients(props) {
 									id={item._id}
 									key={item._id}
 									onClick={() => {
-										handleProductDetails(item);
-										openModal();
+										openIngredient(item);
 									}}
 								/>
 							);
@@ -107,9 +100,9 @@ export default function BurgerIngredients(props) {
 				</div>
 			</div>
 			<>
-				{open && (
-					<Modal onClose={closeModal} headerText="Детали ингредиента">
-						<IngredientDetails details={productDetails} />
+				{openedModal && (
+					<Modal headerText="Детали ингредиента">
+						<IngredientDetails details={data} />
 					</Modal>
 				)}
 			</>

@@ -9,14 +9,18 @@ import { useState } from "react";
 import Modal from "../modal/Modal.jsx";
 import PropTypes from "prop-types";
 import OrderDetails from "../order-details/OrderDetails";
+import { useDispatch, useSelector } from "react-redux";
+import { OPEN_ORDER } from "../../services/reducers/orderDetails";
 
 export default function BurgerConstructor({ data }) {
-	const [open, setModal] = useState(false);
+	const dispatch = useDispatch();
+	const openedModal = useSelector((state) => state.orderDetails.isModal);
+
 	const elements = data.filter((item) => item.type !== "bun");
 	const someBun = data.filter((item) => item.type === "bun");
 
-	function closeModal() {
-		setModal(false);
+	function openOrder() {
+		dispatch({ type: OPEN_ORDER });
 	}
 
 	return (
@@ -71,7 +75,7 @@ export default function BurgerConstructor({ data }) {
 				<div
 					className={styles.button + " ml-10"}
 					onClick={() => {
-						setModal(true);
+						openOrder();
 					}}>
 					<div className={styles.but}>
 						{" "}
@@ -83,8 +87,8 @@ export default function BurgerConstructor({ data }) {
 			</div>
 
 			<>
-				{open && (
-					<Modal onClose={closeModal}>
+				{openedModal && (
+					<Modal>
 						<OrderDetails />
 					</Modal>
 				)}

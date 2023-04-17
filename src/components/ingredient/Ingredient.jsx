@@ -1,8 +1,16 @@
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient.module.css";
 import PropTypes from "prop-types";
+import { useDrag } from "react-dnd";
 
 export default function Ingredient({ item, id, onClick }) {
+	// const [{ getItemType }, dragRef] = useDrag({
+	// 	type: "ingredient",
+	// 	item: id,
+	// 	collect: (monitor) => ({
+	// 		getItemType: monitor.getItemType(),
+	// 	}),
+	// });
 	return (
 		<li className={styles.li} id={id} onClick={onClick}>
 			<img src={item.image} alt="картинка ингредиента" />

@@ -1,38 +1,33 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styles from "./app.module.css";
-import BurgerIngredientsRight from "../burgerIngredients/BurgerIngredients";
-import BurgerIngredients from "../burger-constructor/Burger-constructor";
+import BurgerIngredients from "../burgerIngredients/BurgerIngredients";
+import BurgerConstructor from "../burger-constructor/Burger-constructor";
 import AppHeader from "../header/AppHeader";
-const burgerURL = "https://norma.nomoreparties.space/api/ingredients";
+import { useDispatch, useSelector } from "react-redux";
+import { getDataIngredients } from "../../services/actions/app";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-	const [state, setState] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
+	const dispatch = useDispatch();
+	const data = useSelector((state) => state.app);
 
 	useEffect(() => {
-		const getStateData = async function () {
-			try {
-				const res = await fetch(burgerURL);
-				const result = await res.json();
-				setState(result.data);
-				setIsLoading(false);
-			} catch (err) {
-				console.log("Err");
-			}
-		};
-		getStateData();
-	}, []);
+		dispatch(getDataIngredients());
+	}, [dispatch]);
 
 	return (
 		<>
-			{isLoading ? (
+			{data.isLoading ? (
 				<h2>...is loading</h2>
 			) : (
 				<div className={styles.App}>
 					<AppHeader />
 					<main className={styles.main}>
-						<BurgerIngredientsRight data={state} />
-						<BurgerIngredients data={state} />
+						<BurgerIngredients data={data.data} />
+						<DndProvider backend={HTML5Backend}>
+							<BurgerConstructor data={data.data} />
+						</DndProvider>
 					</main>
 				</div>
 			)}
