@@ -4,15 +4,12 @@ import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
 
 export default function Ingredient({ item, id, onClick }) {
-	// const [{ getItemType }, dragRef] = useDrag({
-	// 	type: "ingredient",
-	// 	item: id,
-	// 	collect: (monitor) => ({
-	// 		getItemType: monitor.getItemType(),
-	// 	}),
-	// });
+	const [, dragRef] = useDrag({
+		type: "ingredient",
+		item: { id },
+	});
 	return (
-		<li className={styles.li} id={id} onClick={onClick}>
+		<li className={styles.li} id={id} onClick={onClick} ref={dragRef}>
 			<img src={item.image} alt="картинка ингредиента" />
 
 			<div className={styles.div}>

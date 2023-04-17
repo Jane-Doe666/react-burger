@@ -7,6 +7,7 @@ import IngredientDetails from "../ingredient-details/IngredientDetails";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { OPEN_INGREDIENT } from "../../services/reducers/ingredientDetails";
+import { useDrag } from "react-dnd";
 
 export default function BurgerIngredients(props) {
 	const dispatch = useDispatch();
@@ -23,6 +24,11 @@ export default function BurgerIngredients(props) {
 	const arraySouse = elements.filter((item) => item.type === "sauce");
 
 	const [current, setCurrent] = useState("one");
+
+	// const [, dragRef] = useDrag({
+	// 	type: "ingredient",
+	// 	item: Date.now(),
+	// });
 
 	return (
 		<section className={styles.section}>
@@ -45,10 +51,12 @@ export default function BurgerIngredients(props) {
 					<h2 className={styles.h2 + ` text text_type_main-medium pb-5`}>
 						Булки
 					</h2>
+
 					<ul className={styles.ul}>
 						{arrayBun.map((item) => {
 							return (
 								<Ingredient
+									// ref={dragRef}
 									item={item}
 									id={item._id}
 									key={item._id}

@@ -5,16 +5,27 @@ import {
 	DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
-import { useState } from "react";
 import Modal from "../modal/Modal.jsx";
 import PropTypes from "prop-types";
 import OrderDetails from "../order-details/OrderDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { OPEN_ORDER } from "../../services/reducers/orderDetails";
+import { useDrop } from "react-dnd";
+import { ADD } from "../../services/reducers/burgerConstructor";
+import { pushIngredientToConstructor } from "../../services/actions/app";
 
 export default function BurgerConstructor({ data }) {
 	const dispatch = useDispatch();
 	const openedModal = useSelector((state) => state.orderDetails.isModal);
+	const ingredients = useSelector((state) => state.burgerConstructor.list);
+	const bun = useSelector((state) => state.burgerConstructor.bun);
+
+	const [, dropTarget] = useDrop({
+		accept: "ingredient",
+		drop({ id }) {
+			dispatch(pushIngredientToConstructor(id));
+		},
+	});
 
 	const elements = data.filter((item) => item.type !== "bun");
 	const someBun = data.filter((item) => item.type === "bun");
@@ -24,23 +35,27 @@ export default function BurgerConstructor({ data }) {
 	}
 
 	return (
-		<section className={styles.section}>
+		<section className={styles.section} ref={dropTarget}>
 			<div className={styles.list}>
-				<div className={styles.elementTop}>
-					<ConstructorElement
-						type="top"
-						isLocked={true}
-						id={someBun[0]._id}
-						key={someBun[0]._id}
-						text={someBun[0].name + " (верх)"}
-						price={someBun[0].price}
-						thumbnail={someBun[0].image}
-					/>
-				</div>
+				{bun && (
+					<div className={styles.elementTop}>
+						<ConstructorElement
+							type="top"
+							isLocked={true}
+							id={bun.newID}
+							text={bun.name + " (верх)"}
+							price={bun.price}
+							thumbnail={bun.image}
+						/>
+					</div>
+				)}
 
 				<div className={styles.scrollbar}>
-					{elements.map((element) => (
-						<div id={element._id} key={element._id} className={styles.element}>
+					{ingredients.map((element) => (
+						<div
+							id={element._id}
+							key={element.newID}
+							className={styles.element}>
 							<DragIcon type="primary" />
 							<ConstructorElement
 								text={element.name}
@@ -50,17 +65,19 @@ export default function BurgerConstructor({ data }) {
 						</div>
 					))}
 				</div>
-				<div className={styles.elementBottom}>
-					<ConstructorElement
-						id={someBun[0]._id}
-						key={someBun[0]._id}
-						type="bottom"
-						isLocked={true}
-						text={someBun[0].name + " (низ)"}
-						price={someBun[0].price}
-						thumbnail={someBun[0].image}
-					/>
-				</div>
+
+				{bun && (
+					<div className={styles.elementBottom}>
+						<ConstructorElement
+							id={bun.newID}
+							type="bottom"
+							isLocked={true}
+							text={bun.name + " (низ)"}
+							price={bun.price}
+							thumbnail={bun.image}
+						/>
+					</div>
+				)}
 			</div>
 
 			<div className={styles.total + " mt-10 mr-4"}>
