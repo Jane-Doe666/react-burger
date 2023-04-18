@@ -11,8 +11,9 @@ import OrderDetails from "../order-details/OrderDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { OPEN_ORDER } from "../../services/reducers/orderDetails";
 import { useDrop } from "react-dnd";
-import { ADD } from "../../services/reducers/burgerConstructor";
 import { pushIngredientToConstructor } from "../../services/actions/app";
+import { useEffect } from "react";
+import { DELETE } from "../../services/reducers/burgerConstructor";
 
 export default function BurgerConstructor({ data }) {
 	const dispatch = useDispatch();
@@ -26,9 +27,6 @@ export default function BurgerConstructor({ data }) {
 			dispatch(pushIngredientToConstructor(id));
 		},
 	});
-
-	const elements = data.filter((item) => item.type !== "bun");
-	const someBun = data.filter((item) => item.type === "bun");
 
 	function openOrder() {
 		dispatch({ type: OPEN_ORDER });
@@ -46,6 +44,7 @@ export default function BurgerConstructor({ data }) {
 							text={bun.name + " (верх)"}
 							price={bun.price}
 							thumbnail={bun.image}
+							key={bun.newID}
 						/>
 					</div>
 				)}
@@ -61,6 +60,7 @@ export default function BurgerConstructor({ data }) {
 								text={element.name}
 								price={element.price}
 								thumbnail={element.image}
+								handleClose={() => dispatch({ type: DELETE, payload: element })}
 							/>
 						</div>
 					))}
@@ -69,6 +69,7 @@ export default function BurgerConstructor({ data }) {
 				{bun && (
 					<div className={styles.elementBottom}>
 						<ConstructorElement
+							key={bun.newID}
 							id={bun.newID}
 							type="bottom"
 							isLocked={true}

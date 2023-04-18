@@ -1,4 +1,7 @@
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+	Tab,
+	Counter,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import Ingredient from "../ingredient/Ingredient";
 import styles from "./burgerIngredients.module.css";
@@ -7,28 +10,23 @@ import IngredientDetails from "../ingredient-details/IngredientDetails";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { OPEN_INGREDIENT } from "../../services/reducers/ingredientDetails";
-import { useDrag } from "react-dnd";
 
 export default function BurgerIngredients(props) {
 	const dispatch = useDispatch();
-	const data = useSelector((state) => state.ingredientDetails.info);
+	const dataForModal = useSelector((state) => state.ingredientDetails.info);
 	const openedModal = useSelector((state) => state.ingredientDetails.setModal);
-
 	const openIngredient = (item) => {
 		dispatch({ type: OPEN_INGREDIENT, info: item });
 	};
+	const elements = props.data.map(
+		(item) => (item = { ...item, key: item._id })
+	);
 
-	const elements = props.data;
 	const arrayBun = elements.filter((item) => item.type === "bun");
 	const arrayMain = elements.filter((item) => item.type === "main");
 	const arraySouse = elements.filter((item) => item.type === "sauce");
 
 	const [current, setCurrent] = useState("one");
-
-	// const [, dragRef] = useDrag({
-	// 	type: "ingredient",
-	// 	item: Date.now(),
-	// });
 
 	return (
 		<section className={styles.section}>
@@ -56,10 +54,9 @@ export default function BurgerIngredients(props) {
 						{arrayBun.map((item) => {
 							return (
 								<Ingredient
-									// ref={dragRef}
 									item={item}
+									key={item.key}
 									id={item._id}
-									key={item._id}
 									onClick={() => {
 										openIngredient(item);
 									}}
@@ -77,8 +74,8 @@ export default function BurgerIngredients(props) {
 							return (
 								<Ingredient
 									item={item}
+									key={item.key}
 									id={item._id}
-									key={item._id}
 									onClick={() => {
 										openIngredient(item);
 									}}
@@ -96,8 +93,8 @@ export default function BurgerIngredients(props) {
 							return (
 								<Ingredient
 									item={item}
+									key={item.key}
 									id={item._id}
-									key={item._id}
 									onClick={() => {
 										openIngredient(item);
 									}}
@@ -110,7 +107,7 @@ export default function BurgerIngredients(props) {
 			<>
 				{openedModal && (
 					<Modal headerText="Детали ингредиента">
-						<IngredientDetails details={data} />
+						<IngredientDetails details={dataForModal} />
 					</Modal>
 				)}
 			</>

@@ -12,9 +12,17 @@ export const burgerConstructorReducer = (state = initialState, action) => {
 			if (action.payload.type !== "bun") {
 				return {
 					...state,
-					list: [...state.list, action.payload],
+					list: [
+						...state.list,
+						{
+							...action.payload,
+							newId: action.payload.newId,
+							key: action.payload.newId,
+						},
+					],
 				};
 			}
+
 			return {
 				...state,
 				bun: action.payload,
@@ -23,7 +31,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
 		case DELETE: {
 			return {
 				...state,
-				list: state.list.filter((item) => item._id !== action.value),
+				list: state.list.filter((item) => item.newId !== action.payload.newId),
 			};
 		}
 		default: {

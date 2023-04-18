@@ -1,6 +1,7 @@
 import { getBurgerIngredients } from "../api";
-import { ADD } from "../reducers/burgerConstructor";
+import { ADD, DELETE } from "../reducers/burgerConstructor";
 import { UPDATE_DATA } from "../reducers/burgerIngredients";
+import { v4 as uuidv4 } from "uuid";
 
 export function getDataIngredients() {
 	return async function (dispatch) {
@@ -13,7 +14,7 @@ export function pushIngredientToConstructor(id) {
 	return function (dispatch, getstate) {
 		const currentState = getstate();
 		const pushElement = currentState.app.data.find((item) => item._id === id);
-		pushElement.newID = Math.random();
+		pushElement.newId = uuidv4();
 		dispatch({ type: ADD, payload: pushElement });
 	};
 }
