@@ -22,9 +22,17 @@ export default function BurgerConstructor({ data }) {
 	const bunTop = useSelector((state) => state.burgerConstructor.bunTop);
 	const bunBottom = useSelector((state) => state.burgerConstructor.bunBottom);
 
-	const totalCost = bunTop
-		? bunTop.price * 2 + ingredients.reduce((acc, item) => acc + item.price, 0)
-		: ingredients.reduce((acc, item) => acc + item.price, 0);
+	function getTotalOrder(ingredients, bunTop) {
+		const data = bunTop
+			? bunTop.price * 2 +
+			  ingredients.reduce((acc, item) => acc + item.price, 0)
+			: ingredients.reduce((acc, item) => acc + item.price, 0);
+		return data;
+	}
+
+	const totalCost = useMemo(() => {
+		return getTotalOrder(ingredients, bunTop);
+	}, [ingredients, bunTop]);
 
 	const [, dropTarget] = useDrop({
 		accept: "ingredient",
