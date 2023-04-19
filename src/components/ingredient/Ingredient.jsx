@@ -5,18 +5,28 @@ import {
 import styles from "./ingredient.module.css";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
+import { useDispatch, useSelector } from "react-redux";
+import { counterByIdSelectorCreator } from "../../services/selectors/selector";
 
 export default function Ingredient({ item, id, onClick }) {
+	const dispatch = useDispatch();
+	const counterById = useSelector((state) => counterByIdSelectorCreator(state));
+
 	const [, dragRef] = useDrag({
 		type: "ingredient",
 		item: { id },
 	});
+
 	return (
 		<>
 			<li className={styles.li} id={id} key={id} onClick={onClick}>
-				<div className={styles.counter}>
-					<Counter count={""} size="default" extraClass="m-1" />
-				</div>
+				{counterById
+					.filter((item) => item.id === id)
+					.map((item) => (
+						<div className={styles.counter}>
+							<Counter count={item.count} size="default" extraClass="m-1" />
+						</div>
+					))}
 				<div>
 					{" "}
 					<img ref={dragRef} src={item.image} alt="картинка ингредиента" />

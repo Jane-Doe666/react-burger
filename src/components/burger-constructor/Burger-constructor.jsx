@@ -22,12 +22,9 @@ export default function BurgerConstructor({ data }) {
 	const bunTop = useSelector((state) => state.burgerConstructor.bunTop);
 	const bunBottom = useSelector((state) => state.burgerConstructor.bunBottom);
 
-	const totalCost = useSelector((state) =>
-		state.burgerConstructor.bunTop
-			? state.burgerConstructor.bunTop.price * 2 +
-			  state.burgerConstructor.list.reduce((acc, item) => acc + item.price, 0)
-			: state.burgerConstructor.list.reduce((acc, item) => acc + item.price, 0)
-	);
+	const totalCost = bunTop
+		? bunTop.price * 2 + ingredients.reduce((acc, item) => acc + item.price, 0)
+		: ingredients.reduce((acc, item) => acc + item.price, 0);
 
 	const [, dropTarget] = useDrop({
 		accept: "ingredient",
