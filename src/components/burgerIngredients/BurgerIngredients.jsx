@@ -53,14 +53,16 @@ export default function BurgerIngredients(props) {
 					<ul className={styles.ul}>
 						{arrayBun.map((item) => {
 							return (
-								<Ingredient
-									item={item}
-									key={item.key}
-									id={item._id}
-									onClick={() => {
-										openIngredient(item);
-									}}
-								/>
+								<div className={styles.div}>
+									<Ingredient
+										item={item}
+										key={item.key}
+										id={item._id}
+										onClick={() => {
+											openIngredient(item);
+										}}
+									/>
+								</div>
 							);
 						})}
 					</ul>

@@ -12,17 +12,25 @@ export default function Ingredient({ item, id, onClick }) {
 		item: { id },
 	});
 	return (
-		<li className={styles.li} id={id} key={id} onClick={onClick} ref={dragRef}>
-			<img src={item.image} alt="картинка ингредиента" />
-			<div className={styles.div}>
-				<p className="text text_type_digits-default mt-1 mr-1 mb-1">
-					{item.price}
-				</p>
-				<CurrencyIcon type="primary" />
-			</div>
+		<>
+			<li className={styles.li} id={id} key={id} onClick={onClick}>
+				<div className={styles.counter}>
+					<Counter count={""} size="default" extraClass="m-1" />
+				</div>
+				<div>
+					{" "}
+					<img ref={dragRef} src={item.image} alt="картинка ингредиента" />
+					<div className={styles.div}>
+						<p className="text text_type_digits-default mt-1 mr-1 mb-1">
+							{item.price}
+						</p>
+						<CurrencyIcon type="primary" />
+					</div>
+				</div>
 
-			<p className="text text_type_main-default">{item.name}</p>
-		</li>
+				<p className="text text_type_main-default">{item.name}</p>
+			</li>
+		</>
 	);
 }
 

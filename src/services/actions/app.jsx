@@ -15,6 +15,7 @@ export function pushIngredientToConstructor(id) {
 		const currentState = getstate();
 		const pushElement = currentState.app.data.find((item) => item._id === id);
 		pushElement.newId = uuidv4();
+		pushElement.key = pushElement.newId;
 		dispatch({ type: ADD, payload: pushElement });
 	};
 }

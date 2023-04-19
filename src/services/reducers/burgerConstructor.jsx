@@ -2,8 +2,9 @@ export const ADD = "BURGER_CONSTRUCTOR/ADD";
 export const DELETE = "BURGER_CONSTRUCTOR/DELETE";
 
 const initialState = {
-	bun: undefined,
+	bunTop: undefined,
 	list: [],
+	bunBottom: undefined,
 };
 
 export const burgerConstructorReducer = (state = initialState, action) => {
@@ -16,8 +17,6 @@ export const burgerConstructorReducer = (state = initialState, action) => {
 						...state.list,
 						{
 							...action.payload,
-							newId: action.payload.newId,
-							key: action.payload.newId,
 						},
 					],
 				};
@@ -25,7 +24,8 @@ export const burgerConstructorReducer = (state = initialState, action) => {
 
 			return {
 				...state,
-				bun: action.payload,
+				bunTop: action.payload,
+				bunBottom: action.payload,
 			};
 		}
 		case DELETE: {

@@ -12,14 +12,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { OPEN_ORDER } from "../../services/reducers/orderDetails";
 import { useDrop } from "react-dnd";
 import { pushIngredientToConstructor } from "../../services/actions/app";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { DELETE } from "../../services/reducers/burgerConstructor";
 
 export default function BurgerConstructor({ data }) {
 	const dispatch = useDispatch();
 	const openedModal = useSelector((state) => state.orderDetails.isModal);
 	const ingredients = useSelector((state) => state.burgerConstructor.list);
-	const bun = useSelector((state) => state.burgerConstructor.bun);
+	const bunTop = useSelector((state) => state.burgerConstructor.bunTop);
+	const bunBottom = useSelector((state) => state.burgerConstructor.bunBottom);
+
+	const totalCost = useSelector((state) =>
+		state.burgerConstructor.bunTop
+			? state.burgerConstructor.bunTop.price * 2 +
+			  state.burgerConstructor.list.reduce((acc, item) => acc + item.price, 0)
+			: state.burgerConstructor.list.reduce((acc, item) => acc + item.price, 0)
+	);
 
 	const [, dropTarget] = useDrop({
 		accept: "ingredient",
@@ -35,16 +43,16 @@ export default function BurgerConstructor({ data }) {
 	return (
 		<section className={styles.section} ref={dropTarget}>
 			<div className={styles.list}>
-				{bun && (
+				{bunTop && (
 					<div className={styles.elementTop}>
 						<ConstructorElement
 							type="top"
 							isLocked={true}
-							id={bun.newID}
-							text={bun.name + " (верх)"}
-							price={bun.price}
-							thumbnail={bun.image}
-							key={bun.newID}
+							id={bunTop.newID}
+							text={bunTop.name + " (верх)"}
+							price={bunTop.price}
+							thumbnail={bunTop.image}
+							key={bunTop.newID}
 						/>
 					</div>
 				)}
@@ -66,16 +74,16 @@ export default function BurgerConstructor({ data }) {
 					))}
 				</div>
 
-				{bun && (
+				{bunBottom && (
 					<div className={styles.elementBottom}>
 						<ConstructorElement
-							key={bun.newID}
-							id={bun.newID}
+							key={bunBottom.newID}
+							id={bunBottom.newID}
 							type="bottom"
 							isLocked={true}
-							text={bun.name + " (низ)"}
-							price={bun.price}
-							thumbnail={bun.image}
+							text={bunBottom.name + " (низ)"}
+							price={bunBottom.price}
+							thumbnail={bunBottom.image}
 						/>
 					</div>
 				)}
@@ -85,7 +93,7 @@ export default function BurgerConstructor({ data }) {
 				<span>
 					{" "}
 					<span className={styles.span + " text text_type_digits-medium mr-2"}>
-						666
+						{totalCost}
 					</span>
 					<CurrencyIcon type="primary" />
 				</span>
