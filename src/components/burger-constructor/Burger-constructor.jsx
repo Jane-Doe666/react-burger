@@ -6,21 +6,28 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import Modal from "../modal/Modal.jsx";
-import PropTypes from "prop-types";
 import OrderDetails from "../order-details/OrderDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { OPEN_ORDER } from "../../services/reducers/orderDetails";
 import { useDrop } from "react-dnd";
-import { pushIngredientToConstructor } from "../../services/actions/app";
-import { useEffect, useMemo } from "react";
+import {
+	pushIngredientToConstructor,
+	sendIdIngredientsOnServer,
+} from "../../services/actions/app";
+import { useMemo } from "react";
 import { DELETE } from "../../services/reducers/burgerConstructor";
+import { iDInOrderSelectorCreator } from "../../services/selectors/selector";
 
-export default function BurgerConstructor({ data }) {
+export default function BurgerConstructor() {
 	const dispatch = useDispatch();
 	const openedModal = useSelector((state) => state.orderDetails.isModal);
 	const ingredients = useSelector((state) => state.burgerConstructor.list);
 	const bunTop = useSelector((state) => state.burgerConstructor.bunTop);
 	const bunBottom = useSelector((state) => state.burgerConstructor.bunBottom);
+	let iDIngredientsInOrder = useSelector((state) =>
+		iDInOrderSelectorCreator(state)
+	);
+	iDIngredientsInOrder = { ingredients: iDIngredientsInOrder };
 
 	function getTotalOrder(ingredients, bunTop) {
 		const data = bunTop
@@ -42,8 +49,15 @@ export default function BurgerConstructor({ data }) {
 	});
 
 	function openOrder() {
+		if (iDIngredientsInOrder.length) return;
 		dispatch({ type: OPEN_ORDER });
+		dispatch(sendIdIngredientsOnServer(iDIngredientsInOrder));
 	}
+
+	// function sendOrderDetails() {
+	// 	if (iDIngredientsInOrder.length) return;
+	// 	dispatch(sendIdIngredientsOnServer(iDIngredientsInOrder));
+	// }
 
 	return (
 		<section className={styles.section} ref={dropTarget}>
@@ -127,7 +141,3 @@ export default function BurgerConstructor({ data }) {
 		</section>
 	);
 }
-
-BurgerConstructor.propTypes = {
-	data: PropTypes.arrayOf(PropTypes.object).isRequired,
-};

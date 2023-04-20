@@ -19,3 +19,15 @@ export const counterByIdSelectorCreator = (state) => {
 		count: data[itemId],
 	}));
 };
+
+export const iDInOrderSelectorCreator = (state) => {
+	const dataId = [
+		...state.burgerConstructor.list,
+		state.burgerConstructor.bunTop,
+		state.burgerConstructor.bunBottom,
+	]
+		.filter((item) => item !== undefined)
+		.map((item) => item._id);
+
+	return dataId;
+};

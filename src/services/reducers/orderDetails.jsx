@@ -1,9 +1,8 @@
-import { CLOSE_MODAL } from "./ingredientDetails";
+import { CLOSE_MODAL } from "../actions/app";
 export const OPEN_ORDER = "ORDER_DETAILS/OPEN_ORDER";
-// export const CLOSE_ORDER = "ORDER_DETAILS/CLOSE_ORDER";
 
 const initialState = {
-	// list: [],
+	list: {},
 	isModal: false,
 };
 
@@ -12,7 +11,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
 		case OPEN_ORDER: {
 			return {
 				...state,
-				// list: action.value,
+				list: action.payload,
 				isModal: true,
 			};
 		}

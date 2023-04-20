@@ -25,8 +25,8 @@ function App() {
 					<AppHeader />
 					<main className={styles.main}>
 						<DndProvider backend={HTML5Backend}>
-							<BurgerIngredients key={1} data={data.data} />
-							<BurgerConstructor key={2} data={data.data} />
+							<BurgerIngredients data={data.data} />
+							<BurgerConstructor />
 						</DndProvider>
 					</main>
 				</div>

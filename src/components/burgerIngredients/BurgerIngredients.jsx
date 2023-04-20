@@ -1,7 +1,4 @@
-import {
-	Tab,
-	Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import Ingredient from "../ingredient/Ingredient";
 import styles from "./burgerIngredients.module.css";
@@ -117,6 +114,6 @@ export default function BurgerIngredients(props) {
 	);
 }
 
-BurgerIngredients.propTypes = {
-	data: PropTypes.array.isRequired,
-};
+// BurgerIngredients.propTypes = {
+// 	data: PropTypes.array.isRequired,
+// };
