@@ -2,7 +2,6 @@ import {
 	ConstructorElement,
 	Button,
 	CurrencyIcon,
-	DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import Modal from "../modal/Modal.jsx";
@@ -15,8 +14,8 @@ import {
 	sendIdIngredientsOnServer,
 } from "../../services/actions/app";
 import { useMemo } from "react";
-import { DELETE } from "../../services/reducers/burgerConstructor";
 import { iDInOrderSelectorCreator } from "../../services/selectors/selector";
+import { ConstructorElementContainer } from "./Constructor-element";
 
 export default function BurgerConstructor() {
 	const dispatch = useDispatch();
@@ -24,22 +23,17 @@ export default function BurgerConstructor() {
 	const ingredients = useSelector((state) => state.burgerConstructor.list);
 	const bunTop = useSelector((state) => state.burgerConstructor.bunTop);
 	const bunBottom = useSelector((state) => state.burgerConstructor.bunBottom);
+
 	let iDIngredientsInOrder = useSelector((state) =>
 		iDInOrderSelectorCreator(state)
 	);
 	iDIngredientsInOrder = { ingredients: iDIngredientsInOrder };
 
-	function getTotalOrder(ingredients, bunTop) {
-		const data = bunTop
-			? bunTop.price * 2 +
-			  ingredients.reduce((acc, item) => acc + item.price, 0)
-			: ingredients.reduce((acc, item) => acc + item.price, 0);
-		return data;
+	function openOrder() {
+		if (iDIngredientsInOrder.length) return;
+		dispatch({ type: OPEN_ORDER });
+		dispatch(sendIdIngredientsOnServer(iDIngredientsInOrder));
 	}
-
-	const totalCost = useMemo(() => {
-		return getTotalOrder(ingredients, bunTop);
-	}, [ingredients, bunTop]);
 
 	const [, dropTarget] = useDrop({
 		accept: "ingredient",
@@ -48,16 +42,17 @@ export default function BurgerConstructor() {
 		},
 	});
 
-	function openOrder() {
-		if (iDIngredientsInOrder.length) return;
-		dispatch({ type: OPEN_ORDER });
-		dispatch(sendIdIngredientsOnServer(iDIngredientsInOrder));
-	}
+	const totalCost = useMemo(() => {
+		return getTotalOrder(ingredients, bunTop);
+	}, [ingredients, bunTop]);
 
-	// function sendOrderDetails() {
-	// 	if (iDIngredientsInOrder.length) return;
-	// 	dispatch(sendIdIngredientsOnServer(iDIngredientsInOrder));
-	// }
+	function getTotalOrder(ingredients, bunTop) {
+		const data = bunTop
+			? bunTop.price * 2 +
+			  ingredients.reduce((acc, item) => acc + item.price, 0)
+			: ingredients.reduce((acc, item) => acc + item.price, 0);
+		return data;
+	}
 
 	return (
 		<section className={styles.section} ref={dropTarget}>
@@ -77,19 +72,8 @@ export default function BurgerConstructor() {
 				)}
 
 				<div className={styles.scrollbar}>
-					{ingredients.map((element) => (
-						<div
-							id={element._id}
-							key={element.newID}
-							className={styles.element}>
-							<DragIcon type="primary" />
-							<ConstructorElement
-								text={element.name}
-								price={element.price}
-								thumbnail={element.image}
-								handleClose={() => dispatch({ type: DELETE, payload: element })}
-							/>
-						</div>
+					{ingredients.map((element, index) => (
+						<ConstructorElementContainer element={element} index={index} />
 					))}
 				</div>
 

@@ -18,7 +18,6 @@ export const ingredientDetailsReducer = (state = initialState, action) => {
 		case CLOSE_MODAL: {
 			return {
 				...state,
-				info: initialState.info,
 				setModal: false,
 			};
 		}

@@ -1,10 +1,12 @@
 export const ADD = "BURGER_CONSTRUCTOR/ADD";
 export const DELETE = "BURGER_CONSTRUCTOR/DELETE";
+export const CHANGE_ORDER = "BURGER_CONSTRUCTOR/CHANGE_ORDER";
 
 const initialState = {
 	bunTop: undefined,
 	list: [],
 	bunBottom: undefined,
+	indexDragOrder: undefined,
 };
 
 export const burgerConstructorReducer = (state = initialState, action) => {
@@ -21,7 +23,6 @@ export const burgerConstructorReducer = (state = initialState, action) => {
 					],
 				};
 			}
-
 			return {
 				...state,
 				bunTop: action.payload,
@@ -32,6 +33,12 @@ export const burgerConstructorReducer = (state = initialState, action) => {
 			return {
 				...state,
 				list: state.list.filter((item) => item.newId !== action.payload.newId),
+			};
+		}
+		case CHANGE_ORDER: {
+			return {
+				...state,
+				list: action.payload,
 			};
 		}
 		default: {

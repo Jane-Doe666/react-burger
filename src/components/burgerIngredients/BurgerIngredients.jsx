@@ -1,5 +1,5 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Ingredient from "../ingredient/Ingredient";
 import styles from "./burgerIngredients.module.css";
 import Modal from "../modal/Modal";
@@ -18,12 +18,46 @@ export default function BurgerIngredients(props) {
 	const elements = props.data.map(
 		(item) => (item = { ...item, key: item._id })
 	);
-
 	const arrayBun = elements.filter((item) => item.type === "bun");
 	const arrayMain = elements.filter((item) => item.type === "main");
 	const arraySouse = elements.filter((item) => item.type === "sauce");
 
+	const scrollConainer = useRef();
+	const currentOne = useRef();
+	const currentTwo = useRef();
+	const currentThree = useRef();
+
 	const [current, setCurrent] = useState("one");
+
+	useEffect(() => {
+		current === "one" &&
+			currentOne.current.scrollIntoView({ behavior: "smooth" });
+		current === "two" &&
+			currentTwo.current.scrollIntoView({ behavior: "smooth" });
+		current === "three" &&
+			currentThree.current.scrollIntoView({ behavior: "smooth" });
+	});
+
+	//scrollTop
+	//offSet
+
+	//litcode
+	//теория алгор
+
+	function handleScroll() {
+		const topConainerScroll =
+			scrollConainer.current.getBoundingClientRect().top;
+		const bottomBun = currentOne.current.getBoundingClientRect().bottom;
+		const bottomSouse = currentTwo.current.getBoundingClientRect().bottom;
+
+		if (bottomSouse <= topConainerScroll) {
+			setCurrent("three");
+		} else if (bottomBun <= topConainerScroll) {
+			setCurrent("two");
+		} else {
+			setCurrent("one");
+		}
+	}
 
 	return (
 		<section className={styles.section}>
@@ -41,13 +75,16 @@ export default function BurgerIngredients(props) {
 					Начинки
 				</Tab>
 			</nav>
-			<div className={styles.scrollbar}>
+
+			<div
+				className={styles.scrollbar}
+				onScroll={handleScroll}
+				ref={scrollConainer}>
 				<div className={styles.div}>
 					<h2 className={styles.h2 + ` text text_type_main-medium pb-5`}>
 						Булки
 					</h2>
-
-					<ul className={styles.ul}>
+					<ul className={styles.ul} ref={currentOne}>
 						{arrayBun.map((item) => {
 							return (
 								<div className={styles.div}>
@@ -68,7 +105,7 @@ export default function BurgerIngredients(props) {
 					<h2 className={styles.h2 + ` text text_type_main-medium pt-10 pb-5`}>
 						Соусы
 					</h2>
-					<ul className={styles.ul}>
+					<ul className={styles.ul} ref={currentTwo}>
 						{arraySouse.map((item) => {
 							return (
 								<Ingredient
@@ -87,7 +124,7 @@ export default function BurgerIngredients(props) {
 					<h2 className={styles.h2 + ` text text_type_main-medium pt-10 pb-5`}>
 						Начинки
 					</h2>
-					<ul className={styles.ul}>
+					<ul className={styles.ul} ref={currentThree}>
 						{arrayMain.map((item) => {
 							return (
 								<Ingredient
@@ -114,6 +151,6 @@ export default function BurgerIngredients(props) {
 	);
 }
 
-// BurgerIngredients.propTypes = {
-// 	data: PropTypes.array.isRequired,
-// };
+BurgerIngredients.propTypes = {
+	data: PropTypes.array.isRequired,
+};
