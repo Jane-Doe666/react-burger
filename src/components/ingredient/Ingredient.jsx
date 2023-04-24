@@ -19,12 +19,17 @@ export default function Ingredient({ item, id, onClick }) {
 
 	return (
 		<>
-			<li className={styles.li} id={id} key={id} onClick={onClick}>
+			<li className={styles.li} id={id} onClick={onClick}>
 				{counterById
 					.filter((item) => item.id === id)
 					.map((item) => (
 						<div className={styles.counter}>
-							<Counter count={item.count} size="default" extraClass="m-1" />
+							<Counter
+								key={`${id}-counter`}
+								count={item.count}
+								size="default"
+								extraClass="m-1"
+							/>
 						</div>
 					))}
 				<div>

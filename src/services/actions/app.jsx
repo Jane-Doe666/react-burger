@@ -4,7 +4,7 @@ import { UPDATE_DATA } from "../reducers/burgerIngredients";
 import { v4 as uuidv4 } from "uuid";
 import { OPEN_ORDER } from "../reducers/orderDetails";
 
-export const CLOSE_MODAL = "ACTIONS/CLOSE_MODAL";
+export const CLOSE_MODAL = "CLOSE_MODAL";
 
 export function getDataIngredients() {
 	return async function (dispatch) {

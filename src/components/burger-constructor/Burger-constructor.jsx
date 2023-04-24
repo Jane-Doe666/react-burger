@@ -7,7 +7,7 @@ import styles from "./burger-constructor.module.css";
 import Modal from "../modal/Modal.jsx";
 import OrderDetails from "../order-details/OrderDetails";
 import { useDispatch, useSelector } from "react-redux";
-import { OPEN_ORDER } from "../../services/reducers/orderDetails";
+
 import { useDrop } from "react-dnd";
 import {
 	pushIngredientToConstructor,
@@ -16,6 +16,7 @@ import {
 import { useMemo } from "react";
 import { iDInOrderSelectorCreator } from "../../services/selectors/selector";
 import { ConstructorElementContainer } from "./Constructor-element";
+import { OPEN_ORDER } from "../../services/reducers/orderDetails";
 
 export default function BurgerConstructor() {
 	const dispatch = useDispatch();
@@ -66,21 +67,23 @@ export default function BurgerConstructor() {
 							text={bunTop.name + " (верх)"}
 							price={bunTop.price}
 							thumbnail={bunTop.image}
-							key={bunTop.newID}
 						/>
 					</div>
 				)}
 
 				<div className={styles.scrollbar}>
 					{ingredients.map((element, index) => (
-						<ConstructorElementContainer element={element} index={index} />
+						<ConstructorElementContainer
+							element={element}
+							index={index}
+							key={element.newID}
+						/>
 					))}
 				</div>
 
 				{bunBottom && (
 					<div className={styles.elementBottom}>
 						<ConstructorElement
-							key={bunBottom.newID}
 							id={bunBottom.newID}
 							type="bottom"
 							isLocked={true}

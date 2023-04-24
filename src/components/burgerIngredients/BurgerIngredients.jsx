@@ -29,20 +29,16 @@ export default function BurgerIngredients(props) {
 
 	const [current, setCurrent] = useState("one");
 
-	useEffect(() => {
-		current === "one" &&
-			currentOne.current.scrollIntoView({ behavior: "smooth" });
-		current === "two" &&
-			currentTwo.current.scrollIntoView({ behavior: "smooth" });
-		current === "three" &&
-			currentThree.current.scrollIntoView({ behavior: "smooth" });
-	});
+	// const [tabScroll, setTabScroll] = useState(false);
 
-	//scrollTop
-	//offSet
-
-	//litcode
-	//теория алгор
+	// useEffect(() => {
+	// 	current === "one" &&
+	// 		currentOne.current.scrollIntoView({ behavior: "smooth" });
+	// 	current === "two" &&
+	// 		currentTwo.current.scrollIntoView({ behavior: "smooth" });
+	// 	current === "three" &&
+	// 		currentThree.current.scrollIntoView({ behavior: "smooth" });
+	// });
 
 	function handleScroll() {
 		const topConainerScroll =
@@ -86,6 +82,7 @@ export default function BurgerIngredients(props) {
 					</h2>
 					<ul className={styles.ul} ref={currentOne}>
 						{arrayBun.map((item) => {
+							console.log(7, item);
 							return (
 								<div className={styles.div}>
 									<Ingredient

@@ -10,6 +10,7 @@ import {
 	DELETE,
 } from "../../services/reducers/burgerConstructor";
 import styles from "./burger-constructor.module.css";
+import PropTypes from "prop-types";
 
 export function ConstructorElementContainer({ element, index }) {
 	const dispatch = useDispatch();
@@ -61,7 +62,6 @@ export function ConstructorElementContainer({ element, index }) {
 		<div
 			ref={dragDropRef}
 			id={element._id}
-			key={element.newID}
 			index={index}
 			className={styles.element}>
 			<DragIcon type="primary" />
@@ -74,3 +74,8 @@ export function ConstructorElementContainer({ element, index }) {
 		</div>
 	);
 }
+
+ConstructorElementContainer.propTypes = {
+	index: PropTypes.number.isRequired,
+	element: PropTypes.object.isRequired,
+};
