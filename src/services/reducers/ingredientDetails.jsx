@@ -1,5 +1,5 @@
 import { CLOSE_MODAL } from "../actions/app";
-export const OPEN_INGREDIENT = "INGREDIENT_DETAILS/OPEN_INGREDIENT";
+import { OPEN_INGREDIENT } from "../actions/ingredientDetails";
 
 const initialState = {
 	info: {},

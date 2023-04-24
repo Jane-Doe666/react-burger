@@ -1,19 +1,19 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Ingredient from "../ingredient/Ingredient";
 import styles from "./burgerIngredients.module.css";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
-import { OPEN_INGREDIENT } from "../../services/reducers/ingredientDetails";
+import { openIngredientInfo } from "../../services/actions/ingredientDetails";
 
 export default function BurgerIngredients(props) {
 	const dispatch = useDispatch();
 	const dataForModal = useSelector((state) => state.ingredientDetails.info);
 	const openedModal = useSelector((state) => state.ingredientDetails.setModal);
 	const openIngredient = (item) => {
-		dispatch({ type: OPEN_INGREDIENT, info: item });
+		dispatch(openIngredientInfo(item));
 	};
 	const elements = props.data.map(
 		(item) => (item = { ...item, key: item._id })
@@ -28,17 +28,6 @@ export default function BurgerIngredients(props) {
 	const currentThree = useRef();
 
 	const [current, setCurrent] = useState("one");
-
-	// const [tabScroll, setTabScroll] = useState(false);
-
-	// useEffect(() => {
-	// 	current === "one" &&
-	// 		currentOne.current.scrollIntoView({ behavior: "smooth" });
-	// 	current === "two" &&
-	// 		currentTwo.current.scrollIntoView({ behavior: "smooth" });
-	// 	current === "three" &&
-	// 		currentThree.current.scrollIntoView({ behavior: "smooth" });
-	// });
 
 	function handleScroll() {
 		const topConainerScroll =
@@ -81,13 +70,11 @@ export default function BurgerIngredients(props) {
 						Булки
 					</h2>
 					<ul className={styles.ul} ref={currentOne}>
-						{arrayBun.map((item) => {
-							console.log(7, item);
+						{arrayBun.map((item, index) => {
 							return (
-								<div className={styles.div}>
+								<div className={styles.div} key={index}>
 									<Ingredient
 										item={item}
-										key={item.key}
 										id={item._id}
 										onClick={() => {
 											openIngredient(item);
@@ -103,16 +90,17 @@ export default function BurgerIngredients(props) {
 						Соусы
 					</h2>
 					<ul className={styles.ul} ref={currentTwo}>
-						{arraySouse.map((item) => {
+						{arraySouse.map((item, index) => {
 							return (
-								<Ingredient
-									item={item}
-									key={item.key}
-									id={item._id}
-									onClick={() => {
-										openIngredient(item);
-									}}
-								/>
+								<div className={styles.div} key={index}>
+									<Ingredient
+										item={item}
+										id={item._id}
+										onClick={() => {
+											openIngredient(item);
+										}}
+									/>
+								</div>
 							);
 						})}
 					</ul>
@@ -122,16 +110,17 @@ export default function BurgerIngredients(props) {
 						Начинки
 					</h2>
 					<ul className={styles.ul} ref={currentThree}>
-						{arrayMain.map((item) => {
+						{arrayMain.map((item, index) => {
 							return (
-								<Ingredient
-									item={item}
-									key={item.key}
-									id={item._id}
-									onClick={() => {
-										openIngredient(item);
-									}}
-								/>
+								<div className={styles.div} key={index}>
+									<Ingredient
+										item={item}
+										id={item._id}
+										onClick={() => {
+											openIngredient(item);
+										}}
+									/>
+								</div>
 							);
 						})}
 					</ul>

@@ -7,16 +7,15 @@ import styles from "./burger-constructor.module.css";
 import Modal from "../modal/Modal.jsx";
 import OrderDetails from "../order-details/OrderDetails";
 import { useDispatch, useSelector } from "react-redux";
-
 import { useDrop } from "react-dnd";
+import { useMemo } from "react";
+import { iDInOrderSelectorCreator } from "../../services/selectors/selector";
+import { ConstructorElementContainer } from "../burger-constructor-element/Constructor-element";
+import { openOrder, OPEN_ORDER } from "../../services/actions/orderDetails";
 import {
 	pushIngredientToConstructor,
 	sendIdIngredientsOnServer,
-} from "../../services/actions/app";
-import { useMemo } from "react";
-import { iDInOrderSelectorCreator } from "../../services/selectors/selector";
-import { ConstructorElementContainer } from "./Constructor-element";
-import { OPEN_ORDER } from "../../services/reducers/orderDetails";
+} from "../../services/actions/burgerConstructor";
 
 export default function BurgerConstructor() {
 	const dispatch = useDispatch();
@@ -30,9 +29,9 @@ export default function BurgerConstructor() {
 	);
 	iDIngredientsInOrder = { ingredients: iDIngredientsInOrder };
 
-	function openOrder() {
+	function handleOpenedOrder() {
 		if (iDIngredientsInOrder.length) return;
-		dispatch({ type: OPEN_ORDER });
+		dispatch(openOrder());
 		dispatch(sendIdIngredientsOnServer(iDIngredientsInOrder));
 	}
 
@@ -73,11 +72,10 @@ export default function BurgerConstructor() {
 
 				<div className={styles.scrollbar}>
 					{ingredients.map((element, index) => (
-						<ConstructorElementContainer
-							element={element}
-							index={index}
-							key={element.newID}
-						/>
+						<div key={index}>
+							{" "}
+							<ConstructorElementContainer element={element} index={index} />
+						</div>
 					))}
 				</div>
 
@@ -107,7 +105,7 @@ export default function BurgerConstructor() {
 				<div
 					className={styles.button + " ml-10"}
 					onClick={() => {
-						openOrder();
+						handleOpenedOrder();
 					}}>
 					<div className={styles.but}>
 						{" "}

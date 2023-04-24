@@ -1,4 +1,4 @@
-export const UPDATE_DATA = "UPDATE_DATA";
+import { UPDATE_DATA } from "../actions/burgerIngredients";
 
 const initialState = {
 	data: [],
@@ -10,7 +10,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
 		case UPDATE_DATA: {
 			return {
 				...state,
-				data: action.value,
+				data: action.payload,
 				isLoading: false,
 			};
 		}

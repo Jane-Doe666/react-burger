@@ -5,18 +5,19 @@ import {
 import React, { useCallback, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	CHANGE_ORDER,
-	DELETE,
-} from "../../services/reducers/burgerConstructor";
-import styles from "./burger-constructor.module.css";
+
+import styles from "../burger-constructor/burger-constructor.module.css";
 import PropTypes from "prop-types";
+import {
+	changeOrderInConstructor,
+	deleteIngredientFromConstructor,
+} from "../../services/actions/burgerConstructor";
 
 export function ConstructorElementContainer({ element, index }) {
 	const dispatch = useDispatch();
 	const ingredients = useSelector((state) => state.burgerConstructor.list);
 
-	const [{ isDragging }, dragRef] = useDrag({
+	const [, dragRef] = useDrag({
 		type: "item",
 		item: { index },
 		// collect: (monitor) => ({
@@ -31,12 +32,12 @@ export function ConstructorElementContainer({ element, index }) {
 			const updatedIngredients = [...ingredients];
 			updatedIngredients[dragIndex] = hoverItem;
 			updatedIngredients[hoverIndex] = dragItem;
-			dispatch({ type: CHANGE_ORDER, payload: updatedIngredients });
+			dispatch(changeOrderInConstructor(updatedIngredients));
 		},
 		[ingredients]
 	);
 
-	const [spec, dropRef] = useDrop({
+	const [, dropRef] = useDrop({
 		accept: "item",
 		hover: (item, monitor) => {
 			const dragIndex = item.index;
@@ -59,17 +60,13 @@ export function ConstructorElementContainer({ element, index }) {
 	const dragDropRef = dragRef(dropRef(ref));
 
 	return (
-		<div
-			ref={dragDropRef}
-			id={element._id}
-			index={index}
-			className={styles.element}>
+		<div ref={dragDropRef} className={styles.element}>
 			<DragIcon type="primary" />
 			<ConstructorElement
 				text={element.name}
 				price={element.price}
 				thumbnail={element.image}
-				handleClose={() => dispatch({ type: DELETE, payload: element })}
+				handleClose={() => dispatch(deleteIngredientFromConstructor(element))}
 			/>
 		</div>
 	);

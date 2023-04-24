@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 export default function OrderDetails() {
 	const orderDetails = useSelector((state) => state.orderDetails.list);
-	console.log("orderDetails", orderDetails);
 
 	return (
 		orderDetails && (

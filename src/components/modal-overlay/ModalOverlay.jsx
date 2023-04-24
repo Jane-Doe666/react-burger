@@ -1,6 +1,5 @@
 import styles from "./modalOverlay.module.css";
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
 
 export default function ModalOverlay({ children, onClose }) {
 	function closeByOverlay(evt) {

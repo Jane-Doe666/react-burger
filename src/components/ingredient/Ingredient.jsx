@@ -5,13 +5,11 @@ import {
 import styles from "./ingredient.module.css";
 import PropTypes from "prop-types";
 import { useDrag } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { counterByIdSelectorCreator } from "../../services/selectors/selector";
 
 export default function Ingredient({ item, id, onClick }) {
-	const dispatch = useDispatch();
 	const counterById = useSelector((state) => counterByIdSelectorCreator(state));
-
 	const [, dragRef] = useDrag({
 		type: "ingredient",
 		item: { id },
@@ -19,17 +17,12 @@ export default function Ingredient({ item, id, onClick }) {
 
 	return (
 		<>
-			<li className={styles.li} id={id} onClick={onClick}>
+			<li className={styles.li} onClick={onClick}>
 				{counterById
 					.filter((item) => item.id === id)
-					.map((item) => (
-						<div className={styles.counter}>
-							<Counter
-								key={`${id}-counter`}
-								count={item.count}
-								size="default"
-								extraClass="m-1"
-							/>
+					.map((item, index) => (
+						<div className={styles.counter} key={index}>
+							<Counter count={item.count} size="default" extraClass="m-1" />
 						</div>
 					))}
 				<div>

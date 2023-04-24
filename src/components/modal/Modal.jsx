@@ -5,14 +5,14 @@ import { createPortal } from "react-dom";
 import { PropTypes } from "prop-types";
 import { useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { CLOSE_MODAL } from "../../services/actions/app";
+import { closeModal } from "../../services/actions/app";
 const portalModalOverLay = document.querySelector("#portalOverlay");
 
 export default function Modal({ headerText = "", children }) {
 	const dispatch = useDispatch();
 
 	const closeIngredient = useCallback(() => {
-		dispatch({ type: CLOSE_MODAL });
+		dispatch(closeModal());
 	});
 
 	useEffect(() => {

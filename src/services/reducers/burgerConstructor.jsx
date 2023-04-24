@@ -1,6 +1,4 @@
-export const ADD = "BURGER_CONSTRUCTOR/ADD";
-export const DELETE = "BURGER_CONSTRUCTOR/DELETE";
-export const CHANGE_ORDER = "BURGER_CONSTRUCTOR/CHANGE_ORDER";
+import { ADD, CHANGE_ORDER, DELETE } from "../actions/burgerConstructor";
 
 const initialState = {
 	bunTop: undefined,
