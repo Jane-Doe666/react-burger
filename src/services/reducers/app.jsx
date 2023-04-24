@@ -1,48 +1,41 @@
-import { CLOSE_MODAL } from "../actions/app";
 import {
-	GET_ORDER_REQUEST,
-	GET_ORDER_SUCCESS,
-	GET_ORDER_ERROR,
-} from "../actions/orderDetails";
+	GET_INGREDIENTS_REQUEST,
+	GET_INGREDIENTS_SUCCESS,
+	GET_INGREDIENTS_ERROR,
+} from "../actions/app";
 
 const initialState = {
-	isModal: false,
 	items: [],
+	isLoading: true,
 	itemsRequest: false,
 	itemsFailed: false,
 };
 
-export const orderDetailsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case GET_ORDER_REQUEST: {
+		case GET_INGREDIENTS_REQUEST: {
 			return {
 				...state,
 				itemsRequest: true,
 			};
 		}
-		case GET_ORDER_SUCCESS: {
+		case GET_INGREDIENTS_SUCCESS: {
 			return {
 				...state,
 				itemsFailed: false,
 				items: action.items,
 				itemsRequest: false,
-				isModal: true,
+				isLoading: false,
 			};
 		}
-		case GET_ORDER_ERROR: {
+		case GET_INGREDIENTS_ERROR: {
 			return {
 				...state,
 				itemsFailed: true,
 				itemsRequest: false,
+				isLoading: true,
 			};
 		}
-		case CLOSE_MODAL: {
-			return {
-				...state,
-				isModal: false,
-			};
-		}
-
 		default: {
 			return state;
 		}

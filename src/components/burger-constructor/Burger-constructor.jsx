@@ -11,7 +11,7 @@ import { useDrop } from "react-dnd";
 import { useMemo } from "react";
 import { iDInOrderSelectorCreator } from "../../services/selectors/selector";
 import { ConstructorElementContainer } from "../burger-constructor-element/Constructor-element";
-import { openOrder, OPEN_ORDER } from "../../services/actions/orderDetails";
+import { getOrder, openOrder } from "../../services/actions/orderDetails";
 import {
 	pushIngredientToConstructor,
 	sendIdIngredientsOnServer,
@@ -31,8 +31,7 @@ export default function BurgerConstructor() {
 
 	function handleOpenedOrder() {
 		if (iDIngredientsInOrder.length) return;
-		dispatch(openOrder());
-		dispatch(sendIdIngredientsOnServer(iDIngredientsInOrder));
+		dispatch(getOrder(iDIngredientsInOrder));
 	}
 
 	const [, dropTarget] = useDrop({

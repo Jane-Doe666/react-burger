@@ -4,16 +4,16 @@ import BurgerIngredients from "../burgerIngredients/BurgerIngredients";
 import BurgerConstructor from "../burger-constructor/Burger-constructor";
 import AppHeader from "../header/AppHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { getDataIngredients } from "../../services/actions/app";
+import { getIngredients } from "../../services/actions/app";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
 	const dispatch = useDispatch();
-	const data = useSelector((state) => state.app);
+	const data = useSelector((state) => state.app.items);
 
 	useEffect(() => {
-		dispatch(getDataIngredients());
+		dispatch(getIngredients());
 	}, [dispatch]);
 
 	return (
@@ -25,7 +25,7 @@ function App() {
 					<AppHeader />
 					<main className={styles.main}>
 						<DndProvider backend={HTML5Backend}>
-							<BurgerIngredients data={data.data} />
+							<BurgerIngredients data={data} />
 							<BurgerConstructor />
 						</DndProvider>
 					</main>

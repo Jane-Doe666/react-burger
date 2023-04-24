@@ -27,6 +27,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
 				bunBottom: action.payload,
 			};
 		}
+
 		case DELETE: {
 			return {
 				...state,

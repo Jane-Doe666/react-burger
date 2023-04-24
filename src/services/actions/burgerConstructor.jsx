@@ -1,6 +1,4 @@
 import { v4 as uuidv4 } from "uuid";
-import { getIdOrderFromServer } from "../api";
-import { openOrder } from "./orderDetails";
 
 export const ADD = "BURGER_CONSTRUCTOR/ADD";
 export const DELETE = "BURGER_CONSTRUCTOR/DELETE";
@@ -24,17 +22,10 @@ export const changeOrderInConstructor = (payload) => ({
 export function pushIngredientToConstructor(id) {
 	return function (dispatch, getstate) {
 		const currentState = getstate();
-		const pushElement = currentState.app.data.find((item) => item._id === id);
+		const pushElement = currentState.app.items.find((item) => item._id === id);
 		pushElement.newId = uuidv4();
 		pushElement.key = pushElement.newId;
 
 		dispatch(addIngredientToConstructor(pushElement));
-	};
-}
-
-export function sendIdIngredientsOnServer(array) {
-	return async function (dispatch) {
-		const data = await getIdOrderFromServer(array);
-		dispatch(openOrder(data));
 	};
 }

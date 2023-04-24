@@ -3,13 +3,13 @@ import flag from "../../images/doneflag.png";
 import { useSelector } from "react-redux";
 
 export default function OrderDetails() {
-	const orderDetails = useSelector((state) => state.orderDetails.list);
+	const orderDetails = useSelector((state) => state.orderDetails.items);
 
 	return (
 		orderDetails && (
 			<div className={styles.form + " pl-25 pr-25"}>
 				<p className={styles.number + " text text_type_digits-large pt-20"}>
-					{orderDetails.order.number}
+					{orderDetails}
 				</p>
 				<h2 className={styles.h2 + " text text_type_main-default mt-8"}>
 					идентификатор заказа
