@@ -14,7 +14,11 @@ export default function OrderDetails() {
 				<h2 className={styles.h2 + " text text_type_main-default mt-8"}>
 					идентификатор заказа
 				</h2>
-				<img className={styles.img + " mt-15"} src={flag} alt="flag" />
+				<img
+					className={styles.img + " mt-15"}
+					src={flag}
+					alt="флаг подтвреждения заказа поставлен"
+				/>
 				<p className={styles.orderStatus + " text text_type_main-small mt-15"}>
 					Ваш заказ начали готовить
 				</p>

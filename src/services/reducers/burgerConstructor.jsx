@@ -1,4 +1,9 @@
-import { ADD, CHANGE_ORDER, DELETE } from "../actions/burgerConstructor";
+import {
+	ADD,
+	CHANGE_ORDER,
+	DELETE,
+	CLEAR_CONSTRUCTOR,
+} from "../actions/burgerConstructor";
 
 const initialState = {
 	bunTop: undefined,
@@ -38,6 +43,14 @@ export const burgerConstructorReducer = (state = initialState, action) => {
 			return {
 				...state,
 				list: action.payload,
+			};
+		}
+		case CLEAR_CONSTRUCTOR: {
+			return {
+				bunTop: undefined,
+				list: [],
+				bunBottom: undefined,
+				indexDragOrder: undefined,
 			};
 		}
 		default: {

@@ -27,7 +27,7 @@ export default function Ingredient({ item, id, onClick }) {
 					))}
 				<div>
 					{" "}
-					<img ref={dragRef} src={item.image} alt="картинка ингредиента" />
+					<img ref={dragRef} src={item.image} alt={item.name} />
 					<div className={styles.div}>
 						<p className="text text_type_digits-default mt-1 mr-1 mb-1">
 							{item.price}

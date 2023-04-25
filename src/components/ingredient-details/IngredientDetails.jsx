@@ -2,6 +2,7 @@ import styles from "./ingredientDetails.module.css";
 import PropTypes from "prop-types";
 
 export default function IngredientDetails({ details }) {
+	console.log(details);
 	const {
 		calories,
 		carbohydrates,
@@ -13,10 +14,7 @@ export default function IngredientDetails({ details }) {
 	return (
 		<div className={styles.form}>
 			<div>
-				<img
-					className={styles.image}
-					src={image}
-					alt="картинка ингредиента"></img>
+				<img className={styles.image} src={image} alt={name}></img>
 				<p className={styles.productName + " text text_type_main-default mt-4"}>
 					{name}
 				</p>

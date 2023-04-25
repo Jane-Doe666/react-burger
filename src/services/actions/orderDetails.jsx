@@ -1,4 +1,5 @@
 import { getIdOrderFromServer } from "../api";
+import { CLEAR_CONSTRUCTOR } from "./burgerConstructor";
 
 export const OPEN_ORDER = "ORDER_DETAILS/OPEN_ORDER";
 export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
@@ -10,17 +11,24 @@ export function getOrder(idList) {
 		dispatch({
 			type: GET_ORDER_REQUEST,
 		});
-		getIdOrderFromServer(idList).then((res) => {
-			if (res && res.success) {
-				dispatch({
-					type: GET_ORDER_SUCCESS,
-					items: res.order.number,
-				});
-			} else {
-				dispatch({
-					type: GET_ORDER_ERROR,
-				});
-			}
-		});
+		getIdOrderFromServer(idList)
+			.then((res) => {
+				if (res && res.success) {
+					dispatch({
+						type: GET_ORDER_SUCCESS,
+						items: res.order.number,
+					});
+					dispatch({
+						type: CLEAR_CONSTRUCTOR,
+					});
+				} else {
+					dispatch({
+						type: GET_ORDER_ERROR,
+					});
+				}
+			})
+			.catch((err) => {
+				console.error(`Ошибка: ${err}`);
+			});
 	};
 }

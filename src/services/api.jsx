@@ -1,6 +1,5 @@
 const config = {
-	burgerURL: "https://norma.nomoreparties.space/api/ingredients",
-	orderURL: "https://norma.nomoreparties.space/api/orders",
+	BASE_URL: "https://norma.nomoreparties.space/api",
 	headers: { "Content-Type": "application/json; charset=UTF-8" },
 };
 
@@ -15,13 +14,13 @@ async function checkResponse(response) {
 }
 
 export async function getBurgerIngredientsFromServer() {
-	const req = await fetch(config.burgerURL);
+	const req = await fetch(`${config.BASE_URL}/ingredients`);
 	const response = await checkResponse(req);
 	return response;
 }
 
 export async function getIdOrderFromServer(array) {
-	const req = await fetch(config.orderURL, {
+	const req = await fetch(`${config.BASE_URL}/orders`, {
 		method: "POST",
 		headers: config.headers,
 		body: JSON.stringify(array),

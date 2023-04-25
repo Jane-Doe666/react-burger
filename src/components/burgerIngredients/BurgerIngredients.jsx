@@ -4,20 +4,18 @@ import Ingredient from "../ingredient/Ingredient";
 import styles from "./burgerIngredients.module.css";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { openIngredientInfo } from "../../services/actions/ingredientDetails";
 
-export default function BurgerIngredients(props) {
+export default function BurgerIngredients() {
 	const dispatch = useDispatch();
+	const data = useSelector((state) => state.app.items);
 	const dataForModal = useSelector((state) => state.ingredientDetails.info);
 	const openedModal = useSelector((state) => state.ingredientDetails.setModal);
 	const openIngredient = (item) => {
 		dispatch(openIngredientInfo(item));
 	};
-	const elements = props.data.map(
-		(item) => (item = { ...item, key: item._id })
-	);
+	const elements = data.map((item) => (item = { ...item, key: item._id }));
 	const arrayBun = elements.filter((item) => item.type === "bun");
 	const arrayMain = elements.filter((item) => item.type === "main");
 	const arraySouse = elements.filter((item) => item.type === "sauce");
@@ -44,19 +42,41 @@ export default function BurgerIngredients(props) {
 		}
 	}
 
+	function handleClick(elementRef) {
+		elementRef.current.scrollIntoView({ block: "center", behavior: "smooth" });
+	}
+
 	return (
 		<section className={styles.section}>
 			<h2 className={styles.h2 + ` text text_type_main-large pt-10 pb-5`}>
 				Соберите бургер
 			</h2>
 			<nav className={styles.nav + " mb-10"}>
-				<Tab value="one" active={current === "one"} onClick={setCurrent}>
+				<Tab
+					value="one"
+					active={current === "one"}
+					onClick={() => {
+						setCurrent();
+						handleClick(currentOne);
+					}}>
 					Булки
 				</Tab>
-				<Tab value="two" active={current === "two"} onClick={setCurrent}>
+				<Tab
+					value="two"
+					active={current === "two"}
+					onClick={() => {
+						setCurrent();
+						handleClick(currentTwo);
+					}}>
 					Соусы
 				</Tab>
-				<Tab value="three" active={current === "three"} onClick={setCurrent}>
+				<Tab
+					value="three"
+					active={current === "three"}
+					onClick={() => {
+						setCurrent();
+						handleClick(currentThree);
+					}}>
 					Начинки
 				</Tab>
 			</nav>
@@ -70,9 +90,9 @@ export default function BurgerIngredients(props) {
 						Булки
 					</h2>
 					<ul className={styles.ul} ref={currentOne}>
-						{arrayBun.map((item, index) => {
+						{arrayBun.map((item) => {
 							return (
-								<div className={styles.div} key={index}>
+								<div className={styles.div} key={item._id}>
 									<Ingredient
 										item={item}
 										id={item._id}
@@ -90,9 +110,9 @@ export default function BurgerIngredients(props) {
 						Соусы
 					</h2>
 					<ul className={styles.ul} ref={currentTwo}>
-						{arraySouse.map((item, index) => {
+						{arraySouse.map((item) => {
 							return (
-								<div className={styles.div} key={index}>
+								<div className={styles.div} key={item._id}>
 									<Ingredient
 										item={item}
 										id={item._id}
@@ -110,9 +130,9 @@ export default function BurgerIngredients(props) {
 						Начинки
 					</h2>
 					<ul className={styles.ul} ref={currentThree}>
-						{arrayMain.map((item, index) => {
+						{arrayMain.map((item) => {
 							return (
-								<div className={styles.div} key={index}>
+								<div className={styles.div} key={item._id}>
 									<Ingredient
 										item={item}
 										id={item._id}
@@ -136,7 +156,3 @@ export default function BurgerIngredients(props) {
 		</section>
 	);
 }
-
-BurgerIngredients.propTypes = {
-	data: PropTypes.array.isRequired,
-};

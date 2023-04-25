@@ -14,17 +14,21 @@ export function getIngredients() {
 		dispatch({
 			type: GET_INGREDIENTS_REQUEST,
 		});
-		getBurgerIngredientsFromServer().then((res) => {
-			if (res && res.success) {
-				dispatch({
-					type: GET_INGREDIENTS_SUCCESS,
-					items: res.data,
-				});
-			} else {
-				dispatch({
-					type: GET_INGREDIENTS_ERROR,
-				});
-			}
-		});
+		getBurgerIngredientsFromServer()
+			.then((res) => {
+				if (res && res.success) {
+					dispatch({
+						type: GET_INGREDIENTS_SUCCESS,
+						items: res.data,
+					});
+				} else {
+					dispatch({
+						type: GET_INGREDIENTS_ERROR,
+					});
+				}
+			})
+			.catch((err) => {
+				console.error(`Ошибка: ${err}`);
+			});
 	};
 }

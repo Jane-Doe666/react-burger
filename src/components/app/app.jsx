@@ -1,3 +1,4 @@
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import styles from "./app.module.css";
 import BurgerIngredients from "../burgerIngredients/BurgerIngredients";
@@ -25,7 +26,7 @@ function App() {
 					<AppHeader />
 					<main className={styles.main}>
 						<DndProvider backend={HTML5Backend}>
-							<BurgerIngredients data={data} />
+							<BurgerIngredients />
 							<BurgerConstructor />
 						</DndProvider>
 					</main>
