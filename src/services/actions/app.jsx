@@ -1,8 +1,8 @@
 import { getBurgerIngredientsFromServer } from "../api";
-export const CLOSE_MODAL = "CLOSE_MODAL";
-export const GET_INGREDIENTS_REQUEST = "GETGET_INGREDIENTS__REQUEST";
-export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
-export const GET_INGREDIENTS_ERROR = "GET_INGREDIENTS_ERROR";
+export const CLOSE_MODAL = "APP/CLOSE_MODAL";
+export const GET_INGREDIENTS_REQUEST = "APP/GETGET_INGREDIENTS_REQUEST";
+export const GET_INGREDIENTS_SUCCESS = "APP/GET_INGREDIENTS_SUCCESS";
+export const GET_INGREDIENTS_ERROR = "APP/GET_INGREDIENTS_ERROR";
 
 export const closeModal = (payload) => ({
 	type: CLOSE_MODAL,
@@ -16,19 +16,16 @@ export function getIngredients() {
 		});
 		getBurgerIngredientsFromServer()
 			.then((res) => {
-				if (res && res.success) {
-					dispatch({
-						type: GET_INGREDIENTS_SUCCESS,
-						items: res.data,
-					});
-				} else {
-					dispatch({
-						type: GET_INGREDIENTS_ERROR,
-					});
-				}
+				dispatch({
+					type: GET_INGREDIENTS_SUCCESS,
+					items: res.data,
+				});
 			})
 			.catch((err) => {
 				console.error(`Ошибка: ${err}`);
+				dispatch({
+					type: GET_INGREDIENTS_ERROR,
+				});
 			});
 	};
 }

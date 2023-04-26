@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 export const ADD = "BURGER_CONSTRUCTOR/ADD";
 export const DELETE = "BURGER_CONSTRUCTOR/DELETE";
 export const CHANGE_ORDER = "BURGER_CONSTRUCTOR/CHANGE_ORDER";
-export const CLEAR_CONSTRUCTOR = "CLEAR_CONSTRUCTOR_AFTER_SUCCESS";
+export const CLEAR_CONSTRUCTOR =
+	"BURGER_CONSTRUCTOR/CLEAR_CONSTRUCTOR_AFTER_SUCCESS";
 
 export const addIngredientToConstructor = (payload) => ({
 	type: ADD,
