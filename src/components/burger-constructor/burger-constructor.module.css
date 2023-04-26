@@ -2,7 +2,7 @@
 	box-sizing: border-box;
 	max-width: 100%;
 	padding-top: 100px;
-	height: 100vh;
+	/* height: 100vh; */
 }
 
 .element {

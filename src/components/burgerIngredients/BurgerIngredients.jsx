@@ -28,18 +28,37 @@ export default function BurgerIngredients() {
 	const [current, setCurrent] = useState("one");
 
 	function handleScroll() {
-		const topConainerScroll =
-			scrollConainer.current.getBoundingClientRect().top;
-		const bottomBun = currentOne.current.getBoundingClientRect().bottom;
-		const bottomSouse = currentTwo.current.getBoundingClientRect().bottom;
+		// const topConainerScroll =
+		// 	scrollConainer.current.getBoundingClientRect().top;
+		// const bottomBun = currentOne.current.getBoundingClientRect().bottom;
+		// const bottomSouse = currentTwo.current.getBoundingClientRect().bottom;
 
-		if (bottomSouse <= topConainerScroll) {
-			setCurrent("three");
-		} else if (bottomBun <= topConainerScroll) {
+		// if (bottomSouse <= topConainerScroll) {
+		// 	setCurrent("three");
+		// } else if (bottomBun <= topConainerScroll) {
+		// 	setCurrent("two");
+		// } else {
+		// 	setCurrent("one");
+		// }
+
+		const topContainer = scrollConainer.current.getBoundingClientRect().top;
+		const topBun = currentOne.current.getBoundingClientRect().top;
+		const topSause = currentTwo.current.getBoundingClientRect().top;
+		const topMain = currentThree.current.getBoundingClientRect().top;
+
+		const diffBun = topContainer - topBun;
+		const diffSause = topContainer - topSause;
+		const diffMain = topContainer - topMain;
+
+		if (diffSause >= 0 && diffMain < 0) {
 			setCurrent("two");
+		} else if (diffMain >= 0) {
+			setCurrent("three");
 		} else {
 			setCurrent("one");
 		}
+
+		console.log(diffBun, diffSause, diffMain);
 	}
 
 	function handleClick(elementRef, value) {
@@ -85,7 +104,7 @@ export default function BurgerIngredients() {
 				onScroll={handleScroll}
 				ref={scrollConainer}>
 				<div className={styles.div}>
-					<h2 className={styles.h2 + ` text text_type_main-medium pb-5`}>
+					<h2 className={styles.h2 + ` text h2_1 text_type_main-medium pb-5`}>
 						Булки
 					</h2>
 					<ul className={styles.ul} ref={currentOne}>
