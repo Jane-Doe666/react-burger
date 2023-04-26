@@ -42,7 +42,9 @@ export default function BurgerIngredients() {
 		}
 	}
 
-	function handleClick(elementRef) {
+	function handleClick(elementRef, value) {
+		console.log(elementRef.current);
+		setCurrent(value);
 		elementRef.current.scrollIntoView({ block: "center", behavior: "smooth" });
 	}
 
@@ -56,8 +58,7 @@ export default function BurgerIngredients() {
 					value="one"
 					active={current === "one"}
 					onClick={() => {
-						setCurrent();
-						handleClick(currentOne);
+						handleClick(currentOne, "one");
 					}}>
 					Булки
 				</Tab>
@@ -65,8 +66,7 @@ export default function BurgerIngredients() {
 					value="two"
 					active={current === "two"}
 					onClick={() => {
-						setCurrent();
-						handleClick(currentTwo);
+						handleClick(currentTwo, "two");
 					}}>
 					Соусы
 				</Tab>
@@ -74,8 +74,7 @@ export default function BurgerIngredients() {
 					value="three"
 					active={current === "three"}
 					onClick={() => {
-						setCurrent();
-						handleClick(currentThree);
+						handleClick(currentThree, "three");
 					}}>
 					Начинки
 				</Tab>
