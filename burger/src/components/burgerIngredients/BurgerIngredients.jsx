@@ -6,7 +6,7 @@ import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { openIngredientInfo } from "../../services/actions/ingredientDetails";
-import { useInView } from "react-intersection-observer";
+import { useInView, InView } from "react-intersection-observer";
 
 export default function BurgerIngredients() {
 	const dispatch = useDispatch();
@@ -21,29 +21,35 @@ export default function BurgerIngredients() {
 	const arrayMain = elements.filter((item) => item.type === "main");
 	const arraySouse = elements.filter((item) => item.type === "sauce");
 
+	const scrollConainer = useRef();
+	const currentOne = useRef();
+	const currentTwo = useRef();
+	const currentThree = useRef();
+
 	const [current, setCurrent] = useState("one");
-	const sectionOne = useRef();
-	const sectionTwo = useRef();
-	const sectionThree = useRef();
 
-	const [refOne, inViewOne] = useInView({ threshold: 0.5 });
-	const [refTwo, inViewTwo] = useInView({ threshold: 0.5 });
-	const [refThree, inViewThree] = useInView({ threshold: 0 });
+	const handleScroll = () => {
+		const topContainer = scrollConainer.current.getBoundingClientRect().top;
+		const topSause = currentTwo.current.getBoundingClientRect().top;
+		const topMain = currentThree.current.getBoundingClientRect().top;
+		const diffSause = topContainer - topSause;
+		const diffMain = topContainer - topMain;
+		if (diffSause >= 0 && diffMain < 0) {
+			setCurrent("two");
+		} else if (diffMain >= 0) {
+			setCurrent("three");
+		} else {
+			setCurrent("one");
+		}
+	};
 
-	useEffect(() => {
-		inViewOne
-			? setCurrent("one")
-			: inViewTwo
-			? setCurrent("two")
-			: inViewThree
-			? setCurrent("three")
-			: setCurrent("one");
-	}, [inViewOne, inViewTwo, inViewThree]);
-
-	function handleClick(section, activeState) {
-		setCurrent(activeState);
-		section.current.scrollIntoView({ behavior: "smooth", block: "start" });
-	}
+	const handleClick = (elementRef, value) => {
+		// console.log(elementRef);
+		setCurrent(value);
+		// elementRef.current.scrollIntoView({
+		// 	/*block: "center",*/ behavior: "smooth",
+		// });
+	};
 
 	return (
 		<section className={styles.section}>
@@ -55,7 +61,7 @@ export default function BurgerIngredients() {
 					value="one"
 					active={current === "one"}
 					onClick={() => {
-						handleClick(sectionOne, "one");
+						handleClick(currentOne, "one");
 					}}>
 					Булки
 				</Tab>
@@ -63,29 +69,29 @@ export default function BurgerIngredients() {
 					value="two"
 					active={current === "two"}
 					onClick={() => {
-						handleClick(sectionTwo, "two");
+						handleClick(currentTwo, "two");
 					}}>
 					Соусы
-				</Tab>{" "}
+				</Tab>
 				<Tab
-					href="three"
 					value="three"
 					active={current === "three"}
 					onClick={() => {
-						handleClick(sectionThree, "three");
+						handleClick(currentThree, "three");
 					}}>
 					Начинки
 				</Tab>
 			</nav>
 
-			<div className={styles.scrollbar}>
+			<div
+				className={styles.scrollbar}
+				onScroll={handleScroll}
+				ref={scrollConainer}>
 				<div className={styles.div}>
-					<h2
-						className={styles.h2 + ` text h2_1 text_type_main-medium pb-5`}
-						ref={sectionOne}>
+					<h2 className={styles.h2 + ` text h2_1 text_type_main-medium pb-5`}>
 						Булки
 					</h2>
-					<ul className={styles.ul} ref={refOne}>
+					<ul className={styles.ul} ref={currentOne}>
 						{arrayBun.map((item) => {
 							return (
 								<div className={styles.div} key={item._id}>
@@ -102,12 +108,10 @@ export default function BurgerIngredients() {
 					</ul>
 				</div>
 				<div className={styles.div}>
-					<h2
-						className={styles.h2 + ` text text_type_main-medium pt-10 pb-5`}
-						ref={sectionTwo}>
+					<h2 className={styles.h2 + ` text text_type_main-medium pt-10 pb-5`}>
 						Соусы
 					</h2>
-					<ul className={styles.ul} ref={refTwo}>
+					<ul className={styles.ul} ref={currentTwo}>
 						{arraySouse.map((item) => {
 							return (
 								<div className={styles.div} key={item._id}>
@@ -124,12 +128,10 @@ export default function BurgerIngredients() {
 					</ul>
 				</div>
 				<div className={styles.div}>
-					<h2
-						className={styles.h2 + ` text text_type_main-medium pt-10 pb-5`}
-						ref={sectionThree}>
+					<h2 className={styles.h2 + ` text text_type_main-medium pt-10 pb-5`}>
 						Начинки
 					</h2>
-					<ul className={styles.ul} ref={refThree}>
+					<ul className={styles.ul} ref={currentThree}>
 						{arrayMain.map((item) => {
 							return (
 								<div className={styles.div} key={item._id}>
