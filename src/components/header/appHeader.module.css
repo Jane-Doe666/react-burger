@@ -9,6 +9,11 @@
 	justify-content: center;
 }
 
+.logo {
+	margin: auto;
+	align-self: center;
+}
+
 .div {
 	display: flex;
 	flex-direction: row;
@@ -18,9 +23,6 @@
 
 .a {
 	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
 	cursor: pointer;
 	color: #8585ad;
 	text-decoration: none;

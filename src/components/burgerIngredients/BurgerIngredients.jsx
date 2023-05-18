@@ -1,47 +1,48 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Ingredient from "../ingredient/Ingredient";
 import styles from "./burgerIngredients.module.css";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { openIngredientInfo } from "../../services/actions/ingredientDetails";
+import { useInView } from "react-intersection-observer";
 
-export default function BurgerIngredients(props) {
+export default function BurgerIngredients() {
 	const dispatch = useDispatch();
+	const data = useSelector((state) => state.app.items);
 	const dataForModal = useSelector((state) => state.ingredientDetails.info);
 	const openedModal = useSelector((state) => state.ingredientDetails.setModal);
 	const openIngredient = (item) => {
 		dispatch(openIngredientInfo(item));
 	};
-	const elements = props.data.map(
-		(item) => (item = { ...item, key: item._id })
-	);
+	const elements = data.map((item) => (item = { ...item, key: item._id }));
 	const arrayBun = elements.filter((item) => item.type === "bun");
 	const arrayMain = elements.filter((item) => item.type === "main");
 	const arraySouse = elements.filter((item) => item.type === "sauce");
 
-	const scrollConainer = useRef();
-	const currentOne = useRef();
-	const currentTwo = useRef();
-	const currentThree = useRef();
-
 	const [current, setCurrent] = useState("one");
+	const sectionOne = useRef();
+	const sectionTwo = useRef();
+	const sectionThree = useRef();
 
-	function handleScroll() {
-		const topConainerScroll =
-			scrollConainer.current.getBoundingClientRect().top;
-		const bottomBun = currentOne.current.getBoundingClientRect().bottom;
-		const bottomSouse = currentTwo.current.getBoundingClientRect().bottom;
+	const [refOne, inViewOne] = useInView({ threshold: 0.5 });
+	const [refTwo, inViewTwo] = useInView({ threshold: 0.5 });
+	const [refThree, inViewThree] = useInView({ threshold: 0 });
 
-		if (bottomSouse <= topConainerScroll) {
-			setCurrent("three");
-		} else if (bottomBun <= topConainerScroll) {
-			setCurrent("two");
-		} else {
-			setCurrent("one");
-		}
+	useEffect(() => {
+		inViewOne
+			? setCurrent("one")
+			: inViewTwo
+			? setCurrent("two")
+			: inViewThree
+			? setCurrent("three")
+			: setCurrent("one");
+	}, [inViewOne, inViewTwo, inViewThree]);
+
+	function handleClick(section, activeState) {
+		setCurrent(activeState);
+		section.current.scrollIntoView({ behavior: "smooth", block: "start" });
 	}
 
 	return (
@@ -50,29 +51,44 @@ export default function BurgerIngredients(props) {
 				Соберите бургер
 			</h2>
 			<nav className={styles.nav + " mb-10"}>
-				<Tab value="one" active={current === "one"} onClick={setCurrent}>
+				<Tab
+					value="one"
+					active={current === "one"}
+					onClick={() => {
+						handleClick(sectionOne, "one");
+					}}>
 					Булки
 				</Tab>
-				<Tab value="two" active={current === "two"} onClick={setCurrent}>
+				<Tab
+					value="two"
+					active={current === "two"}
+					onClick={() => {
+						handleClick(sectionTwo, "two");
+					}}>
 					Соусы
-				</Tab>
-				<Tab value="three" active={current === "three"} onClick={setCurrent}>
+				</Tab>{" "}
+				<Tab
+					href="three"
+					value="three"
+					active={current === "three"}
+					onClick={() => {
+						handleClick(sectionThree, "three");
+					}}>
 					Начинки
 				</Tab>
 			</nav>
 
-			<div
-				className={styles.scrollbar}
-				onScroll={handleScroll}
-				ref={scrollConainer}>
+			<div className={styles.scrollbar}>
 				<div className={styles.div}>
-					<h2 className={styles.h2 + ` text text_type_main-medium pb-5`}>
+					<h2
+						className={styles.h2 + ` text h2_1 text_type_main-medium pb-5`}
+						ref={sectionOne}>
 						Булки
 					</h2>
-					<ul className={styles.ul} ref={currentOne}>
-						{arrayBun.map((item, index) => {
+					<ul className={styles.ul} ref={refOne}>
+						{arrayBun.map((item) => {
 							return (
-								<div className={styles.div} key={index}>
+								<div className={styles.div} key={item._id}>
 									<Ingredient
 										item={item}
 										id={item._id}
@@ -86,13 +102,15 @@ export default function BurgerIngredients(props) {
 					</ul>
 				</div>
 				<div className={styles.div}>
-					<h2 className={styles.h2 + ` text text_type_main-medium pt-10 pb-5`}>
+					<h2
+						className={styles.h2 + ` text text_type_main-medium pt-10 pb-5`}
+						ref={sectionTwo}>
 						Соусы
 					</h2>
-					<ul className={styles.ul} ref={currentTwo}>
-						{arraySouse.map((item, index) => {
+					<ul className={styles.ul} ref={refTwo}>
+						{arraySouse.map((item) => {
 							return (
-								<div className={styles.div} key={index}>
+								<div className={styles.div} key={item._id}>
 									<Ingredient
 										item={item}
 										id={item._id}
@@ -106,13 +124,15 @@ export default function BurgerIngredients(props) {
 					</ul>
 				</div>
 				<div className={styles.div}>
-					<h2 className={styles.h2 + ` text text_type_main-medium pt-10 pb-5`}>
+					<h2
+						className={styles.h2 + ` text text_type_main-medium pt-10 pb-5`}
+						ref={sectionThree}>
 						Начинки
 					</h2>
-					<ul className={styles.ul} ref={currentThree}>
-						{arrayMain.map((item, index) => {
+					<ul className={styles.ul} ref={refThree}>
+						{arrayMain.map((item) => {
 							return (
-								<div className={styles.div} key={index}>
+								<div className={styles.div} key={item._id}>
 									<Ingredient
 										item={item}
 										id={item._id}
@@ -136,7 +156,3 @@ export default function BurgerIngredients(props) {
 		</section>
 	);
 }
-
-BurgerIngredients.propTypes = {
-	data: PropTypes.array.isRequired,
-};

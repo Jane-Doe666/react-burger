@@ -11,24 +11,24 @@ const portalModalOverLay = document.querySelector("#portalOverlay");
 export default function Modal({ headerText = "", children }) {
 	const dispatch = useDispatch();
 
-	const closeIngredient = useCallback(() => {
+	const closePopup = useCallback(() => {
 		dispatch(closeModal());
 	});
 
 	useEffect(() => {
 		function closeModalByEscape(evt) {
 			if (evt.key === "Escape") {
-				closeIngredient();
+				closePopup();
 			}
 		}
 		document.addEventListener("keydown", closeModalByEscape);
 		return () => {
 			document.removeEventListener("keydown", closeModalByEscape);
 		};
-	}, [closeIngredient]);
+	}, [closePopup]);
 
 	return createPortal(
-		<ModalOverlay onClose={closeIngredient}>
+		<ModalOverlay onClose={closePopup}>
 			<div className={styles.form}>
 				<div>
 					<h2
@@ -36,7 +36,7 @@ export default function Modal({ headerText = "", children }) {
 							styles.h2 + " text text_type_main-medium pt-10 pl-10 pr-10"
 						}>
 						{headerText}
-						<div className={styles.cross} onClick={closeIngredient}>
+						<div className={styles.cross} onClick={closePopup}>
 							<CloseIcon type="primary" />
 						</div>
 					</h2>
@@ -49,6 +49,6 @@ export default function Modal({ headerText = "", children }) {
 }
 
 Modal.propTypes = {
-	headerText: PropTypes.oneOf(["", "Детали ингредиента"]),
+	headerText: PropTypes.string,
 	children: PropTypes.element.isRequired,
 };

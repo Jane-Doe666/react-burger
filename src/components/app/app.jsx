@@ -1,12 +1,18 @@
 import { useEffect } from "react";
 import styles from "./app.module.css";
-import BurgerIngredients from "../burgerIngredients/BurgerIngredients";
-import BurgerConstructor from "../burger-constructor/Burger-constructor";
 import AppHeader from "../header/AppHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../../services/actions/app";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Main from "./pages/main";
+import { NotFound404 } from "./pages/notfound";
+import { Login } from "./pages/login/Login";
+import { Registration } from "./pages/registration/Registration";
+import { RestorePassword } from "./pages/restore-password/RestorePassword";
+
+import { PasswordReset } from "./pages/password-reset/PasswordReset";
+import { Profile } from "./pages/profile/Profile";
+import { Orders } from "./pages/orders/Orders";
 
 function App() {
 	const dispatch = useDispatch();
@@ -22,13 +28,19 @@ function App() {
 				<h2>...is loading</h2>
 			) : (
 				<div className={styles.App}>
-					<AppHeader />
-					<main className={styles.main}>
-						<DndProvider backend={HTML5Backend}>
-							<BurgerIngredients data={data} />
-							<BurgerConstructor />
-						</DndProvider>
-					</main>
+					<BrowserRouter>
+						<AppHeader />
+						<Routes>
+							<Route path="/" element={<Main />} />
+							<Route path="/login" element={<Login />} />
+							<Route path="/register" element={<Registration />} />
+							<Route path="/forgot-password" element={<RestorePassword />} />
+							<Route path="/profile" element={<Profile />} />
+							<Route path="/reset-password" element={<PasswordReset />} />
+							<Route path="/profile/orders" element={<Orders />} />
+							<Route path="*" element={<NotFound404 />} />
+						</Routes>
+					</BrowserRouter>
 				</div>
 			)}
 		</>

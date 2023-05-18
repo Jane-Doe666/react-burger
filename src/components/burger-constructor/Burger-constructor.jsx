@@ -11,28 +11,25 @@ import { useDrop } from "react-dnd";
 import { useMemo } from "react";
 import { iDInOrderSelectorCreator } from "../../services/selectors/selector";
 import { ConstructorElementContainer } from "../burger-constructor-element/Constructor-element";
-import { getOrder, openOrder } from "../../services/actions/orderDetails";
-import {
-	pushIngredientToConstructor,
-	sendIdIngredientsOnServer,
-} from "../../services/actions/burgerConstructor";
+import { getOrder } from "../../services/actions/orderDetails";
+import { pushIngredientToConstructor } from "../../services/actions/burgerConstructor";
 
 export default function BurgerConstructor() {
 	const dispatch = useDispatch();
 	const openedModal = useSelector((state) => state.orderDetails.isModal);
+	const isLoading = useSelector((state) => state.orderDetails.isLoading);
 	const ingredients = useSelector((state) => state.burgerConstructor.list);
 	const bunTop = useSelector((state) => state.burgerConstructor.bunTop);
 	const bunBottom = useSelector((state) => state.burgerConstructor.bunBottom);
 
-	let iDIngredientsInOrder = useSelector((state) =>
+	const iDIngredientsInOrder = useSelector((state) =>
 		iDInOrderSelectorCreator(state)
 	);
-	iDIngredientsInOrder = { ingredients: iDIngredientsInOrder };
 
-	function handleOpenedOrder() {
-		if (iDIngredientsInOrder.length) return;
-		dispatch(getOrder(iDIngredientsInOrder));
-	}
+	const handleOpenedOrder = () => {
+		const ids = { ingredients: iDIngredientsInOrder };
+		totalCost > 0 && dispatch(getOrder(ids));
+	};
 
 	const [, dropTarget] = useDrop({
 		accept: "ingredient",
@@ -41,17 +38,17 @@ export default function BurgerConstructor() {
 		},
 	});
 
-	const totalCost = useMemo(() => {
-		return getTotalOrder(ingredients, bunTop);
-	}, [ingredients, bunTop]);
-
-	function getTotalOrder(ingredients, bunTop) {
+	const getTotalOrder = (ingredients, bunTop) => {
 		const data = bunTop
 			? bunTop.price * 2 +
 			  ingredients.reduce((acc, item) => acc + item.price, 0)
 			: ingredients.reduce((acc, item) => acc + item.price, 0);
 		return data;
-	}
+	};
+
+	const totalCost = useMemo(() => {
+		return getTotalOrder(ingredients, bunTop);
+	}, [ingredients, bunTop]);
 
 	return (
 		<section className={styles.section} ref={dropTarget}>
@@ -71,7 +68,7 @@ export default function BurgerConstructor() {
 
 				<div className={styles.scrollbar}>
 					{ingredients.map((element, index) => (
-						<div key={index}>
+						<div key={element.key}>
 							{" "}
 							<ConstructorElementContainer element={element} index={index} />
 						</div>
@@ -116,10 +113,14 @@ export default function BurgerConstructor() {
 			</div>
 
 			<>
-				{openedModal && (
-					<Modal>
-						<OrderDetails />
-					</Modal>
+				{isLoading ? (
+					<h2>Loading....</h2>
+				) : (
+					openedModal && (
+						<Modal>
+							<OrderDetails />
+						</Modal>
+					)
 				)}
 			</>
 		</section>
