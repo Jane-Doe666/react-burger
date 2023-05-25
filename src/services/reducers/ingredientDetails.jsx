@@ -2,7 +2,7 @@ import { CLOSE_MODAL } from "../actions/app";
 import { OPEN_INGREDIENT } from "../actions/ingredientDetails";
 
 const initialState = {
-	info: {},
+	info: undefined,
 	setModal: false,
 };
 

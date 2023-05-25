@@ -4,19 +4,32 @@ import ModalOverlay from "../modal-overlay/ModalOverlay";
 import { createPortal } from "react-dom";
 import { PropTypes } from "prop-types";
 import { useEffect, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { closeModal } from "../../services/actions/app";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal, getIngredients } from "../../services/actions/app";
+import { useNavigate, useParams } from "react-router-dom";
+
 const portalModalOverLay = document.querySelector("#portalOverlay");
 
 export default function Modal({ headerText = "", children }) {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	const handleClose = () => {
+		navigate("/");
+	};
 
 	const closePopup = useCallback(() => {
 		dispatch(closeModal());
+		handleClose();
 	});
 
 	useEffect(() => {
+		dispatch(getIngredients());
+	}, []);
+
+	useEffect(() => {
 		function closeModalByEscape(evt) {
+			evt.stopPropagation();
 			if (evt.key === "Escape") {
 				closePopup();
 			}

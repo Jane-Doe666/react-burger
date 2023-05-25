@@ -5,7 +5,6 @@ export const REFRESH_TOKEN = "LOGIN/REFRESH_TOKEN_SUCCESS";
 
 export function getRefreshToken() {
 	return function (dispatch) {
-		console.log(4);
 		getRefreshTokenOnServer()
 			.then((data) => {
 				setCookie("refreshToken", data.refreshToken, {});

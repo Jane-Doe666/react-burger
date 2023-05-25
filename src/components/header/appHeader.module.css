@@ -28,6 +28,13 @@
 	text-decoration: none;
 }
 
+.b {
+	display: flex;
+	cursor: pointer;
+	color: white;
+	text-decoration: none;
+}
+
 .ml {
 	margin-right: auto;
 }
@@ -36,9 +43,13 @@
 	margin-left: auto;
 }
 
-a:hover {
+/* .activeLink {
 	color: white;
-}
+} */
+
+/* a:hover {
+	color: white;
+} */
 
 @media screen and (max-width: 950px) {
 	.header {

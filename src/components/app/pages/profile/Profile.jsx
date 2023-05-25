@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import styles from "./profile.module.css";
 import {
 	Input,
@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "../../../../services/actions/getUserInfo";
 import { getLogout } from "../../../../services/actions/logout";
 import { changeUserInfoProfile } from "../../../../services/actions/updateUrerInfo";
+import { getAuthorization } from "../../../../services/actions/authorization";
+import { getCookie } from "../../../../services/utile/utile";
 
 export function Profile() {
 	const dispatch = useDispatch();
@@ -46,10 +48,6 @@ export function Profile() {
 			? setValue({ ...value, name: user.name, email: user.email })
 			: setValue({ ...value });
 	}, [user]);
-
-	useEffect(() => {
-		handleUserInfo();
-	}, []);
 
 	return isLoader ? (
 		<div>is loading...</div>

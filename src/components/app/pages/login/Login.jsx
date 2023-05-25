@@ -4,15 +4,15 @@ import {
 	Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getAuthorization } from "../../../../services/actions/authorization";
 import styles from "./login.module.css";
 
 export function Login() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-
+	const location = useLocation();
 	const [value, setValue] = useState({ email: "", password: "" });
 	const [icon, setIcon] = useState("ShowIcon");
 	const [typeOfInput, setTypeOfInput] = useState("password");
@@ -22,7 +22,7 @@ export function Login() {
 	};
 
 	const handleAuthorization = () => {
-		dispatch(getAuthorization(value, navigate));
+		dispatch(getAuthorization(value, navigate, location));
 	};
 
 	const onIconClick = () => {

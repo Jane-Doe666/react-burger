@@ -3,7 +3,7 @@ import { setCookie } from "../utile/utile";
 
 export const AUTHORIZATION_REQUEST = "LOGIN/AUTHORIZATION_REQUEST";
 
-export function getAuthorization(value, navigate) {
+export function getAuthorization(value, navigate, location) {
 	return function (dispatch) {
 		getAuthorizationOnServer(value)
 			.then((data) => {
@@ -11,8 +11,10 @@ export function getAuthorization(value, navigate) {
 					"max-age": 1200000,
 				});
 				setCookie("refreshToken", data.refreshToken, {});
+
 				dispatch({ type: AUTHORIZATION_REQUEST, payload: data });
-				navigate("/");
+				navigate(location?.state?.from?.pathname || "/", { replace: true });
+				return data;
 			})
 
 			.catch((err) => {

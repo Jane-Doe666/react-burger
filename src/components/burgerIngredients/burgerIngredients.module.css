@@ -16,6 +16,8 @@
 
 .div {
 	position: relative;
+	text-decoration: none;
+	color: #fff;
 }
 
 .counter {

@@ -10,6 +10,7 @@ const initialState = {
 	items: [],
 	itemsRequest: false,
 	itemsFailed: false,
+	isLoader: false,
 };
 
 export const orderDetailsReducer = (state = initialState, action) => {
@@ -18,6 +19,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
 			return {
 				...state,
 				itemsRequest: true,
+				isLoader: true,
 			};
 		}
 		case GET_ORDER_SUCCESS: {
@@ -27,6 +29,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
 				items: action.items,
 				itemsRequest: false,
 				isModal: true,
+				isLoader: false,
 			};
 		}
 		case GET_ORDER_ERROR: {
@@ -34,6 +37,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
 				...state,
 				itemsFailed: true,
 				itemsRequest: false,
+				isLoader: false,
 			};
 		}
 		case CLOSE_MODAL: {

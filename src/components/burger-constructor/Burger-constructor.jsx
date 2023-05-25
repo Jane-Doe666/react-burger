@@ -14,13 +14,18 @@ import { ConstructorElementContainer } from "../burger-constructor-element/Const
 import { getOrder } from "../../services/actions/orderDetails";
 import { pushIngredientToConstructor } from "../../services/actions/burgerConstructor";
 
+import { getCookie } from "../../services/utile/utile";
+import { useNavigate } from "react-router-dom";
+
 export default function BurgerConstructor() {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const openedModal = useSelector((state) => state.orderDetails.isModal);
-	const isLoading = useSelector((state) => state.orderDetails.isLoading);
 	const ingredients = useSelector((state) => state.burgerConstructor.list);
 	const bunTop = useSelector((state) => state.burgerConstructor.bunTop);
 	const bunBottom = useSelector((state) => state.burgerConstructor.bunBottom);
+	const isCookie = getCookie("refreshToken");
+	const isLoading = useSelector((state) => state.orderDetails.isLoader);
 
 	const iDIngredientsInOrder = useSelector((state) =>
 		iDInOrderSelectorCreator(state)
@@ -28,7 +33,9 @@ export default function BurgerConstructor() {
 
 	const handleOpenedOrder = () => {
 		const ids = { ingredients: iDIngredientsInOrder };
-		totalCost > 0 && dispatch(getOrder(ids));
+		return isCookie === undefined
+			? navigate("/login")
+			: dispatch(getOrder(ids));
 	};
 
 	const [, dropTarget] = useDrop({

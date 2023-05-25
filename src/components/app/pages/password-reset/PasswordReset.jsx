@@ -44,7 +44,6 @@ export function PasswordReset() {
 				value={value.password}
 				name={"password"}
 				error={false}
-				// ref={inputRef}
 				onIconClick={onIconClick}
 				errorText={"Ошибка"}
 				size={"default"}
@@ -57,7 +56,6 @@ export function PasswordReset() {
 				value={value.email}
 				name={"token"}
 				error={false}
-				// ref={inputRef}
 				errorText={"Ошибка"}
 				size={"default"}
 				extraClass="mt-6"

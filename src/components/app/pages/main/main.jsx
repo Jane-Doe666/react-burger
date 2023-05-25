@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import styles from "../app.module.css";
-import BurgerIngredients from "../../burgerIngredients/BurgerIngredients";
-import BurgerConstructor from "../../burger-constructor/Burger-constructor";
+import styles from "../../app.module.css";
+import BurgerIngredients from "../../../burgerIngredients/BurgerIngredients";
+import BurgerConstructor from "../../../burger-constructor/Burger-constructor";
 import { useDispatch, useSelector } from "react-redux";
-import { getIngredients } from "../../../services/actions/app";
+import { getIngredients } from "../../../../services/actions/app";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 

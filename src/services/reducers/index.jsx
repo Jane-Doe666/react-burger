@@ -4,7 +4,6 @@ import { burgerIngredientsReducer } from "./app";
 import { orderDetailsReducer } from "./orderDetails";
 import { ingredientDetailsReducer } from "./ingredientDetails";
 import { registrationReducer } from "./registration";
-import { getAuthorizationReducer } from "./authorization";
 
 export const rootReducer = combineReducers({
 	app: burgerIngredientsReducer,

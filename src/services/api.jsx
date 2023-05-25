@@ -28,12 +28,17 @@ const request = (endpoint, options) => {
 
 export const getBurgerIngredientsFromServer = () => request(`ingredients`);
 
-export const getIdOrderFromServer = (array) =>
-	request(`orders`, {
+export const getIdOrderFromServer = (array) => {
+	return request(`orders`, {
 		method: "POST",
+		// headers: {
+		// 	"Content-Type": "application/json; charset=UTF-8",
+		// 	Authorization: getCookie("accessToken"),
+		// },
 		headers: config.headers,
 		body: JSON.stringify(array),
 	});
+};
 
 export const createRegistrationOnServer = (object) => {
 	return request("auth/register", {
@@ -43,57 +48,62 @@ export const createRegistrationOnServer = (object) => {
 	});
 };
 
-export const getAuthorizationOnServer = (object) =>
-	request(`auth/login`, {
+export const getAuthorizationOnServer = (object) => {
+	return request(`auth/login`, {
 		method: "POST",
 		headers: config.headers,
 		body: JSON.stringify(object),
 	});
+};
 
-export const getResetPasswordOnServer = (object) =>
-	request(`password-reset`, {
+export const getResetPasswordOnServer = (object) => {
+	return request(`password-reset`, {
 		method: "POST",
 		headers: config.headers,
 		body: JSON.stringify(object),
 	});
+};
 
-export const setNewPasswordOnServer = (object) =>
-	request(`password-reset/reset`, {
+export const setNewPasswordOnServer = (object) => {
+	return request(`password-reset/reset`, {
 		method: "POST",
 		headers: config.headers,
 		body: JSON.stringify(object),
 	});
+};
 
-export const getRefreshTokenOnServer = () =>
-	request(`auth/token`, {
+export const getRefreshTokenOnServer = () => {
+	return request(`auth/token`, {
 		method: "POST",
 		headers: config.headers,
 		body: JSON.stringify({
 			token: getCookie("refreshToken"),
 		}),
 	});
+};
 
-export const getUserInfoOnServer = () =>
-	request(`auth/user`, {
+export const getUserInfoOnServer = () => {
+	return request(`auth/user`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json; charset=UTF-8",
 			Authorization: getCookie("accessToken"),
 		},
 	});
+};
 
-export const setLogOutOnServer = () =>
-	request(`auth/logout`, {
+export const setLogOutOnServer = () => {
+	return request(`auth/logout`, {
 		method: "POST",
 		headers: config.headers,
 		body: JSON.stringify({
 			token: getCookie("refreshToken"),
 		}),
 	});
+};
 
 export const putchUpdateUserInfoOnServer = (object) => {
-	console.log(1, object);
-	request(`auth/user`, {
+	return request(`auth/user`, {
 		method: "PATCH",
 		headers: {
 			"Content-Type": "application/json; charset=UTF-8",

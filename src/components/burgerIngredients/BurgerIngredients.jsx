@@ -7,15 +7,16 @@ import IngredientDetails from "../ingredient-details/IngredientDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { openIngredientInfo } from "../../services/actions/ingredientDetails";
 import { useInView } from "react-intersection-observer";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 export default function BurgerIngredients() {
 	const dispatch = useDispatch();
 	const data = useSelector((state) => state.app.items);
-	const dataForModal = useSelector((state) => state.ingredientDetails.info);
 	const openedModal = useSelector((state) => state.ingredientDetails.setModal);
 	const openIngredient = (item) => {
 		dispatch(openIngredientInfo(item));
 	};
+
 	const elements = data.map((item) => (item = { ...item, key: item._id }));
 	const arrayBun = elements.filter((item) => item.type === "bun");
 	const arrayMain = elements.filter((item) => item.type === "main");
@@ -88,7 +89,15 @@ export default function BurgerIngredients() {
 					<ul className={styles.ul} ref={refOne}>
 						{arrayBun.map((item) => {
 							return (
-								<div className={styles.div} key={item._id}>
+								<Link
+									to={{
+										pathname: `/ingredients/${item._id}`,
+									}}
+									state={{
+										state: { modal: true },
+									}}
+									className={styles.div}
+									key={item._id}>
 									<Ingredient
 										item={item}
 										id={item._id}
@@ -96,7 +105,7 @@ export default function BurgerIngredients() {
 											openIngredient(item);
 										}}
 									/>
-								</div>
+								</Link>
 							);
 						})}
 					</ul>
@@ -110,7 +119,15 @@ export default function BurgerIngredients() {
 					<ul className={styles.ul} ref={refTwo}>
 						{arraySouse.map((item) => {
 							return (
-								<div className={styles.div} key={item._id}>
+								<Link
+									to={{
+										pathname: `/ingredients/${item._id}`,
+									}}
+									state={{
+										state: { modal: true },
+									}}
+									className={styles.div}
+									key={item._id}>
 									<Ingredient
 										item={item}
 										id={item._id}
@@ -118,7 +135,7 @@ export default function BurgerIngredients() {
 											openIngredient(item);
 										}}
 									/>
-								</div>
+								</Link>
 							);
 						})}
 					</ul>
@@ -132,7 +149,15 @@ export default function BurgerIngredients() {
 					<ul className={styles.ul} ref={refThree}>
 						{arrayMain.map((item) => {
 							return (
-								<div className={styles.div} key={item._id}>
+								<Link
+									className={styles.div}
+									key={item._id}
+									to={{
+										pathname: `/ingredients/${item._id}`,
+									}}
+									state={{
+										state: { modal: true },
+									}}>
 									<Ingredient
 										item={item}
 										id={item._id}
@@ -140,16 +165,17 @@ export default function BurgerIngredients() {
 											openIngredient(item);
 										}}
 									/>
-								</div>
+								</Link>
 							);
 						})}
 					</ul>
 				</div>
 			</div>
+
 			<>
 				{openedModal && (
 					<Modal headerText="Детали ингредиента">
-						<IngredientDetails details={dataForModal} />
+						<IngredientDetails />
 					</Modal>
 				)}
 			</>
