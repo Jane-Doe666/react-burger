@@ -1,22 +1,31 @@
 import { getRefreshTokenOnServer } from "../api";
-import { setCookie } from "../utile/utile";
+import { getCookie, setCookie } from "../utile/utile";
+import { LOADING } from "./getUserInfo";
 
 export const REFRESH_TOKEN = "LOGIN/REFRESH_TOKEN_SUCCESS";
 
 export function getRefreshToken() {
 	return function (dispatch) {
-		getRefreshTokenOnServer()
-			.then((data) => {
-				setCookie("refreshToken", data.refreshToken, {});
-				setCookie("accessToken", data.accessToken, {
-					"max-age": 1200000,
+		// dispatch({ type: LOADING, payload: true });
+		if (!getCookie("accessToken")) {
+			console.log("user do not have access");
+			// dispatch({ type: LOADING, payload: false });
+		} else {
+			getRefreshTokenOnServer()
+				.then((data) => {
+					console.log("refresh   ", data);
+					setCookie("refreshToken", data.refreshToken, {});
+					setCookie("accessToken", data.accessToken, {
+						"max-age": 1200000,
+					});
+
+					dispatch({ type: REFRESH_TOKEN, payload: data });
+					// dispatch({ type: LOADING, payload: false });
+				})
+
+				.catch((err) => {
+					console.error(`Ошибка: ${err}`);
 				});
-
-				dispatch({ type: REFRESH_TOKEN, payload: data });
-			})
-
-			.catch((err) => {
-				console.error(`Ошибка: ${err}`);
-			});
+		}
 	};
 }

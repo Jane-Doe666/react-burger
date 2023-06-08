@@ -1,11 +1,12 @@
 import { AUTHORIZATION_REQUEST } from "../actions/authorization";
-import { DISPATCH_FUNCTION, GET_USER_INFO } from "../actions/getUserInfo";
+import { LOADING, GET_USER_INFO } from "../actions/getUserInfo";
 import { LOGOUT } from "../actions/logout";
 import { RESET_PASSWORD } from "../actions/passwordReset";
 import { RESTORE_PASSWORD } from "../actions/passwordRestore";
 import { REFRESH_TOKEN } from "../actions/refreshToken";
 import { REGISTRATION_REQUEST } from "../actions/registration";
 import { UPDATE_USER_INFO } from "../actions/updateUrerInfo";
+import { AUTH_CHECKED, USER_SUCCESS } from "../actions/user";
 
 const initialState = {
 	getUser: "",
@@ -14,15 +15,20 @@ const initialState = {
 	userData: {},
 	isAuth: false,
 	data: {},
-	isDispatch: "",
+	isLoader: false,
+	isAuthChecked: false,
+	isLogged: false,
+	user: false,
 };
 
 export const registrationReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case DISPATCH_FUNCTION: {
+		case LOADING: {
 			return {
 				...state,
-				isDispatch: action.payload,
+				isLoader: action.payload,
+				isLogged: action?.payload?.success,
+				isAuthChecked: true,
 			};
 		}
 		case REGISTRATION_REQUEST: {
@@ -30,8 +36,23 @@ export const registrationReducer = (state = initialState, action) => {
 				...state,
 				userName: action.payload.user.name,
 				email: action.payload.user.email,
+				isLogged: action?.payload?.success,
 				isAuth: true,
-				isDispatch: false,
+				isAuthChecked: true,
+			};
+		}
+		case AUTH_CHECKED: {
+			return {
+				...state,
+				isAuthChecked: true,
+			};
+		}
+		case USER_SUCCESS: {
+			return {
+				...state,
+				isAuthChecked: true,
+				isLogged: action.payload.success,
+				user: action.payload.user,
 			};
 		}
 		case AUTHORIZATION_REQUEST: {
@@ -41,7 +62,8 @@ export const registrationReducer = (state = initialState, action) => {
 				email: action.payload.user.email,
 				userData: { ...action.payload.user },
 				isAuth: true,
-				isDispatch: false,
+				isLogged: action.payload.success,
+				isAuthChecked: true,
 			};
 		}
 
@@ -56,7 +78,8 @@ export const registrationReducer = (state = initialState, action) => {
 				...state,
 				getUser: action.payload,
 				isAuth: true,
-				isDispatch: false,
+				isLogged: action?.payload?.success,
+				isAuthChecked: true,
 			};
 		}
 
@@ -69,6 +92,9 @@ export const registrationReducer = (state = initialState, action) => {
 		case REFRESH_TOKEN: {
 			return {
 				...state,
+				isAuth: action.payload.success,
+				isLogged: action?.payload?.success,
+				isAuthChecked: true,
 			};
 		}
 
@@ -76,7 +102,9 @@ export const registrationReducer = (state = initialState, action) => {
 			return {
 				...state,
 				isAuth: false,
+				isLogged: false,
 				isLoader: true,
+				isAuthChecked: true,
 			};
 		}
 

@@ -1,0 +1,44 @@
+export type TReset = {
+	email: "" | string;
+};
+
+export type TPasswordResetReset = {
+	password: "" | string;
+	token: "" | string;
+};
+
+export type TRegister = {
+	email: "" | string;
+	password: "" | string;
+	name: "" | string;
+};
+
+export type TAuth = {
+	email: "" | string;
+	password: "" | string;
+};
+
+export type TRefreshToken = {
+	token: string;
+};
+
+export type TIngredirntsArray = string[];
+
+export type TElement = {
+	readonly calories: number;
+	readonly carbohydrates: number;
+	readonly fat: number;
+	readonly image: string;
+	readonly image_large: string;
+	readonly image_mobile: string;
+	readonly key: string;
+	readonly name: string;
+	readonly newId: string | null;
+	readonly price: number;
+	readonly proteins: number;
+	readonly type: string;
+	__v: number;
+	readonly _id: string;
+	index: number;
+	id: string;
+};

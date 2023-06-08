@@ -11,5 +11,4 @@ export const rootReducer = combineReducers({
 	ingredientDetails: ingredientDetailsReducer, //
 	orderDetails: orderDetailsReducer, //
 	registration: registrationReducer,
-	// authorization: getAuthorizationReducer,
 });

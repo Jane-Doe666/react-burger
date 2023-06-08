@@ -4,9 +4,13 @@ export const GET_INGREDIENTS_REQUEST = "APP/GETGET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "APP/GET_INGREDIENTS_SUCCESS";
 export const GET_INGREDIENTS_ERROR = "APP/GET_INGREDIENTS_ERROR";
 
-export const closeModal = (payload) => ({
+// export const closeModal = (payload) => ({
+// 	type: CLOSE_MODAL,
+// 	payload: payload,
+// });
+
+export const closeModal = () => ({
 	type: CLOSE_MODAL,
-	payload: payload,
 });
 
 export function getIngredients() {

@@ -21,9 +21,10 @@ export const changeOrderInConstructor = (payload) => ({
 	payload: payload,
 });
 
-export function pushIngredientToConstructor(id) {
+export function pushIngredientToConstructor({ id }) {
 	return function (dispatch, getstate) {
 		const currentState = getstate();
+
 		const pushElement = currentState.app.items.find((item) => item._id === id);
 		pushElement.newId = uuidv4();
 		pushElement.key = pushElement.newId;
