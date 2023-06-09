@@ -13,7 +13,6 @@ import { PasswordReset } from "./pages/password-reset/PasswordReset";
 import { Profile } from "./pages/profile/Profile";
 import { Orders } from "./pages/orders/Orders";
 import { ProtectedRoute } from "../components/HOC/ProtectedRoute";
-
 import IngredientDetails from "../components/ingredient-details/IngredientDetails";
 import { checkAuth } from "../services/actions/user";
 import { Modal } from "../components/modal/Modal";
@@ -27,7 +26,9 @@ function App() {
 
 	const modal = location?.state?.state?.modal;
 
-	const handleClose = () => {
+	type TFunc = React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined;
+
+	const handleClose: any = () => {
 		navigate(-1);
 	};
 

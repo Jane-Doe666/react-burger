@@ -12,7 +12,7 @@ import { TElement } from "../../services/utile/types";
 type TIngredientProps = {
 	item: TElement;
 	id: String;
-	onClick: any;
+	onClick: React.MouseEventHandler<HTMLLIElement>;
 };
 
 export const Ingredient: FC<TIngredientProps> = ({ item, id, onClick }) => {

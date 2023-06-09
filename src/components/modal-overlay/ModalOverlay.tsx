@@ -4,12 +4,12 @@ import { FC, ReactNode } from "react";
 
 type TModalOverlay = {
 	children: ReactNode;
-	onClose: Function;
+	onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
 
-export const ModalOverlay: FC<TModalOverlay> = ({ children, onClose }) => {
+export const ModalOverlay: FC<TModalOverlay> = ({ children, onClick }) => {
 	function closeByOverlay(evt: any) {
-		if (evt.target === evt.currentTarget) onClose();
+		if (evt.target === evt.currentTarget) onClick(evt);
 	}
 
 	return (

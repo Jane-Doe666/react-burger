@@ -10,7 +10,9 @@ const portalModalOverLay: any = document.querySelector("#portalOverlay");
 
 type TModal = {
 	children: ReactNode;
-	handleClose?: any;
+	handleClose: (
+		event: React.MouseEvent<HTMLDivElement, MouseEvent> | null
+	) => void;
 	headerText?: string;
 };
 
@@ -19,7 +21,7 @@ export const Modal: FC<TModal> = ({ headerText, children, handleClose }) => {
 		function closeModalByEscape(evt: KeyboardEvent) {
 			evt.stopPropagation();
 			if (evt.key === "Escape") {
-				handleClose();
+				handleClose(null);
 			}
 		}
 		document.addEventListener("keydown", closeModalByEscape);
@@ -29,7 +31,7 @@ export const Modal: FC<TModal> = ({ headerText, children, handleClose }) => {
 	}, [handleClose]);
 
 	return createPortal(
-		<ModalOverlay onClose={handleClose}>
+		<ModalOverlay onClick={handleClose}>
 			<div className={styles.form}>
 				<div>
 					<h2
