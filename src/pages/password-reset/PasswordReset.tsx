@@ -5,27 +5,24 @@ import {
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getRefreshPassword } from "../../../services/actions/passwordReset";
+import { getRefreshPassword } from "../../services/actions/passwordReset";
+import { useForm } from "../../services/hooks/useForm";
+import { TValue } from "../../services/utile/types";
 import styles from "./password-reset.module.css";
 
 export function PasswordReset() {
-	type TValue = {
-		password: "" | string;
-		token: "" | string;
-	};
-
 	type TInput = "password" | "text";
 	type TIcon = "HideIcon" | "ShowIcon";
-
 	const navigate = useNavigate();
 	const dispatch: any = useDispatch();
-	const [value, setValue] = useState<TValue>({ password: "", token: "" });
+
+	const { values, handleChange } = useForm<TValue>({
+		password: "",
+		token: "",
+	});
+
 	const [icon, setIcon] = useState<TIcon>("ShowIcon");
 	const [typeOfInput, setTypeOfInput] = useState<TInput>("password");
-
-	const onChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-		setValue({ ...value, [evt.target.name]: evt.target.value });
-	};
 
 	const onIconClick = () => {
 		setIcon((prevState) =>
@@ -38,7 +35,7 @@ export function PasswordReset() {
 
 	const handleNewPassword = (evt: React.FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
-		dispatch(getRefreshPassword(value, navigate));
+		dispatch(getRefreshPassword(values, navigate));
 	};
 
 	return (
@@ -48,9 +45,9 @@ export function PasswordReset() {
 			<Input
 				type={typeOfInput}
 				placeholder={"Введите новый пароль"}
-				onChange={onChange}
+				onChange={handleChange}
 				icon={icon}
-				value={value.password}
+				value={values.password}
 				name={"password"}
 				error={false}
 				onIconClick={onIconClick}
@@ -61,8 +58,8 @@ export function PasswordReset() {
 			<Input
 				type={"text"}
 				placeholder={"Введите код из письма"}
-				onChange={onChange}
-				value={value.token}
+				onChange={handleChange}
+				value={values.token}
 				name={"token"}
 				error={false}
 				errorText={"Ошибка"}

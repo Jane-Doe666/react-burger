@@ -5,20 +5,22 @@ import {
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getRestorePassword } from "../../../services/actions/passwordRestore";
+import { getRestorePassword } from "../../services/actions/passwordRestore";
+import { useForm } from "../../services/hooks/useForm";
+import { TValue } from "../../services/utile/types";
 import styles from "./restore-pass.module.css";
 
 export function RestorePassword() {
 	const navigate = useNavigate();
 	const dispatch: any = useDispatch();
-	const [value, setValue] = useState({ email: "" });
-	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setValue({ ...value, [e.target.name]: e.target.value });
-	};
+
+	const { values, handleChange } = useForm<TValue>({
+		email: "",
+	});
 
 	const handleResetPassword = (evt: React.FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
-		dispatch(getRestorePassword(value, navigate));
+		dispatch(getRestorePassword(values, navigate));
 	};
 
 	return (
@@ -27,8 +29,8 @@ export function RestorePassword() {
 
 			<EmailInput
 				placeholder="Укажите e-mail"
-				onChange={onChange}
-				value={value.email}
+				onChange={handleChange}
+				value={values.email}
 				name={"email"}
 				isIcon={false}
 				extraClass="mt-6"

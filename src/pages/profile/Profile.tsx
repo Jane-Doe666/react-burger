@@ -6,35 +6,26 @@ import {
 	Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserInfo } from "../../../services/actions/getUserInfo";
-import { getLogout } from "../../../services/actions/logout";
-import { changeUserInfoProfile } from "../../../services/actions/updateUrerInfo";
+import { getUserInfo } from "../../services/actions/getUserInfo";
+import { getLogout } from "../../services/actions/logout";
+import { changeUserInfoProfile } from "../../services/actions/updateUrerInfo";
+import { useForm } from "../../services/hooks/useForm";
+import { TValue } from "../../services/utile/types";
 
 export function Profile() {
-	type TValue = {
-		email: "" | string;
-		password: "" | string;
-		name: "" | string;
-	};
-
 	type TLoader = Boolean;
-
 	const dispatch: any = useDispatch();
 	const user = useSelector((state: any) => state.registration.getUser.user);
 	const [isLoader, setIsLoader] = useState<TLoader>(true);
-	const [value, setValue] = useState<TValue>({
+	const { values, handleChange, setValues } = useForm<TValue>({
 		email: "",
 		password: "",
 		name: "",
 	});
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setValue({ ...value, [e.target.name]: e.target.value });
-	};
-
 	const updateUserInfo = (evt: React.FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
-		dispatch(changeUserInfoProfile(value));
+		dispatch(changeUserInfoProfile(values));
 	};
 
 	const handleLogOut = () => {
@@ -55,8 +46,8 @@ export function Profile() {
 
 	useEffect(() => {
 		user
-			? setValue({ ...value, name: user.name, email: user.email })
-			: setValue({ ...value });
+			? setValues({ ...values, name: user.name, email: user.email })
+			: setValues({ ...values });
 	}, [user]);
 
 	return isLoader ? (
@@ -72,7 +63,7 @@ export function Profile() {
 						Профиль
 					</NavLink>
 					<NavLink
-						to="/profile/orders/:id"
+						to="/profile/orders"
 						className={styles.p + " text text_type_main-medium"}>
 						История заказов
 					</NavLink>
@@ -94,7 +85,7 @@ export function Profile() {
 						type={"text"}
 						placeholder={"Имя"}
 						icon={"EditIcon"}
-						value={value.name}
+						value={values.name}
 						name={"name"}
 						onChange={handleChange}
 						error={false}
@@ -106,7 +97,7 @@ export function Profile() {
 						type={"text"}
 						placeholder={"Логин"}
 						icon={"EditIcon"}
-						value={value.email}
+						value={values.email}
 						onChange={handleChange}
 						error={false}
 						name={"email"}
@@ -119,7 +110,7 @@ export function Profile() {
 						placeholder={"Пароль"}
 						onChange={handleChange}
 						icon={"EditIcon"}
-						value={value.password}
+						value={values.password}
 						name={"password"}
 						error={false}
 						errorText={"Ошибка"}

@@ -24,6 +24,10 @@ export type TRefreshToken = {
 
 export type TIngredirntsArray = string[];
 
+export type TValue = {
+	[key: string]: string;
+};
+
 export type TElement = {
 	readonly calories: number;
 	readonly carbohydrates: number;

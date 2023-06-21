@@ -8,7 +8,6 @@ export function getRestorePassword(value, navigate) {
 			.then(() => {
 				dispatch({ type: RESTORE_PASSWORD });
 				navigate("/reset-password");
-				//error in console if navigate ?
 			})
 
 			.catch((err) => {

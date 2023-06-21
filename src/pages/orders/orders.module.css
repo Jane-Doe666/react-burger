@@ -1,0 +1,66 @@
+.app {
+	margin: auto;
+	text-align: center;
+	max-width: 1240px;
+	height: 100vh;
+}
+
+.h2 {
+	text-align: left;
+}
+.main {
+	margin: auto;
+	text-align: left;
+	max-width: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, 600px);
+	column-gap: 40px;
+}
+
+.orderStatus {
+	display: grid;
+	grid-template-columns: repeat(2, auto);
+	column-gap: 36px;
+}
+
+.ready {
+	list-style: none;
+	color: #0cc;
+}
+
+.inProgress {
+	list-style: none;
+}
+
+.Link {
+	text-decoration: none;
+	color: white;
+}
+
+.total {
+	display: flex;
+}
+
+.order {
+	display: flex;
+	justify-content: space-between;
+}
+
+.images {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+}
+
+@media screen and (max-width: 1200px) {
+	.main {
+		grid-template-columns: repeat(2, 1fr);
+		column-gap: 10px;
+	}
+}
+
+@media screen and (max-width: 780px) {
+	.main {
+		grid-template-columns: repeat(1, minmax(360px, 1fr));
+	}
+}

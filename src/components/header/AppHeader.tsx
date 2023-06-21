@@ -20,11 +20,9 @@ export default function AppHeader() {
 				</NavLink>
 
 				<NavLink
-					to="/profile/orders"
-					className={location === "/profile/orders" ? styles.b : styles.a}>
-					<ListIcon
-						type={location === "/profile/orders" ? "primary" : "secondary"}
-					/>
+					to="/feed"
+					className={location === "/feed" ? styles.b : styles.a}>
+					<ListIcon type={location === "/feed" ? "primary" : "secondary"} />
 					<p className="text text_type_main-default pr-5 pl-2">Лента заказов</p>
 				</NavLink>
 			</div>

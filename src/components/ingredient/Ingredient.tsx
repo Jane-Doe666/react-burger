@@ -17,7 +17,7 @@ type TIngredientProps = {
 
 export const Ingredient: FC<TIngredientProps> = ({ item, id, onClick }) => {
 	const counterById = useSelector((state: any) =>
-		counterByIdSelectorCreator(state)
+		counterByIdSelectorCreator(state.burgerConstructor)
 	);
 	const [, dragRef] = useDrag({
 		type: "ingredient",

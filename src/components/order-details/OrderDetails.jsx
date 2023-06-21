@@ -3,7 +3,7 @@ import flag from "../../images/doneflag.png";
 import { useSelector } from "react-redux";
 
 export default function OrderDetails() {
-	const orderDetails = useSelector((state: any) => state.orderDetails.items);
+	const orderDetails = useSelector((state) => state.orderDetails.items);
 
 	return (
 		orderDetails && (

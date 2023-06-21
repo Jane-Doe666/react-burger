@@ -39,7 +39,7 @@ export default function BurgerConstructor() {
 	);
 
 	const iDIngredientsInOrder = useSelector((state: any) =>
-		iDInOrderSelectorCreator(state)
+		iDInOrderSelectorCreator(state.burgerConstructor)
 	);
 
 	const handleOpenedOrder = () => {

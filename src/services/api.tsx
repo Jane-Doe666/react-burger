@@ -9,14 +9,14 @@ import {
 
 const config = {
 	BASE_URL: "https://norma.nomoreparties.space/api/",
-	headers: { "Content-Type": "application/json; charset=UTF-8" },
+	headers: { "Content-Type": "application/json" },
 };
 
 async function checkResponse(response: any) {
 	if (response.ok) {
 		return response.json();
 	} else {
-		return Promise.reject(`Ошибка ${response.status}`);
+		return response.json().then((err: any) => Promise.reject(err));
 	}
 }
 
@@ -76,6 +76,7 @@ export const setNewPasswordOnServer = (object: TPasswordResetReset) => {
 };
 
 export const getRefreshTokenOnServer = () => {
+	console.log("run api getRefreshTokenOnServer");
 	return request(`auth/token`, {
 		method: "POST",
 		headers: config.headers,

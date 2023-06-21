@@ -1,6 +1,6 @@
-import { getUserInfoOnServer } from "../api";
-import { getCookie } from "../utile/utile";
-import { getRefreshToken } from "./refreshToken";
+import { getRefreshTokenOnServer, getUserInfoOnServer } from "../api";
+import { getCookie, setCookie } from "../utile/utile";
+import { getRefreshToken, REFRESH_TOKEN } from "./refreshToken";
 
 export const AUTH_CHECKED = "AUTH_CHECKED";
 export const USER_SUCCESS = "USER_SUCCESS";
@@ -13,8 +13,28 @@ export const checkAuth = () => {
 		}
 		getUserInfoOnServer()
 			.then((data) => {
+				console.log("checkAuth 1");
 				dispatch({ type: USER_SUCCESS, payload: data });
 			})
-			.catch(getRefreshToken(), getUserInfoOnServer());
+			.catch((err) => {
+				if (err.message === "jwt expired") {
+					console.log("error - jwt expired !!! ");
+					getRefreshTokenOnServer()
+						.then((data) => {
+							console.log("refresh   ", data);
+							setCookie("refreshToken", data.refreshToken, {});
+							setCookie("accessToken", data.accessToken, {
+								"max-age": 1200000,
+							});
+
+							dispatch({ type: REFRESH_TOKEN, payload: data });
+							console.log("токены обновлены");
+						})
+
+						.catch((err) => {
+							console.error(`Ошибка: ${err.message} !!!`);
+						});
+				}
+			});
 	};
 };

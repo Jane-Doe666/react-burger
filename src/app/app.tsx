@@ -4,18 +4,19 @@ import AppHeader from "../components/header/AppHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredients } from "../services/actions/app";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import Main from "./pages/main/main";
-import { NotFound404 } from "./pages/notfound-page/notfound";
-import { Login } from "./pages/login/Login";
-import { Registration } from "./pages/registration/Registration";
-import { RestorePassword } from "./pages/restore-password/RestorePassword";
-import { PasswordReset } from "./pages/password-reset/PasswordReset";
-import { Profile } from "./pages/profile/Profile";
-import { Orders } from "./pages/orders/Orders";
+import Main from "../pages/main/main";
+import { NotFound404 } from "../pages/notfound-page/notfound";
+import { Login } from "../pages/login/Login";
+import { Registration } from "../pages/registration/Registration";
+import { RestorePassword } from "../pages/restore-password/RestorePassword";
+import { PasswordReset } from "../pages/password-reset/PasswordReset";
+import { Profile } from "../pages/profile/Profile";
+import { Orders } from "../pages/orders/Orders";
 import { ProtectedRoute } from "../components/HOC/ProtectedRoute";
 import IngredientDetails from "../components/ingredient-details/IngredientDetails";
 import { checkAuth } from "../services/actions/user";
 import { Modal } from "../components/modal/Modal";
+import { OrdersPrivate } from "../pages/orders-private/OrdersPrivate";
 
 function App() {
 	const dispatch: any = useDispatch();
@@ -25,8 +26,6 @@ function App() {
 	const navigate = useNavigate();
 
 	const modal = location?.state?.state?.modal;
-
-	type TFunc = React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined;
 
 	const handleClose: any = () => {
 		navigate(-1);
@@ -59,11 +58,23 @@ function App() {
 						<Route path="/forgot-password" element={<RestorePassword />} />
 						<Route path="/reset-password" element={<PasswordReset />} />
 						<Route path="*" element={<NotFound404 />} />
+						<Route path="/feed" element={<Orders />} />
+						<Route path="/feed/:id" element={<Orders />} />
+
 						<Route
 							path="/profile/orders"
 							element={
 								<ProtectedRoute authOnly={true}>
-									<Orders />
+									<OrdersPrivate />
+								</ProtectedRoute>
+							}
+						/>
+
+						<Route
+							path="/profile/orders/:id"
+							element={
+								<ProtectedRoute authOnly={true}>
+									<OrdersPrivate />
 								</ProtectedRoute>
 							}
 						/>

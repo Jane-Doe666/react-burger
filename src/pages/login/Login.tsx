@@ -6,32 +6,29 @@ import {
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { getAuthorization } from "../../../services/actions/authorization";
+import { getAuthorization } from "../../services/actions/authorization";
+import { useForm } from "../../services/hooks/useForm";
+import { TValue } from "../../services/utile/types";
 import styles from "./login.module.css";
 
 export function Login() {
-	type TValue = {
-		email: "" | string;
-		password: "" | string;
-	};
 	type TIcon = "ShowIcon" | "HideIcon";
 	type TImput = "password" | "text";
-
 	const navigate = useNavigate();
 	const dispatch: any = useDispatch();
 	const location = useLocation();
-	const [value, setValue] = useState<TValue>({ email: "", password: "" });
+	const { values, handleChange } = useForm<TValue>({
+		email: "",
+		password: "",
+	});
+
 	const [icon, setIcon] = useState<TIcon>("ShowIcon");
 	const [typeOfInput, setTypeOfInput] = useState<TImput>("password");
-
-	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setValue({ ...value, [e.target.name]: e.target.value });
-	};
 
 	const handleAuthorization = (evt: React.FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
 		const loc = location?.state?.from?.pathname;
-		dispatch(getAuthorization(value, loc, navigate));
+		dispatch(getAuthorization(values, loc, navigate));
 	};
 
 	const onIconClick = () => {
@@ -47,17 +44,17 @@ export function Login() {
 		<form onSubmit={handleAuthorization} className={styles.login}>
 			<h2 className={"text text_type_main-medium"}>Вход</h2>
 			<EmailInput
-				onChange={onChange}
-				value={value.email}
+				onChange={handleChange}
+				value={values.email}
 				name={"email"}
 				extraClass="mt-6"
 			/>{" "}
 			<Input
 				type={typeOfInput}
 				placeholder={"Пароль"}
-				onChange={onChange}
+				onChange={handleChange}
 				icon={icon}
-				value={value.password}
+				value={values.password}
 				name={"password"}
 				error={false}
 				onIconClick={onIconClick}

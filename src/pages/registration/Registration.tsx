@@ -5,26 +5,23 @@ import {
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./registration.module.css";
-import { getRegistration } from "../../../services/actions/registration";
+import { getRegistration } from "../../services/actions/registration";
 import { useDispatch } from "react-redux";
+import { TValue } from "../../services/utile/types";
 
 export function Registration() {
-	type TValue = {
-		email: "" | string;
-		password: "" | string;
-		name: "" | string;
-	};
-
 	type TIcon = "HideIcon" | "ShowIcon";
 	type TInput = "text" | "password";
 
 	const dispatch: any = useDispatch();
 	const navigate = useNavigate();
+
 	const [value, setValue] = useState<TValue>({
 		email: "",
 		password: "",
 		name: "",
 	});
+
 	const [icon, setIcon] = useState<TIcon>("ShowIcon");
 	const [typeOfInput, setTypeOfInput] = useState<TInput>("password");
 

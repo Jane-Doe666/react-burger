@@ -3,15 +3,23 @@ import {
 	GET_INGREDIENTS_SUCCESS,
 	GET_INGREDIENTS_ERROR,
 } from "../actions/app";
+import { TElement } from "../utile/types";
 
-const initialState = {
+type TInitialState = {
+	items: TElement[];
+	isLoading: boolean;
+	itemsRequest: boolean;
+	itemsFailed: boolean;
+};
+
+const initialState: TInitialState = {
 	items: [],
 	isLoading: true,
 	itemsRequest: false,
 	itemsFailed: false,
 };
 
-export const burgerIngredientsReducer = (state = initialState, action) => {
+export const burgerIngredientsReducer = (state = initialState, action: any) => {
 	switch (action.type) {
 		case GET_INGREDIENTS_REQUEST: {
 			return {

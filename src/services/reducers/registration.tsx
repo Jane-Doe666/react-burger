@@ -1,5 +1,5 @@
 import { AUTHORIZATION_REQUEST } from "../actions/authorization";
-import { LOADING, GET_USER_INFO } from "../actions/getUserInfo";
+import { GET_USER_INFO } from "../actions/getUserInfo";
 import { LOGOUT } from "../actions/logout";
 import { RESET_PASSWORD } from "../actions/passwordReset";
 import { RESTORE_PASSWORD } from "../actions/passwordRestore";
@@ -7,30 +7,37 @@ import { REFRESH_TOKEN } from "../actions/refreshToken";
 import { REGISTRATION_REQUEST } from "../actions/registration";
 import { UPDATE_USER_INFO } from "../actions/updateUrerInfo";
 import { AUTH_CHECKED, USER_SUCCESS } from "../actions/user";
+import { TAuth } from "../utile/types";
 
-const initialState = {
+type TUser = {
+	email: string;
+	name: string;
+};
+
+type TInitialState = {
+	getUser: TUser | "";
+	userName: string;
+	email: string;
+	isAuth: boolean;
+	isLoader: boolean;
+	isAuthChecked: boolean;
+	isLogged: boolean;
+	user: boolean;
+};
+
+const initialState: TInitialState = {
 	getUser: "",
 	userName: "",
 	email: "",
-	userData: {},
 	isAuth: false,
-	data: {},
 	isLoader: false,
 	isAuthChecked: false,
 	isLogged: false,
 	user: false,
 };
 
-export const registrationReducer = (state = initialState, action) => {
+export const registrationReducer = (state = initialState, action: any) => {
 	switch (action.type) {
-		case LOADING: {
-			return {
-				...state,
-				isLoader: action.payload,
-				isLogged: action?.payload?.success,
-				isAuthChecked: true,
-			};
-		}
 		case REGISTRATION_REQUEST: {
 			return {
 				...state,
@@ -60,7 +67,6 @@ export const registrationReducer = (state = initialState, action) => {
 				...state,
 				userName: action.payload.user.name,
 				email: action.payload.user.email,
-				userData: { ...action.payload.user },
 				isAuth: true,
 				isLogged: action.payload.success,
 				isAuthChecked: true,

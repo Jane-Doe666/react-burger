@@ -5,15 +5,23 @@ import {
 	GET_ORDER_ERROR,
 } from "../actions/orderDetails";
 
-const initialState = {
+type TInitialState = {
+	isModal: boolean;
+	items: number | undefined;
+	itemsRequest: boolean;
+	itemsFailed: boolean;
+	isLoader: boolean;
+};
+
+const initialState: TInitialState = {
 	isModal: false,
-	items: [],
+	items: undefined,
 	itemsRequest: false,
 	itemsFailed: false,
 	isLoader: false,
 };
 
-export const orderDetailsReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (state = initialState, action: any) => {
 	switch (action.type) {
 		case GET_ORDER_REQUEST: {
 			return {
