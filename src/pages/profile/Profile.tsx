@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "../../services/actions/getUserInfo";
 import { getLogout } from "../../services/actions/logout";
 import { changeUserInfoProfile } from "../../services/actions/updateUrerInfo";
-import { useForm } from "../../services/hooks/useForm";
+import { useForm } from "../../services/hooks/hooks";
 import { TValue } from "../../services/utile/types";
 
 export function Profile() {

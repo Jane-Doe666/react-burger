@@ -5,13 +5,33 @@
 	height: 100vh;
 }
 
+.scroll {
+	height: 100%; /* высота нашего блока */
+	width: 100%; /* ширина нашего блока */
+	overflow-y: scroll;
+	border: none;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: #1c1c1e;
+	border: none;
+}
+
+::-webkit-scrollbar-thumb {
+	height: 492px;
+	background: #8585ad;
+}
+
 .h2 {
 	text-align: left;
 }
 .main {
-	margin: auto;
+	height: 100%;
 	text-align: left;
-	max-width: 100%;
 	display: grid;
 	grid-template-columns: repeat(2, 600px);
 	column-gap: 40px;
@@ -32,7 +52,12 @@
 	list-style: none;
 }
 
-.Link {
+.container_order {
+	background-color: #1c1c1e;
+	border-radius: 40px;
+}
+
+.link {
 	text-decoration: none;
 	color: white;
 }

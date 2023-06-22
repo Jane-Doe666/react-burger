@@ -4,25 +4,26 @@ import styles from "./orders.module.css";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { socketMiddlewareOrders } from "../../services/actions/socketMiddlewareOrders";
+import { OrdersFeed } from "../../components/order-feed/orderFeed";
 
 export function Orders() {
 	const dispatch = useDispatch();
 	const ws = new WebSocket("wss://norma.nomoreparties.space/orders/all");
-	console.log(ws.readyState);
+	// console.log(ws.readyState);
 
 	useEffect(() => {
 		dispatch(socketMiddlewareOrders(ws));
 	}, []);
 
-	ws.onopen = (event) => {
-		console.log("Соединение установлено");
-		console.log(event.type);
-	};
+	// ws.onopen = (event) => {
+	// 	console.log("Соединение установлено");
+	// 	console.log(event.type);
+	// };
 
-	ws.onmessage = (event) => {
-		const userMessage = event.data;
-		console.log(userMessage); // {id: 1, name: 'Иванов Василий', message: 'Привет, дома? Пришли показатели счётчиков, срочно!'}
-	};
+	// ws.onmessage = (event) => {
+	// 	const userMessage = event.data;
+	// 	console.log(userMessage); // {id: 1, name: 'Иванов Василий', message: 'Привет, дома? Пришли показатели счётчиков, срочно!'}
+	// };
 
 	return (
 		<div className={styles.app}>
@@ -30,25 +31,20 @@ export function Orders() {
 				Лента заказов
 			</h1>
 			<div className={styles.main}>
-				<Link className={styles.Link + " mb-4"} to="/feed/:id">
-					<div className={styles.order + " mt-6"}>
-						<p className="text text_type_digits-default">#0536553</p>
-						<p className={"text text_type_main-default text_color_inactive"}>
-							Сегодня, 16:20
-						</p>
-					</div>
-					<p className="text text_type_main-medium mt-6">
-						Death Star Burger Main
-					</p>
-					<div className={styles.images}>
-						{" "}
-						<div>!!! images !!!</div>{" "}
-						<div className={styles.total + " mt-6"}>
-							<div className="text text_type_digits-default pl-6 mr-2">480</div>
-							<CurrencyIcon type="primary" />
-						</div>
-					</div>
-				</Link>
+				<div className={styles.scroll + " pr-2"}>
+					<OrdersFeed />
+					<OrdersFeed />
+					<OrdersFeed />
+					<OrdersFeed />
+					<OrdersFeed />
+					<OrdersFeed />
+					<OrdersFeed />
+					<OrdersFeed />
+					<OrdersFeed />
+					<OrdersFeed />
+					<OrdersFeed />
+					<OrdersFeed />
+				</div>
 
 				<div>
 					<div className={styles.orderStatus}>
