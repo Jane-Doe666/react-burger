@@ -38,3 +38,23 @@ export function deleteCookie(name: string) {
 		"max-age": -1,
 	});
 }
+
+export const createDataOrder = (updatedAt: string) => {
+	const createData = new Date(updatedAt);
+	const today = new Date().getDay();
+	const dayOrder = createData.getDay();
+	let diff = today - dayOrder;
+
+	const hours =
+		createData.getHours() > 9
+			? createData.getHours()
+			: "0" + createData.getHours();
+	const minutes =
+		createData.getMinutes() > 9
+			? createData.getMinutes()
+			: "0" + createData.getMinutes();
+
+	if (diff === 0) return `Сегодня, ${hours}:${minutes} i-GMT+3`;
+	if (diff === 1) return `Вчера, ${hours}:${minutes} i-GMT+3`;
+	if (diff > 2) return `${diff} дня назад, ${hours}:${minutes} i-GMT+3`;
+};

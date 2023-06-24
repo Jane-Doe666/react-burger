@@ -11,10 +11,17 @@ import { getLogout } from "../../services/actions/logout";
 import { changeUserInfoProfile } from "../../services/actions/updateUrerInfo";
 import { useForm } from "../../services/hooks/hooks";
 import { TValue } from "../../services/utile/types";
+import { Outlet, Route, Routes, useLocation } from "react-router";
+import { ProfileNavigation } from "../../components/profile-nav/profileNavigation";
+import { ProtectedRoute } from "../../components/HOC/ProtectedRoute";
+import { OrdersPrivate } from "../orders-private/OrdersPrivate";
 
 export function Profile() {
 	type TLoader = Boolean;
 	const dispatch: any = useDispatch();
+	const loc = useLocation();
+	console.log(loc);
+
 	const user = useSelector((state: any) => state.registration.getUser.user);
 	const [isLoader, setIsLoader] = useState<TLoader>(true);
 	const { values, handleChange, setValues } = useForm<TValue>({
@@ -28,9 +35,9 @@ export function Profile() {
 		dispatch(changeUserInfoProfile(values));
 	};
 
-	const handleLogOut = () => {
-		dispatch(getLogout());
-	};
+	// const handleLogOut = () => {
+	// 	dispatch(getLogout());
+	// };
 
 	const handleUserInfo = () => {
 		dispatch(getUserInfo());
@@ -55,81 +62,64 @@ export function Profile() {
 	) : (
 		<>
 			<div className={styles.profile}>
-				{" "}
-				<div className={styles.page}>
-					<NavLink
-						to="/profile"
-						className={styles.isActive + " text text_type_main-medium"}>
-						Профиль
-					</NavLink>
-					<NavLink
-						to="/profile/orders"
-						className={styles.p + " text text_type_main-medium"}>
-						История заказов
-					</NavLink>
-					<NavLink
-						to="/login"
-						onClick={handleLogOut}
-						className={styles.p + " text text_type_main-medium"}>
-						Выход
-					</NavLink>
-					<p className={"text text_type_main-default mt-20"}>
-						В этом разделе вы можете изменить свои персональные данные
-					</p>
-				</div>
-				<form
-					onSubmit={updateUserInfo}
-					className={styles.profileInfo + " ml-15"}>
-					{" "}
-					<Input
-						type={"text"}
-						placeholder={"Имя"}
-						icon={"EditIcon"}
-						value={values.name}
-						name={"name"}
-						onChange={handleChange}
-						error={false}
-						errorText={"Ошибка"}
-						size={"default"}
-						extraClass="mt-6"
-					/>
-					<Input
-						type={"text"}
-						placeholder={"Логин"}
-						icon={"EditIcon"}
-						value={values.email}
-						onChange={handleChange}
-						error={false}
-						name={"email"}
-						errorText={"Ошибка"}
-						size={"default"}
-						extraClass="mt-6"
-					/>{" "}
-					<Input
-						type={"password"}
-						placeholder={"Пароль"}
-						onChange={handleChange}
-						icon={"EditIcon"}
-						value={values.password}
-						name={"password"}
-						error={false}
-						errorText={"Ошибка"}
-						size={"default"}
-						extraClass="mt-6"
-					/>
-					<div className={styles.button + " mt-6"}>
-						<Button htmlType="submit" type="primary" size="small">
-							Сохранить
-						</Button>
-						<Button
-							onClick={handleUserInfo}
-							htmlType="button"
-							type="primary"
-							size="small">
-							Отмена
-						</Button>
-					</div>
-				</form>
+				<ProfileNavigation />
+				{loc.pathname === "/profile/orders" ? (
+					<OrdersPrivate />
+				) : (
+					<form
+						onSubmit={updateUserInfo}
+						className={styles.profileInfo + " ml-15"}>
+						{" "}
+						<Input
+							type={"text"}
+							placeholder={"Имя"}
+							icon={"EditIcon"}
+							value={values.name}
+							name={"name"}
+							onChange={handleChange}
+							error={false}
+							errorText={"Ошибка"}
+							size={"default"}
+							extraClass="mt-6"
+						/>
+						<Input
+							type={"text"}
+							placeholder={"Логин"}
+							icon={"EditIcon"}
+							value={values.email}
+							onChange={handleChange}
+							error={false}
+							name={"email"}
+							errorText={"Ошибка"}
+							size={"default"}
+							extraClass="mt-6"
+						/>{" "}
+						<Input
+							type={"password"}
+							placeholder={"Пароль"}
+							onChange={handleChange}
+							icon={"EditIcon"}
+							value={values.password}
+							name={"password"}
+							error={false}
+							errorText={"Ошибка"}
+							size={"default"}
+							extraClass="mt-6"
+						/>
+						<div className={styles.button + " mt-6"}>
+							<Button htmlType="submit" type="primary" size="small">
+								Сохранить
+							</Button>
+							<Button
+								onClick={handleUserInfo}
+								htmlType="button"
+								type="primary"
+								size="small">
+								Отмена
+							</Button>
+						</div>
+					</form>
+				)}
 			</div>
 		</>
 	);

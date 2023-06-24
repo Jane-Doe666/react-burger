@@ -1,7 +1,9 @@
+import { OrdersFeed } from "../../components/order-feed/orderFeed";
+
 export function OrdersPrivate() {
 	return (
 		<>
-			<h1>OrdersPrivate</h1>
+			<OrdersFeed />
 		</>
 	);
 }

@@ -20,7 +20,7 @@ import { OrdersPrivate } from "../pages/orders-private/OrdersPrivate";
 
 function App() {
 	const dispatch: any = useDispatch();
-	const data: any = useSelector((state: any) => state.app.items);
+	const data = useSelector((state: any) => state.app.items);
 	const { state } = useLocation();
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -62,13 +62,15 @@ function App() {
 						<Route path="/feed/:id" element={<Orders />} />
 
 						<Route
-							path="/profile/orders"
+							path="/profile"
 							element={
 								<ProtectedRoute authOnly={true}>
-									<OrdersPrivate />
+									<Profile />
 								</ProtectedRoute>
-							}
-						/>
+							}>
+							<Route path="/profile/" element={<Profile />} />
+							<Route path="/profile/orders" element={<OrdersPrivate />} />
+						</Route>
 
 						<Route
 							path="/profile/orders/:id"
@@ -79,14 +81,6 @@ function App() {
 							}
 						/>
 
-						<Route
-							path="/profile"
-							element={
-								<ProtectedRoute authOnly={true}>
-									<Profile />
-								</ProtectedRoute>
-							}
-						/>
 						<Route path="/ingredients/:id" element={<IngredientDetails />} />
 					</Routes>
 
@@ -111,3 +105,11 @@ function App() {
 }
 
 export default App;
+
+//     <Route
+//       path="/profile"
+//       element={<ProtectedRouteElement element={<ProfilePage />} />}
+//     >
+//       <Route path="/profile/" element={<ProfileInputs />} />
+//       <Route path="/profile/orders" element={<OrdersHistoryFeed />} />
+//     </Route>

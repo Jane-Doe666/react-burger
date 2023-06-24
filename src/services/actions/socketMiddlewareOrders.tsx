@@ -1,8 +1,6 @@
 import type { Middleware, MiddlewareAPI } from "redux";
 import { AppDispatch, RootState } from "../utile/typesRedux";
 
-// import type { AppActions, AppDispatch, RootState } from '../types';
-
 export const WS_CONNECTION_START: "WS_CONNECTION_START" = "WS_CONNECTION_START";
 export const WS_CONNECTION_SUCCESS: "WS_CONNECTION_SUCCESS" =
 	"WS_CONNECTION_SUCCESS";
@@ -12,19 +10,55 @@ export const WS_CONNECTION_CLOSED: "WS_CONNECTION_CLOSED" =
 export const WS_GET_MESSAGE: "WS_GET_MESSAGE" = "WS_GET_MESSAGE";
 export const WS_SEND_MESSAGE: "WS_SEND_MESSAGE" = "WS_SEND_MESSAGE";
 
+export type TWsConnectionStart = {
+	type: typeof WS_CONNECTION_START;
+	payload: string;
+};
+
+export type TWsConnectionSuccess = {
+	type: typeof WS_CONNECTION_SUCCESS;
+};
+
+export type TWsConnectionError = {
+	type: typeof WS_CONNECTION_ERROR;
+	payload: string;
+};
+
+export type TWsConnectionClosed = {
+	type: typeof WS_CONNECTION_CLOSED;
+};
+
+export type TWsConnectionGetMessage = {
+	type: typeof WS_GET_MESSAGE;
+	payload: string;
+};
+
+export type TWsConnectionSendMessage = {
+	type: typeof WS_SEND_MESSAGE;
+	payload: string;
+};
+
+export type TWsOrderActions =
+	| TWsConnectionStart
+	| TWsConnectionSuccess
+	| TWsConnectionError
+	| TWsConnectionClosed
+	| TWsConnectionGetMessage
+	| TWsConnectionSendMessage;
+
 // socketMiddleware.ts
 
-export const socketMiddlewareOrders = (wsUrl: string): Middleware => {
+export const socketMiddlewareOrders = (wsApiOrderUrl: string): Middleware => {
 	return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
 		let socket: WebSocket | null = null;
 
-		return (next) => (action: any /*AppActions*/) => {
-			const { dispatch, getState } = store;
-			const { type, payload } = action;
+		return (next) => (action: TWsOrderActions) => {
+			const { dispatch } = store;
+			const { type } = action;
 
 			if (type === "WS_CONNECTION_START") {
 				// объект класса WebSocket
-				socket = new WebSocket(wsUrl);
+				socket = new WebSocket(wsApiOrderUrl);
 			}
 			if (socket) {
 				// функция, которая вызывается при открытии сокета
@@ -40,7 +74,9 @@ export const socketMiddlewareOrders = (wsUrl: string): Middleware => {
 				// функция, которая вызывается при получения события от сервера
 				socket.onmessage = (event) => {
 					const { data } = event;
-					dispatch({ type: "WS_GET_MESSAGE", payload: data });
+					const orders = JSON.parse(data);
+
+					dispatch({ type: "WS_GET_MESSAGE", payload: orders });
 				};
 				// функция, которая вызывается при закрытии соединения
 				socket.onclose = (event) => {
@@ -48,7 +84,7 @@ export const socketMiddlewareOrders = (wsUrl: string): Middleware => {
 				};
 
 				if (type === "WS_SEND_MESSAGE") {
-					const message = payload;
+					const message = action.payload;
 					// функция для отправки сообщения на сервер
 					socket.send(JSON.stringify(message));
 				}
@@ -58,3 +94,15 @@ export const socketMiddlewareOrders = (wsUrl: string): Middleware => {
 		};
 	}) as Middleware;
 };
+
+// const ADD_TODO: 'ADD_TODO' = 'ADD_TODO';
+
+// export interface IAddTodoAction {
+// 	readonly type: typeof ADD_TODO;
+// 	readonly text: string;
+// }
+
+// export const addTodo = (text: string): IAddTodoAction => ({
+//   type: ADD_TODO,
+//     text
+// });

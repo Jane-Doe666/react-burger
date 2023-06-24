@@ -77,6 +77,41 @@
 	justify-content: space-between;
 }
 
+.status {
+	color: #0cc;
+}
+
+.image_container {
+	display: inline-flex;
+	flex-direction: row;
+}
+
+.image_div:first-of-type {
+	margin: 0;
+}
+
+.image_div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 59px;
+	height: 59px;
+	background: #131316;
+	border-radius: 100px;
+	background: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%),
+		linear-gradient(0deg, #131316, #131316);
+	border-image-source: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
+	margin-left: -20px;
+}
+
+.image {
+	background-color: #131316;
+	border-radius: 100px;
+	height: 56px;
+	width: 56px;
+	object-fit: cover;
+}
+
 @media screen and (max-width: 1200px) {
 	.main {
 		grid-template-columns: repeat(2, 1fr);
@@ -88,4 +123,29 @@
 	.main {
 		grid-template-columns: repeat(1, minmax(360px, 1fr));
 	}
+}
+
+/* {orderIngredientsArr.slice(0, 5).map((element: any) => (
+	<div className={`${styles.img_overlay} ${styles.img}`}>
+		<img className={styles.img} src={element.image} />
+	</div>
+))} */
+
+.img_overlay:first-of-type {
+	margin: 0;
+}
+
+.img_overlay {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 64px;
+	height: 64px;
+	background: #131316;
+	border-radius: 100px;
+	border: 2px solid;
+	background: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%),
+		linear-gradient(0deg, #131316, #131316);
+	border-image-source: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
+	margin-left: -20px;
 }

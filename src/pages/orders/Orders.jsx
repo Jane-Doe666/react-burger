@@ -1,29 +1,30 @@
-import { Link } from "react-router-dom";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./orders.module.css";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { socketMiddlewareOrders } from "../../services/actions/socketMiddlewareOrders";
+import {
+	socketMiddlewareOrders,
+	WS_CONNECTION_CLOSED,
+	WS_CONNECTION_START,
+} from "../../services/actions/socketMiddlewareOrders";
 import { OrdersFeed } from "../../components/order-feed/orderFeed";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export function Orders() {
 	const dispatch = useDispatch();
-	const ws = new WebSocket("wss://norma.nomoreparties.space/orders/all");
-	// console.log(ws.readyState);
+	const listOfOrders = useSelector((state) => state.wsOrders.messages);
+
+	const { orders, total, totalToday } = listOfOrders;
+	// console.log(999, orders?.length);
+	// console.log(1, ordersWs);
 
 	useEffect(() => {
-		dispatch(socketMiddlewareOrders(ws));
-	}, []);
-
-	// ws.onopen = (event) => {
-	// 	console.log("Соединение установлено");
-	// 	console.log(event.type);
-	// };
-
-	// ws.onmessage = (event) => {
-	// 	const userMessage = event.data;
-	// 	console.log(userMessage); // {id: 1, name: 'Иванов Василий', message: 'Привет, дома? Пришли показатели счётчиков, срочно!'}
-	// };
+		dispatch({
+			type: WS_CONNECTION_START,
+		});
+		return () => {
+			dispatch({ type: WS_CONNECTION_CLOSED });
+		};
+	}, [dispatch]);
 
 	return (
 		<div className={styles.app}>
@@ -32,18 +33,13 @@ export function Orders() {
 			</h1>
 			<div className={styles.main}>
 				<div className={styles.scroll + " pr-2"}>
-					<OrdersFeed />
-					<OrdersFeed />
-					<OrdersFeed />
-					<OrdersFeed />
-					<OrdersFeed />
-					<OrdersFeed />
-					<OrdersFeed />
-					<OrdersFeed />
-					<OrdersFeed />
-					<OrdersFeed />
-					<OrdersFeed />
-					<OrdersFeed />
+					{orders?.length ? (
+						orders.map((item) => {
+							return <OrdersFeed key={item._id} item={item} />;
+						})
+					) : (
+						<>Loading....</>
+					)}
 				</div>
 
 				<div>
@@ -76,13 +72,23 @@ export function Orders() {
 					<div className="text text_type_main-medium mt-15">
 						Выполнено за все время:
 					</div>
-					<div className="text text_type_digits-large">28752</div>
+					<div className="text text_type_digits-large">{total}</div>
 					<div className="text text_type_main-medium mt-15">
 						Выполнено за сегодня:
 					</div>
-					<div className="text text_type_digits-large">138</div>
+					<div className="text text_type_digits-large">{totalToday}</div>
 				</div>
 			</div>
 		</div>
 	);
 }
+
+// ws.onopen = (event) => {
+// 	console.log("Соединение установлено");
+// 	console.log(event.type);
+// };
+
+// ws.onmessage = (event) => {
+// 	const userMessage = event.data;
+// 	console.log(userMessage); // {id: 1, name: 'Иванов Василий', message: 'Привет, дома? Пришли показатели счётчиков, срочно!'}
+// };
