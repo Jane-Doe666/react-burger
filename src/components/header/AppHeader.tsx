@@ -4,7 +4,6 @@ import {
 	ProfileIcon,
 	ListIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import styles from "./appHeader.module.css";
 

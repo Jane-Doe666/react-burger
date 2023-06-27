@@ -94,15 +94,3 @@ export const socketMiddlewareOrders = (wsApiOrderUrl: string): Middleware => {
 		};
 	}) as Middleware;
 };
-
-// const ADD_TODO: 'ADD_TODO' = 'ADD_TODO';
-
-// export interface IAddTodoAction {
-// 	readonly type: typeof ADD_TODO;
-// 	readonly text: string;
-// }
-
-// export const addTodo = (text: string): IAddTodoAction => ({
-//   type: ADD_TODO,
-//     text
-// });

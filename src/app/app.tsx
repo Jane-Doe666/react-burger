@@ -17,6 +17,7 @@ import IngredientDetails from "../components/ingredient-details/IngredientDetail
 import { checkAuth } from "../services/actions/user";
 import { Modal } from "../components/modal/Modal";
 import { OrdersPrivate } from "../pages/orders-private/OrdersPrivate";
+import { OrderFeedById } from "../pages/order/OrderFeedById";
 
 function App() {
 	const dispatch: any = useDispatch();
@@ -59,7 +60,7 @@ function App() {
 						<Route path="/reset-password" element={<PasswordReset />} />
 						<Route path="*" element={<NotFound404 />} />
 						<Route path="/feed" element={<Orders />} />
-						<Route path="/feed/:id" element={<Orders />} />
+						<Route path="/feed/:id" element={<OrderFeedById />} />
 
 						<Route
 							path="/profile"

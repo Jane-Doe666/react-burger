@@ -12,10 +12,7 @@ import { useEffect } from "react";
 export function Orders() {
 	const dispatch = useDispatch();
 	const listOfOrders = useSelector((state) => state.wsOrders.messages);
-
 	const { orders, total, totalToday } = listOfOrders;
-	// console.log(999, orders?.length);
-	// console.log(1, ordersWs);
 
 	useEffect(() => {
 		dispatch({
@@ -26,32 +23,36 @@ export function Orders() {
 		};
 	}, [dispatch]);
 
-	return (
+	return orders ? (
 		<div className={styles.app}>
 			<h1 className={styles.h2 + ` text text_type_main-large pt-10 pb-5`}>
 				Лента заказов
 			</h1>
 			<div className={styles.main}>
 				<div className={styles.scroll + " pr-2"}>
-					{orders?.length ? (
-						orders.map((item) => {
-							return <OrdersFeed key={item._id} item={item} />;
-						})
-					) : (
-						<>Loading....</>
-					)}
+					{orders.map((item) => {
+						return <OrdersFeed key={item._id} item={item} />;
+					})}
 				</div>
 
 				<div>
 					<div className={styles.orderStatus}>
 						<div>
 							<h2 className="text text_type_main-medium mb-6">Готовы:</h2>
-							<ul className={styles.ready + " text text_type_digits-default"}>
-								<li className="mb-2">11111</li>
-								<li className="mb-2">22222</li>
-								<li className="mb-2">33333</li>
-								<li className="mb-2">44444</li>
-								<li className="mb-2">55555</li>
+
+							<ul
+								className={
+									styles.scrollReady + " text text_type_digits-default"
+								}>
+								{orders.map((item) => {
+									return item.status === "done" ? (
+										<li className={styles.li_ready} key={item._id}>
+											{item.number}
+										</li>
+									) : (
+										""
+									);
+								})}
 							</ul>
 						</div>
 
@@ -61,11 +62,15 @@ export function Orders() {
 								className={
 									styles.inProgress + " text text_type_digits-default"
 								}>
-								<li className="mb-2">11111</li>
-								<li className="mb-2">22222</li>
-								<li className="mb-2">33333</li>
-								<li className="mb-2">44444</li>
-								<li className="mb-2">55555</li>
+								{orders.map((item) => {
+									return item.status === "pending" ? (
+										<li className={styles.li_ready} key={item._id}>
+											{item.number}
+										</li>
+									) : (
+										""
+									);
+								})}
 							</ul>
 						</div>
 					</div>
@@ -80,15 +85,7 @@ export function Orders() {
 				</div>
 			</div>
 		</div>
+	) : (
+		<>Loading....</>
 	);
 }
-
-// ws.onopen = (event) => {
-// 	console.log("Соединение установлено");
-// 	console.log(event.type);
-// };
-
-// ws.onmessage = (event) => {
-// 	const userMessage = event.data;
-// 	console.log(userMessage); // {id: 1, name: 'Иванов Василий', message: 'Привет, дома? Пришли показатели счётчиков, срочно!'}
-// };

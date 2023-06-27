@@ -43,14 +43,6 @@
 	margin-left: auto;
 }
 
-/* .activeLink {
-	color: white;
-} */
-
-/* a:hover {
-	color: white;
-} */
-
 @media screen and (max-width: 950px) {
 	.header {
 		margin: auto 15px auto;
@@ -68,5 +60,9 @@
 	}
 	.mr {
 		margin-left: 0;
+	}
+	.img {
+		height: 18px;
+		width: 18px;
 	}
 }

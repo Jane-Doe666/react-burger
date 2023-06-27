@@ -2,68 +2,89 @@ import { Link } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../../pages/orders/orders.module.css";
 import { useSelector } from "react-redux";
-import { TElement } from "../../services/utile/types";
+import { TElement, TItem } from "../../services/utile/types";
 import { createDataOrder } from "../../services/utile/utile";
-
-export type TItem = {
-	item: {
-		createdAt: string;
-		ingredients: [];
-		name: string;
-		number: number;
-		status: string;
-		updatedAt: string;
-		_id: string;
-	};
-};
 
 export function OrdersFeed(item: TItem) {
 	const { createdAt, number, status, name, updatedAt, ingredients, _id } =
 		item.item; // ID
-	const ingredientsBD = useSelector((state: any) => state.app.items); // DataBase
+	const ingredientsBD = useSelector((state: any) => state.app.items);
 	const ingredientsInOrder = ingredients.map((element) =>
 		ingredientsBD.find((item: TElement) => item._id === element)
 	);
-
 	const totalCostOrder = ingredientsInOrder.reduce((acc, item) => {
-		const total = acc + item.price;
+		const total = acc + item?.price;
 		return total;
 	}, 0);
-
+	const ingredientsQty = ingredientsInOrder.length - 6;
 	const orderDay = createDataOrder(updatedAt);
 
 	return (
 		<div className={styles.container_order + " p-6 mb-4"}>
 			{" "}
-			<Link className={styles.link} to="/feed/:id">
+			<Link
+				className={styles.link}
+				to={`/feed/${_id}`}
+				state={{
+					ingredients: ingredientsInOrder,
+					orderInfo: item,
+					cost: totalCostOrder,
+					orderDay: orderDay,
+				}}>
 				<div className={styles.order}>
 					<p className="text text_type_digits-default">#{number}</p>
 					<p className={"text text_type_main-default text_color_inactive"}>
-						{orderDay}
+						{orderDay} i-GMT+3
 					</p>
 				</div>
-				<p className="text text_type_main-medium mt-6">{name}</p>
-				<p
-					className={
-						status === "done"
-							? styles.status + " text text_type_main-default mt-2"
-							: " text text_type_main-default mt-2"
-					}>
-					{status === "done" && <p>Готов</p>}
-					{status === "pending" && <p>Готовиться</p>}
-					{status === "created" && <p>Создан</p>}
-				</p>
-
+				<p className="text text_type_main-medium mt-6 mb-6">{name}</p>
 				<div className={styles.images}>
 					<div className={styles.image_container}>
-						{ingredientsInOrder.map((item) => (
-							<div className={styles.image_div}>
+						{ingredientsInOrder.map((item, index) => {
+							if (index < 5) {
+								return (
+									<div
+										key={index}
+										className={styles.image_div}
+										style={{ zIndex: 10 - index }}>
+										<img
+											className={styles.image}
+											src={item?.image_mobile}
+											alt={item.name}
+										/>
+									</div>
+								);
+							}
+						})}
+
+						{ingredientsInOrder.length == 6 && (
+							<div
+								key={ingredientsInOrder[5].index}
+								className={styles.image_div}
+								style={{ zIndex: 4 }}>
 								<img
 									className={styles.image}
-									src={item.image_mobile}
-									alt="картинка ингредиента"></img>
+									src={ingredientsInOrder[5].image_mobile}
+									alt={ingredientsInOrder[5].name}
+								/>
 							</div>
-						))}
+						)}
+
+						{ingredientsInOrder.length > 6 && (
+							<div
+								key={ingredientsInOrder[5].index}
+								className={styles.image_div}
+								style={{ zIndex: 4 }}>
+								<img
+									className={styles.image}
+									src={ingredientsInOrder[5].image_mobile}
+									alt={ingredientsInOrder[5].name}
+								/>
+								<div className={styles.last_image}>
+									<p className="text text_type_main-small">+{ingredientsQty}</p>
+								</div>
+							</div>
+						)}
 					</div>
 
 					<div className={styles.total + " mt-6"}>

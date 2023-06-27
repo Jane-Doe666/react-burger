@@ -45,4 +45,17 @@ export type TElement = {
 	readonly _id: string;
 	index: number;
 	id: string;
+	qty?: any;
+};
+
+export type TItem = {
+	item: {
+		createdAt: string;
+		ingredients: [];
+		name: string;
+		number: number;
+		status: string;
+		updatedAt: string;
+		_id: string;
+	};
 };

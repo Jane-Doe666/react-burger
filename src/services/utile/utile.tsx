@@ -54,7 +54,7 @@ export const createDataOrder = (updatedAt: string) => {
 			? createData.getMinutes()
 			: "0" + createData.getMinutes();
 
-	if (diff === 0) return `Сегодня, ${hours}:${minutes} i-GMT+3`;
-	if (diff === 1) return `Вчера, ${hours}:${minutes} i-GMT+3`;
-	if (diff > 2) return `${diff} дня назад, ${hours}:${minutes} i-GMT+3`;
+	if (diff === 0) return `Сегодня, ${hours}:${minutes}`;
+	if (diff === 1) return `Вчера, ${hours}:${minutes}`;
+	if (diff > 2) return `${diff} дня назад, ${hours}:${minutes}`;
 };
