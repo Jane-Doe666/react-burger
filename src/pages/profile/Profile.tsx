@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import styles from "./profile.module.css";
 import {
 	Input,
@@ -7,20 +6,17 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInfo } from "../../services/actions/getUserInfo";
-import { getLogout } from "../../services/actions/logout";
 import { changeUserInfoProfile } from "../../services/actions/updateUrerInfo";
 import { useForm } from "../../services/hooks/hooks";
 import { TValue } from "../../services/utile/types";
-import { Outlet, Route, Routes, useLocation } from "react-router";
+import { useLocation } from "react-router";
 import { ProfileNavigation } from "../../components/profile-nav/profileNavigation";
-import { ProtectedRoute } from "../../components/HOC/ProtectedRoute";
-import { OrdersPrivate } from "../orders-private/OrdersPrivate";
+import { OrdersProfile } from "../orders-profile/OrdersProfile";
 
 export function Profile() {
 	type TLoader = Boolean;
 	const dispatch: any = useDispatch();
 	const loc = useLocation();
-	console.log(loc);
 
 	const user = useSelector((state: any) => state.registration.getUser.user);
 	const [isLoader, setIsLoader] = useState<TLoader>(true);
@@ -34,10 +30,6 @@ export function Profile() {
 		evt.preventDefault();
 		dispatch(changeUserInfoProfile(values));
 	};
-
-	// const handleLogOut = () => {
-	// 	dispatch(getLogout());
-	// };
 
 	const handleUserInfo = () => {
 		dispatch(getUserInfo());
@@ -64,7 +56,7 @@ export function Profile() {
 			<div className={styles.profile}>
 				<ProfileNavigation />
 				{loc.pathname === "/profile/orders" ? (
-					<OrdersPrivate />
+					<OrdersProfile />
 				) : (
 					<form
 						onSubmit={updateUserInfo}

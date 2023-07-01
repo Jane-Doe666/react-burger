@@ -16,8 +16,9 @@ import { ProtectedRoute } from "../components/HOC/ProtectedRoute";
 import IngredientDetails from "../components/ingredient-details/IngredientDetails";
 import { checkAuth } from "../services/actions/user";
 import { Modal } from "../components/modal/Modal";
-import { OrdersPrivate } from "../pages/orders-private/OrdersPrivate";
+// import { OrdersProfile } from "../pages/orders-profile/OrdersProfile";
 import { OrderFeedById } from "../pages/order/OrderFeedById";
+import { OrdersProfile } from "../pages/orders-profile/OrdersProfile";
 
 function App() {
 	const dispatch: any = useDispatch();
@@ -25,8 +26,9 @@ function App() {
 	const { state } = useLocation();
 	const location = useLocation();
 	const navigate = useNavigate();
-
 	const modal = location?.state?.state?.modal;
+	const background = location?.state?.background;
+	// console.log(location);
 
 	const handleClose: any = () => {
 		navigate(-1);
@@ -44,8 +46,7 @@ function App() {
 			) : (
 				<div className={styles.App}>
 					<AppHeader />
-					<Routes location={modal ? "/" : location}>
-						{/* <Routes> */}
+					<Routes location={modal ? background : location}>
 						<Route path="/" element={<Main />} />
 						<Route
 							path="/login"
@@ -70,14 +71,14 @@ function App() {
 								</ProtectedRoute>
 							}>
 							<Route path="/profile/" element={<Profile />} />
-							<Route path="/profile/orders" element={<OrdersPrivate />} />
+							<Route path="/profile/orders" element={<OrdersProfile />} />
 						</Route>
 
 						<Route
 							path="/profile/orders/:id"
 							element={
 								<ProtectedRoute authOnly={true}>
-									<OrdersPrivate />
+									<OrdersProfile />
 								</ProtectedRoute>
 							}
 						/>
@@ -94,6 +95,19 @@ function App() {
 										handleClose={handleClose}
 										headerText={"Детали ингридиента"}>
 										<IngredientDetails />
+									</Modal>
+								}
+							/>
+						</Routes>
+					)}
+
+					{state && (
+						<Routes>
+							<Route
+								path="/feed/:id"
+								element={
+									<Modal handleClose={handleClose}>
+										<OrderFeedById />
 									</Modal>
 								}
 							/>

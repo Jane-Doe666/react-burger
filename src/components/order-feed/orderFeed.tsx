@@ -5,31 +5,31 @@ import { useSelector } from "react-redux";
 import { TElement, TItem } from "../../services/utile/types";
 import { createDataOrder } from "../../services/utile/utile";
 
-export function OrdersFeed(item: TItem) {
-	const { createdAt, number, status, name, updatedAt, ingredients, _id } =
-		item.item; // ID
+export function OrderFeed(item: TItem) {
+	const { number, name, updatedAt, ingredients, _id } = item.item; // ID
 	const ingredientsBD = useSelector((state: any) => state.app.items);
 	const ingredientsInOrder = ingredients.map((element) =>
 		ingredientsBD.find((item: TElement) => item._id === element)
 	);
+
 	const totalCostOrder = ingredientsInOrder.reduce((acc, item) => {
 		const total = acc + item?.price;
 		return total;
 	}, 0);
+
 	const ingredientsQty = ingredientsInOrder.length - 6;
 	const orderDay = createDataOrder(updatedAt);
 
-	return (
+	return item ? (
 		<div className={styles.container_order + " p-6 mb-4"}>
 			{" "}
 			<Link
 				className={styles.link}
 				to={`/feed/${_id}`}
 				state={{
-					ingredients: ingredientsInOrder,
-					orderInfo: item,
-					cost: totalCostOrder,
-					orderDay: orderDay,
+					state: { modal: true },
+					background: "/feed",
+					items: item,
 				}}>
 				<div className={styles.order}>
 					<p className="text text_type_digits-default">#{number}</p>
@@ -50,7 +50,7 @@ export function OrdersFeed(item: TItem) {
 										<img
 											className={styles.image}
 											src={item?.image_mobile}
-											alt={item.name}
+											alt={item?.name}
 										/>
 									</div>
 								);
@@ -96,5 +96,7 @@ export function OrdersFeed(item: TItem) {
 				</div>
 			</Link>
 		</div>
+	) : (
+		<div>Loading.....</div>
 	);
 }

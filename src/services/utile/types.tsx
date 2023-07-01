@@ -59,3 +59,13 @@ export type TItem = {
 		_id: string;
 	};
 };
+
+export type TItemOrderFeed = {
+	createdAt: string;
+	ingredients: [];
+	name: string;
+	number: number;
+	status: string;
+	updatedAt: string;
+	_id: string | undefined;
+};

@@ -10,7 +10,7 @@ declare global {
 	}
 }
 
-const wsApiOrderUrl = "wss://norma.nomoreparties.space/orders/all";
+const wsApiOrderUrl = "wss://norma.nomoreparties.space/orders";
 
 export const composeEnhancers =
 	window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

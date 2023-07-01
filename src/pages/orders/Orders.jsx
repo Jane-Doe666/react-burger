@@ -5,21 +5,28 @@ import {
 	WS_CONNECTION_CLOSED,
 	WS_CONNECTION_START,
 } from "../../services/actions/socketMiddlewareOrders";
-import { OrdersFeed } from "../../components/order-feed/orderFeed";
+import { OrderFeed } from "../../components/order-feed/orderFeed";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import {
+	ORDER_HISTORY_CLOSED_BY_USER,
+	ORDER_HISTORY_START,
+} from "../../services/actions/orderHistory";
+import { useLocation } from "react-router";
 
 export function Orders() {
 	const dispatch = useDispatch();
+	const location = useLocation();
 	const listOfOrders = useSelector((state) => state.wsOrders.messages);
 	const { orders, total, totalToday } = listOfOrders;
+	console.log(222, location.state);
 
 	useEffect(() => {
 		dispatch({
-			type: WS_CONNECTION_START,
+			type: ORDER_HISTORY_START,
 		});
 		return () => {
-			dispatch({ type: WS_CONNECTION_CLOSED });
+			dispatch({ type: ORDER_HISTORY_CLOSED_BY_USER });
 		};
 	}, [dispatch]);
 
@@ -31,7 +38,7 @@ export function Orders() {
 			<div className={styles.main}>
 				<div className={styles.scroll + " pr-2"}>
 					{orders.map((item) => {
-						return <OrdersFeed key={item._id} item={item} />;
+						return <OrderFeed key={item._id} item={item} />;
 					})}
 				</div>
 

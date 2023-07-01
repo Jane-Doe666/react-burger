@@ -1,17 +1,55 @@
 import { useLocation } from "react-router";
-import { TElement } from "../../services/utile/types";
+import { TElement, TItemOrderFeed } from "../../services/utile/types";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./orderFeedById.module.css";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import {
+	WS_CONNECTION_CLOSED,
+	WS_CONNECTION_CLOSED_BY_USER,
+	WS_CONNECTION_START,
+} from "../../services/actions/socketMiddlewareOrders";
+import { useParams } from "react-router";
+import { createDataOrder } from "../../services/utile/utile";
+import { getIngredients } from "../../services/actions/app";
+import {
+	ORDER_HISTORY_CLOSED_BY_USER,
+	ORDER_HISTORY_START,
+} from "../../services/actions/orderHistory";
 
 export function OrderFeedById() {
-	const { orderInfo, ingredients, cost, orderDay } = useLocation().state;
-	const { number, name, status } = orderInfo.item;
-	const orderStatus =
-		status === "done" ? "Выполнен" : status === "pending" ? "#0cc" : "Отменен";
-	const statusColor =
-		status === "done" ? "#0cc" : status === "pending" ? "white" : "red";
+	const location = useLocation();
+	const dispatch = useDispatch();
+	const paramsID = useParams().id;
 
-	const arrayUnique = ingredients.reduce(
+	// id в компонент попадает верный, но в модалке отображается один и тот же заказ после первого клика
+
+	console.log(111, paramsID);
+	console.log(222, location?.state);
+
+	const ingredientsDataBaseInfo = useSelector((state: any) => state.app.items);
+	const listOfOrders = useSelector((state: any) => state.wsOrders.messages);
+
+	const order = listOfOrders?.orders?.find(
+		(item: TItemOrderFeed) => (item._id = paramsID)
+	);
+
+	const ingredientsInOrder = order?.ingredients.map((element: string) =>
+		ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
+	);
+
+	const totalCostOrder = ingredientsInOrder?.reduce(
+		(acc: 0, item: TElement) => {
+			const total = acc + item?.price;
+			return total;
+		},
+		0
+	);
+
+	const orderDay = createDataOrder(order?.updatedAt);
+
+	const arrayUnique = ingredientsInOrder?.reduce(
 		(acc: Array<TElement>, item: TElement) => {
 			if (acc.includes(item)) {
 				item.qty++;
@@ -22,24 +60,56 @@ export function OrderFeedById() {
 		},
 		[]
 	);
-	const scrollStyle = arrayUnique.length > 4 ? styles.ul : styles.ul_wo_scroll;
 
-	return (
+	useEffect(() => {
+		if (!location?.state) {
+			dispatch({
+				type: ORDER_HISTORY_START,
+			});
+			dispatch(getIngredients());
+			return () => {
+				dispatch({ type: ORDER_HISTORY_CLOSED_BY_USER });
+			};
+		}
+	}, []);
+
+	return listOfOrders.success ? (
 		<>
 			<div className={styles.main}>
-				<p className="text text_type_digits-default"># {number}</p>
+				<p className="text text_type_digits-default"># {order.number}</p>
+
 				<p className={styles.text + " text text_type_main-medium mt-10"}>
-					{name}
+					{order.name}
 				</p>
-				<p
-					className={styles.text + " text text_type_main-default mt-3"}
-					style={{ color: statusColor }}>
-					{orderStatus}
-				</p>
+
+				{order.status === "done" && (
+					<p
+						className={styles.text + " text text_type_main-default mt-3"}
+						style={{ color: "#0cc" }}>
+						Выполнен
+					</p>
+				)}
+
+				{order.status === "pending" && (
+					<p
+						className={styles.text + " text text_type_main-default mt-3"}
+						style={{ color: "white" }}>
+						Готовится
+					</p>
+				)}
+
+				{order.status === "delete" && (
+					<p
+						className={styles.text + " text text_type_main-default mt-3"}
+						style={{ color: "red" }}>
+						Отменен
+					</p>
+				)}
+
 				<p className={styles.text + " text text_type_main-medium mt-15"}>
 					Состав:
 				</p>
-				<ul className={scrollStyle}>
+				<ul className={styles.ul}>
 					{arrayUnique.map((item: TElement, index: number) => (
 						<li className={styles.li} key={index}>
 							<div className={styles.image_div}>
@@ -72,11 +142,15 @@ export function OrderFeedById() {
 					</p>
 					<div className={styles.totalFoot}>
 						{" "}
-						<p className="text text_type_digits-default pl-6 mr-2">{cost}</p>
+						<p className="text text_type_digits-default pl-6 mr-2">
+							{totalCostOrder}
+						</p>
 						<CurrencyIcon type="primary" />
 					</div>
 				</div>
 			</div>
 		</>
+	) : (
+		<div>Loading.....</div>
 	);
 }

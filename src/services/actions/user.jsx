@@ -13,7 +13,6 @@ export const checkAuth = () => {
 		}
 		getUserInfoOnServer()
 			.then((data) => {
-				console.log("checkAuth 1");
 				dispatch({ type: USER_SUCCESS, payload: data });
 			})
 			.catch((err) => {

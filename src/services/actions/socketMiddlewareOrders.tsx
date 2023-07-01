@@ -1,5 +1,8 @@
 import type { Middleware, MiddlewareAPI } from "redux";
 import { AppDispatch, RootState } from "../utile/typesRedux";
+import { getCookie } from "../utile/utile";
+import { IOrderHistoryStart, IOrderHistoryClosedByUser } from "./orderHistory";
+import { IOrderProfileStart, IOrderProfileClosedByUser } from "./orderProfile";
 
 export const WS_CONNECTION_START: "WS_CONNECTION_START" = "WS_CONNECTION_START";
 export const WS_CONNECTION_SUCCESS: "WS_CONNECTION_SUCCESS" =
@@ -7,6 +10,8 @@ export const WS_CONNECTION_SUCCESS: "WS_CONNECTION_SUCCESS" =
 export const WS_CONNECTION_ERROR: "WS_CONNECTION_ERROR" = "WS_CONNECTION_ERROR";
 export const WS_CONNECTION_CLOSED: "WS_CONNECTION_CLOSED" =
 	"WS_CONNECTION_CLOSED";
+export const WS_CONNECTION_CLOSED_BY_USER: "WS_CONNECTION_CLOSED_BY_USER" =
+	"WS_CONNECTION_CLOSED_BY_USER";
 export const WS_GET_MESSAGE: "WS_GET_MESSAGE" = "WS_GET_MESSAGE";
 export const WS_SEND_MESSAGE: "WS_SEND_MESSAGE" = "WS_SEND_MESSAGE";
 
@@ -38,13 +43,22 @@ export type TWsConnectionSendMessage = {
 	payload: string;
 };
 
+export type TWsConnectionClosedByUser = {
+	type: typeof WS_CONNECTION_CLOSED_BY_USER;
+	payload: string;
+};
+
 export type TWsOrderActions =
-	| TWsConnectionStart
+	| IOrderHistoryStart
+	| IOrderProfileStart
 	| TWsConnectionSuccess
 	| TWsConnectionError
 	| TWsConnectionClosed
 	| TWsConnectionGetMessage
-	| TWsConnectionSendMessage;
+	| TWsConnectionSendMessage
+	| TWsConnectionClosedByUser
+	| IOrderHistoryClosedByUser
+	| IOrderProfileClosedByUser;
 
 // socketMiddleware.ts
 
@@ -56,36 +70,44 @@ export const socketMiddlewareOrders = (wsApiOrderUrl: string): Middleware => {
 			const { dispatch } = store;
 			const { type } = action;
 
-			if (type === "WS_CONNECTION_START") {
-				// объект класса WebSocket
-				socket = new WebSocket(wsApiOrderUrl);
+			// объект класса WebSocket for ORDERR Profile
+			if (type === "ORDER_HISTORY_START") {
+				socket = new WebSocket(`${wsApiOrderUrl}/all`);
+			}
+
+			// объект класса for ORDERR HIstory
+			if (type === "ORDER_PROFILE_START") {
+				socket = new WebSocket(`${wsApiOrderUrl}?token=${getCookie("token")}`);
 			}
 			if (socket) {
-				// функция, которая вызывается при открытии сокета
 				socket.onopen = (event) => {
 					dispatch({ type: "WS_CONNECTION_SUCCESS", payload: event });
 				};
 
-				// функция, которая вызывается при ошибке соединения
 				socket.onerror = (event) => {
 					dispatch({ type: "WS_CONNECTION_ERROR", payload: event });
 				};
 
-				// функция, которая вызывается при получения события от сервера
 				socket.onmessage = (event) => {
 					const { data } = event;
 					const orders = JSON.parse(data);
-
 					dispatch({ type: "WS_GET_MESSAGE", payload: orders });
 				};
-				// функция, которая вызывается при закрытии соединения
+
 				socket.onclose = (event) => {
 					dispatch({ type: "WS_CONNECTION_CLOSED", payload: event });
 				};
 
+				if (action.type === "ORDER_HISTORY_CLOSED_BY_USER") {
+					socket.close(1000);
+				}
+
+				if (action.type === "ORDER_PROFILE_CLOSED_BY_USER") {
+					socket.close(1000);
+				}
+
 				if (type === "WS_SEND_MESSAGE") {
 					const message = action.payload;
-					// функция для отправки сообщения на сервер
 					socket.send(JSON.stringify(message));
 				}
 			}

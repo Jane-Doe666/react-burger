@@ -95,6 +95,7 @@ export default function BurgerIngredients() {
 									}}
 									state={{
 										state: { modal: true },
+										background: "/",
 									}}
 									className={styles.div}
 									key={item._id}>
