@@ -23,16 +23,11 @@ export function OrderFeedById() {
 	const dispatch = useDispatch();
 	const paramsID = useParams().id;
 
-	// id в компонент попадает верный, но в модалке отображается один и тот же заказ после первого клика
-
-	console.log(111, paramsID);
-	console.log(222, location?.state);
-
 	const ingredientsDataBaseInfo = useSelector((state: any) => state.app.items);
 	const listOfOrders = useSelector((state: any) => state.wsOrders.messages);
 
 	const order = listOfOrders?.orders?.find(
-		(item: TItemOrderFeed) => (item._id = paramsID)
+		(item: TItemOrderFeed) => item._id === paramsID
 	);
 
 	const ingredientsInOrder = order?.ingredients.map((element: string) =>
