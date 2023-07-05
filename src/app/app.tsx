@@ -16,21 +16,20 @@ import { ProtectedRoute } from "../components/HOC/ProtectedRoute";
 import IngredientDetails from "../components/ingredient-details/IngredientDetails";
 import { checkAuth } from "../services/actions/user";
 import { Modal } from "../components/modal/Modal";
-// import { OrdersProfile } from "../pages/orders-profile/OrdersProfile";
 import { OrderFeedById } from "../pages/order/OrderFeedById";
 import { OrdersProfile } from "../pages/orders-profile/OrdersProfile";
+import { OrderProfileById } from "../pages/order/OrderProfileById";
+import { useAppSelector } from "../services/utile/typesRedux";
 
 function App() {
-	const dispatch: any = useDispatch();
-	const data = useSelector((state: any) => state.app.items);
+	const dispatch = useDispatch();
+	const data = useAppSelector((state) => state.app.items);
 	const { state } = useLocation();
 	const location = useLocation();
 	const navigate = useNavigate();
-	const modal = location?.state?.state?.modal;
 	const background = location?.state?.background;
-	// console.log(location);
 
-	const handleClose: any = () => {
+	const handleClose = () => {
 		navigate(-1);
 	};
 
@@ -46,7 +45,7 @@ function App() {
 			) : (
 				<div className={styles.App}>
 					<AppHeader />
-					<Routes location={modal ? background : location}>
+					<Routes location={background || location}>
 						<Route path="/" element={<Main />} />
 						<Route
 							path="/login"
@@ -78,7 +77,7 @@ function App() {
 							path="/profile/orders/:id"
 							element={
 								<ProtectedRoute authOnly={true}>
-									<OrdersProfile />
+									<OrderProfileById />
 								</ProtectedRoute>
 							}
 						/>
@@ -98,16 +97,19 @@ function App() {
 									</Modal>
 								}
 							/>
-						</Routes>
-					)}
-
-					{state && (
-						<Routes>
 							<Route
 								path="/feed/:id"
 								element={
 									<Modal handleClose={handleClose}>
 										<OrderFeedById />
+									</Modal>
+								}
+							/>
+							<Route
+								path="/profile/orders/:id"
+								element={
+									<Modal handleClose={handleClose}>
+										<OrderProfileById />
 									</Modal>
 								}
 							/>
@@ -120,11 +122,3 @@ function App() {
 }
 
 export default App;
-
-//     <Route
-//       path="/profile"
-//       element={<ProtectedRouteElement element={<ProfilePage />} />}
-//     >
-//       <Route path="/profile/" element={<ProfileInputs />} />
-//       <Route path="/profile/orders" element={<OrdersHistoryFeed />} />
-//     </Route>

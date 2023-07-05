@@ -2,30 +2,23 @@ import {
 	ConstructorElement,
 	DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { FC, useCallback, useRef } from "react";
-import { useDrag, useDrop } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
-
+import React, { DetailedHTMLProps, FC, useCallback, useRef } from "react";
+import { useDrag, useDrop, XYCoord } from "react-dnd";
+import { useDispatch } from "react-redux";
 import styles from "../burger-constructor/burger-constructor.module.css";
 import {
 	changeOrderInConstructor,
 	deleteIngredientFromConstructor,
 } from "../../services/actions/burgerConstructor";
-import { TElement } from "../../services/utile/types";
-
-type TConstructorElement = {
-	index: number;
-	element: TElement;
-	topOrBottom?: "top" | "bottom";
-	extraName?: string;
-};
+import { TElement, TConstructorElement } from "../../services/utile/types";
+import { useAppSelector } from "../../services/utile/typesRedux";
 
 export const ConstructorElementContainer: FC<TConstructorElement> = ({
 	element,
 	index,
 }) => {
 	const dispatch = useDispatch();
-	const ingredients = useSelector((state: any) => state.burgerConstructor.list);
+	const ingredients = useAppSelector((state) => state.burgerConstructor.list);
 	const ref = useRef<HTMLDivElement | null>(null);
 	const [, dragRef] = useDrag({
 		type: "item",
@@ -46,13 +39,18 @@ export const ConstructorElementContainer: FC<TConstructorElement> = ({
 
 	const [, dropRef] = useDrop<TElement, void>({
 		accept: "item",
-		hover: (item, monitor: any) => {
+		hover: (item, monitor) => {
+			if (!ref.current) {
+				return;
+			}
 			const dragIndex = item.index;
 			const hoverIndex = index;
-			const hoverBoundingRect: any = ref.current?.getBoundingClientRect();
+			const hoverBoundingRect = ref.current?.getBoundingClientRect();
 			const hoverMiddleY =
 				(hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-			const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top;
+
+			const hoverActualY =
+				(monitor.getClientOffset() as XYCoord).y - hoverBoundingRect.top;
 
 			if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return;
 

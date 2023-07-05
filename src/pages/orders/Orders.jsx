@@ -19,7 +19,6 @@ export function Orders() {
 	const location = useLocation();
 	const listOfOrders = useSelector((state) => state.wsOrders.messages);
 	const { orders, total, totalToday } = listOfOrders;
-	console.log(222, location.state);
 
 	useEffect(() => {
 		dispatch({

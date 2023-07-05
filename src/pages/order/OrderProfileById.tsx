@@ -9,11 +9,11 @@ import { useParams } from "react-router";
 import { createDataOrder } from "../../services/utile/utile";
 import { getIngredients } from "../../services/actions/app";
 import {
-	ORDER_HISTORY_CLOSED_BY_USER,
-	ORDER_HISTORY_START,
-} from "../../services/actions/orderHistory";
+	ORDER_PROFILE_CLOSED_BY_USER,
+	ORDER_PROFILE_START,
+} from "../../services/actions/orderProfile";
 
-export function OrderFeedById() {
+export function OrderProfileById() {
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const paramsID = useParams().id;
@@ -54,11 +54,11 @@ export function OrderFeedById() {
 	useEffect(() => {
 		if (!location?.state) {
 			dispatch({
-				type: ORDER_HISTORY_START,
+				type: ORDER_PROFILE_START,
 			});
 			dispatch(getIngredients());
 			return () => {
-				dispatch({ type: ORDER_HISTORY_CLOSED_BY_USER });
+				dispatch({ type: ORDER_PROFILE_CLOSED_BY_USER });
 			};
 		}
 	}, []);
@@ -72,7 +72,7 @@ export function OrderFeedById() {
 					{order.name}
 				</p>
 
-				{order?.status === "done" && (
+				{order.status === "done" && (
 					<p
 						className={styles.text + " text text_type_main-default mt-3"}
 						style={{ color: "#0cc" }}>
@@ -80,7 +80,7 @@ export function OrderFeedById() {
 					</p>
 				)}
 
-				{order?.status === "pending" && (
+				{order.status === "pending" && (
 					<p
 						className={styles.text + " text text_type_main-default mt-3"}
 						style={{ color: "white" }}>
@@ -88,7 +88,7 @@ export function OrderFeedById() {
 					</p>
 				)}
 
-				{order?.status === "delete" && (
+				{order.status === "delete" && (
 					<p
 						className={styles.text + " text text_type_main-default mt-3"}
 						style={{ color: "red" }}>
@@ -100,7 +100,7 @@ export function OrderFeedById() {
 					Состав:
 				</p>
 				<ul className={styles.ul}>
-					{arrayUnique?.map((item: TElement, index: number) => (
+					{arrayUnique.map((item: TElement, index: number) => (
 						<li className={styles.li} key={index}>
 							<div className={styles.image_div}>
 								<img

@@ -69,3 +69,10 @@ export type TItemOrderFeed = {
 	updatedAt: string;
 	_id: string | undefined;
 };
+
+export type TConstructorElement = {
+	index: number;
+	element: TElement;
+	topOrBottom?: "top" | "bottom";
+	extraName?: string;
+};

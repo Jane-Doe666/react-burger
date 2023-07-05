@@ -33,9 +33,17 @@ export default function AppHeader() {
 			<div className={`${styles.div} ${styles.mr}`}>
 				<NavLink
 					to="/profile"
-					className={location === "/profile" ? styles.b : styles.a}>
+					className={
+						location === "/profile" || location === "/profile/orders"
+							? styles.b
+							: styles.a
+					}>
 					<ProfileIcon
-						type={location === "/profile" ? "primary" : "secondary"}
+						type={
+							location === "/profile" || location === "/profile/orders"
+								? "primary"
+								: "secondary"
+						}
 					/>
 					<p className="text text_type_main-default pr-5 pl-2">
 						Личный кабинет

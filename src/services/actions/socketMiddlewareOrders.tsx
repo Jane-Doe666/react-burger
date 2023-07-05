@@ -77,7 +77,9 @@ export const socketMiddlewareOrders = (wsApiOrderUrl: string): Middleware => {
 
 			// объект класса for ORDERR HIstory
 			if (type === "ORDER_PROFILE_START") {
-				socket = new WebSocket(`${wsApiOrderUrl}?token=${getCookie("token")}`);
+				const accessToken = getCookie("accessToken").slice(7);
+
+				socket = new WebSocket(`${wsApiOrderUrl}?token=${accessToken}`);
 			}
 			if (socket) {
 				socket.onopen = (event) => {

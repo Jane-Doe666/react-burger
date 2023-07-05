@@ -7,11 +7,12 @@ import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
 import { TElement } from "../../services/utile/types";
 import { Ingredient } from "../ingredient/Ingredient";
+import { useAppSelector } from "../../services/utile/typesRedux";
 
 export default function BurgerIngredients() {
 	type TActiveState = "one" | "two" | "three";
 	const dispatch = useDispatch();
-	const data = useSelector((state: any) => state.app.items);
+	const data = useAppSelector((state) => state.app.items);
 	const openIngredient = (item: TElement) => {
 		dispatch(openIngredientInfo(item));
 	};

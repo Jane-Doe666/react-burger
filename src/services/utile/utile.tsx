@@ -22,7 +22,7 @@ export function setCookie(name: string, value: string, options: any = {}) {
 	document.cookie = updatedCookie;
 }
 
-export function getCookie(name: string) {
+export const getCookie = (name: string) => {
 	let matches = document.cookie.match(
 		new RegExp(
 			"(?:^|; )" +
@@ -30,8 +30,8 @@ export function getCookie(name: string) {
 				"=([^;]*)"
 		)
 	);
-	return matches ? decodeURIComponent(matches[1]) : undefined;
-}
+	return matches ? decodeURIComponent(matches[1]) : "";
+};
 
 export function deleteCookie(name: string) {
 	setCookie(name, "", {
@@ -40,21 +40,29 @@ export function deleteCookie(name: string) {
 }
 
 export const createDataOrder = (updatedAt: string) => {
-	const createData = new Date(updatedAt);
-	const today = new Date().getDay();
-	const dayOrder = createData.getDay();
-	let diff = today - dayOrder;
+	const date = Date.parse(updatedAt);
+	const isNow = Date.now();
+	const dateParse = isNow - date;
 
-	const hours =
-		createData.getHours() > 9
-			? createData.getHours()
-			: "0" + createData.getHours();
-	const minutes =
-		createData.getMinutes() > 9
-			? createData.getMinutes()
-			: "0" + createData.getMinutes();
+	let minutes: string | number = Math.floor((dateParse / (1000 * 60)) % 60);
+	let hours: string | number = Math.floor((dateParse / (1000 * 60 * 60)) % 24);
+	let days = Math.floor(dateParse / (1000 * 60 * 60 * 24));
 
-	if (diff === 0) return `Сегодня, ${hours}:${minutes}`;
-	if (diff === 1) return `Вчера, ${hours}:${minutes}`;
-	if (diff > 2) return `${diff} дня назад, ${hours}:${minutes}`;
+	minutes = minutes > 9 ? minutes : "0" + minutes;
+	hours = hours > 9 ? hours : "0" + hours;
+	const daysMessage = days % 10;
+
+	if (days === 0) return `Сегодня ${hours}:${minutes}`;
+	if (days === 1) return `Вчера ${hours}:${minutes}`;
+
+	if ((days < 5 && days % 3) || days % 4)
+		return `${days} дня назад, ${hours}:${minutes}`;
+
+	if (days > 20 && daysMessage === 1)
+		return `${days} день назад, ${hours}:${minutes}`;
+
+	if ((days > 20 && daysMessage === 2) || 3 || 4)
+		return `${days} дня назад, ${hours}:${minutes}`;
+
+	return `${days} дней назад, ${hours}:${minutes}`;
 };

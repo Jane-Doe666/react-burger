@@ -1,7 +1,11 @@
 .main {
 	margin: auto;
+	padding-left: 25px;
+	padding-right: 25px;
+	padding-bottom: 45px;
 	margin-top: 80px;
-	max-width: 600px;
+	width: 600px;
+	text-align: center;
 }
 .text {
 	text-align: left;
@@ -14,13 +18,6 @@
 	margin-top: 24px;
 	text-decoration: none;
 	overflow-y: scroll;
-}
-
-.ul_wo_scroll {
-	padding: 0;
-	max-height: 350px;
-	margin-top: 24px;
-	text-decoration: none;
 }
 
 .li {

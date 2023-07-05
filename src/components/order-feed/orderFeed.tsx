@@ -4,13 +4,16 @@ import styles from "../../pages/orders/orders.module.css";
 import { useSelector } from "react-redux";
 import { TElement, TItem } from "../../services/utile/types";
 import { createDataOrder } from "../../services/utile/utile";
+import { useLocation } from "react-router";
 
-export function OrderFeed(item: TItem) {
-	const { number, name, updatedAt, ingredients, _id } = item.item; // ID
+export function OrderFeed(item: TItem, path: string) {
+	const { number, name, updatedAt, ingredients, _id, status } = item.item; // ID
 	const ingredientsBD = useSelector((state: any) => state.app.items);
 	const ingredientsInOrder = ingredients.map((element) =>
 		ingredientsBD.find((item: TElement) => item._id === element)
 	);
+
+	const location = useLocation().pathname;
 
 	const totalCostOrder = ingredientsInOrder.reduce((acc, item) => {
 		const total = acc + item?.price;
@@ -18,17 +21,27 @@ export function OrderFeed(item: TItem) {
 	}, 0);
 
 	const ingredientsQty = ingredientsInOrder.length - 6;
-	const orderDay = createDataOrder(updatedAt);
+	let orderDay = createDataOrder(updatedAt);
+
+	const statusOrder =
+		status === "done"
+			? "Выполнен"
+			: status === "pending"
+			? "Готовится"
+			: "Отменен";
+
+	const statusColor =
+		status === "done" ? "white" : status === "pending" ? "#0cc" : "red";
 
 	return item ? (
 		<div className={styles.container_order + " p-6 mb-4"}>
 			{" "}
 			<Link
 				className={styles.link}
-				to={`/feed/${_id}`}
+				to={`${location}/${_id}`}
 				state={{
 					state: { modal: true },
-					background: "/feed",
+					background: location,
 					items: item,
 				}}>
 				<div className={styles.order}>
@@ -38,6 +51,11 @@ export function OrderFeed(item: TItem) {
 					</p>
 				</div>
 				<p className="text text_type_main-medium mt-6 mb-6">{name}</p>
+				<p
+					className=" text text_type_main-default mt-6 mb-6"
+					style={{ color: statusColor }}>
+					{statusOrder}
+				</p>
 				<div className={styles.images}>
 					<div className={styles.image_container}>
 						{ingredientsInOrder.map((item, index) => {

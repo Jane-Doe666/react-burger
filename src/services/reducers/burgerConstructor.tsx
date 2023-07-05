@@ -1,18 +1,23 @@
-import { ADD, CHANGE_ORDER, DELETE } from "../actions/burgerConstructor";
+import {
+	ADD,
+	CHANGE_ORDER,
+	CLEAR_CONSTRUCTOR,
+	DELETE,
+} from "../actions/burgerConstructor";
 import { TElement } from "../utile/types";
 
 export type TInitialStateBurgerConstructor = {
-	bunTop: TElement | undefined;
+	bunTop: TElement | null;
 	list: TElement[];
-	bunBottom: TElement | undefined;
-	indexDragOrder: undefined;
+	bunBottom: TElement | null;
+	indexDragOrder: null;
 };
 
 const initialState: TInitialStateBurgerConstructor = {
-	bunTop: undefined,
+	bunTop: null,
 	list: [],
-	bunBottom: undefined,
-	indexDragOrder: undefined,
+	bunBottom: null,
+	indexDragOrder: null,
 };
 
 export const burgerConstructorReducer = (
@@ -36,6 +41,15 @@ export const burgerConstructorReducer = (
 				...state,
 				bunTop: action.payload,
 				bunBottom: action.payload,
+			};
+		}
+
+		case CLEAR_CONSTRUCTOR: {
+			return {
+				...state,
+				list: [],
+				bunBottom: null,
+				bunTop: null,
 			};
 		}
 

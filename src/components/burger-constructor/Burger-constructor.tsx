@@ -4,41 +4,37 @@ import {
 	CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
-
 import OrderDetails from "../order-details/OrderDetails";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { useCallback, useMemo } from "react";
 import { iDInOrderSelectorCreator } from "../../services/selectors/selector";
 import { ConstructorElementContainer } from "../burger-constructor-element/Constructor-element";
 import { getOrder } from "../../services/actions/orderDetails";
 import { pushIngredientToConstructor } from "../../services/actions/burgerConstructor";
-
 import { getCookie } from "../../services/utile/utile";
 import { useNavigate } from "react-router-dom";
-import { closeModal, CLOSE_MODAL } from "../../services/actions/app";
+import { closeModal } from "../../services/actions/app";
 import { Loader } from "../loader/Loader";
 import { TElement } from "../../services/utile/types";
 import { Modal } from "../modal/Modal";
+import { useAppSelector } from "../../services/utile/typesRedux";
 
 export default function BurgerConstructor() {
-	const dispatch: any = useDispatch();
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const openedModal = useSelector((state: any) => state.orderDetails.isModal);
-	const ingredients = useSelector((state: any) => state.burgerConstructor.list);
-	const bunTop = useSelector((state: any) => state.burgerConstructor.bunTop);
-	const bunBottom = useSelector(
-		(state: any) => state.burgerConstructor.bunBottom
+	const openedModal = useAppSelector((state) => state.orderDetails.isModal);
+	const ingredients = useAppSelector((state) => state.burgerConstructor.list);
+	const bunTop = useAppSelector((state) => state.burgerConstructor.bunTop);
+	const bunBottom = useAppSelector(
+		(state) => state.burgerConstructor.bunBottom
 	);
 	const isCookie = getCookie("refreshToken");
-	const isLoading = useSelector((state: any) => state.orderDetails.isLoader);
+	const isLoading = useAppSelector((state) => state.orderDetails.isLoader);
 
-	const closePopup = useCallback(
-		(): void => dispatch(closeModal()),
-		[dispatch]
-	);
+	const closePopup = useCallback(() => dispatch(closeModal()), [dispatch]);
 
-	const iDIngredientsInOrder = useSelector((state: any) =>
+	const iDIngredientsInOrder = useAppSelector((state) =>
 		iDInOrderSelectorCreator(state.burgerConstructor)
 	);
 
@@ -56,7 +52,7 @@ export default function BurgerConstructor() {
 		},
 	});
 
-	const getTotalOrder = (ingredients: any, bunTop: TElement) => {
+	const getTotalOrder = (ingredients: TElement[], bunTop: TElement | null) => {
 		const data = bunTop
 			? bunTop.price * 2 +
 			  ingredients.reduce((acc: number, item: TElement) => acc + item.price, 0)
@@ -79,8 +75,7 @@ export default function BurgerConstructor() {
 						<ConstructorElement
 							type="top"
 							isLocked={true}
-							// id={bunTop.newID}
-							key={bunTop.newID}
+							key={bunTop.newId}
 							text={bunTop.name + " (верх)"}
 							price={bunTop.price}
 							thumbnail={bunTop.image}
@@ -100,8 +95,7 @@ export default function BurgerConstructor() {
 				{bunBottom && (
 					<div className={styles.elementBottom}>
 						<ConstructorElement
-							// id={bunBottom.newID}
-							key={bunBottom.newID}
+							key={bunBottom.newId}
 							type="bottom"
 							isLocked={true}
 							text={bunBottom.name + " (низ)"}
@@ -139,7 +133,6 @@ export default function BurgerConstructor() {
 				{isLoading ? (
 					<Loader />
 				) : (
-					// <h2>Loading....</h2>
 					openedModal && (
 						<Modal handleClose={closePopup}>
 							<OrderDetails />
