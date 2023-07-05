@@ -5,14 +5,16 @@ type TEl = {
 	[key: string]: number;
 };
 
-export type TCreator = {
-	bunTop: TElement;
-	list: TElement[];
-	bunBottom: TElement;
-	indexDragOrder: null;
-};
+// export type Ttest = {
+// 	bunTop: TElement;
+// 	list: TElement[];
+// 	bunBottom: TElement;
+// 	indexDragOrder: null;
+// };
 
-export const counterByIdSelectorCreator = (state: TCreator) => {
+export const counterByIdSelectorCreator = (
+	state: TInitialStateBurgerConstructor
+) => {
 	const data = [...state.list, state.bunTop, state.bunBottom]
 		.filter((item) => !!item)
 		.map((item) => ({ id: item._id }))

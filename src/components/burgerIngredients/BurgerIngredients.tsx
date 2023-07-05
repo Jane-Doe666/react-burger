@@ -43,9 +43,12 @@ export default function BurgerIngredients() {
 			: setCurrent("one");
 	}, [inViewOne, inViewTwo, inViewThree]);
 
-	function handleClick(section: any, activeState: TActiveState) {
+	function handleClick(
+		section: React.RefObject<HTMLDivElement> | null,
+		activeState: TActiveState
+	) {
 		setCurrent(activeState);
-		section.current.scrollIntoView({ behavior: "smooth", block: "start" });
+		section?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 	}
 
 	return (
@@ -173,11 +176,6 @@ export default function BurgerIngredients() {
 					</ul>
 				</div>
 			</div>
-			{/* {openedModal && (
-				<Modal headerText="Детали ингредиента">
-					<IngredientDetails />
-				</Modal>
-			)} */}
 		</section>
 	);
 }

@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type TReset = {
 	email: "" | string;
 };
@@ -75,4 +77,9 @@ export type TConstructorElement = {
 	element: TElement;
 	topOrBottom?: "top" | "bottom";
 	extraName?: string;
+};
+
+export type TProtectedRoute = {
+	authOnly?: false | true;
+	children: ReactNode;
 };

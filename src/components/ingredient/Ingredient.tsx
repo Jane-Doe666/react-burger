@@ -4,10 +4,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient.module.css";
 import { useDrag } from "react-dnd";
-import { useSelector } from "react-redux";
 import { counterByIdSelectorCreator } from "../../services/selectors/selector";
 import { FC } from "react";
 import { TElement } from "../../services/utile/types";
+import { useAppSelector } from "../../services/utile/typesRedux";
 
 type TIngredientProps = {
 	item: TElement;
@@ -16,7 +16,7 @@ type TIngredientProps = {
 };
 
 export const Ingredient: FC<TIngredientProps> = ({ item, id, onClick }) => {
-	const counterById = useSelector((state: any) =>
+	const counterById = useAppSelector((state) =>
 		counterByIdSelectorCreator(state.burgerConstructor)
 	);
 	const [, dragRef] = useDrag({
