@@ -8,7 +8,7 @@ type TModalOverlay = {
 };
 
 export const ModalOverlay: FC<TModalOverlay> = ({ children, onClick }) => {
-	function closeByOverlay(evt: any) {
+	function closeByOverlay(evt: React.MouseEvent<HTMLDivElement, MouseEvent>) {
 		if (evt.target === evt.currentTarget) onClick(evt);
 	}
 

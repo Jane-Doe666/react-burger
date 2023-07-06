@@ -1,11 +1,22 @@
+import { NavigateFunction } from "react-router";
 import { getAuthorizationOnServer } from "../api";
+import { TRegistrationAnswer, TValue } from "../utile/types";
 import { setCookie } from "../utile/utile";
 
-export const AUTHORIZATION_REQUEST = "LOGIN/AUTHORIZATION_REQUEST";
+export const AUTHORIZATION_REQUEST: "LOGIN/AUTHORIZATION_REQUEST" =
+	"LOGIN/AUTHORIZATION_REQUEST";
 
-export function getAuthorization(value, location, navigate) {
+export interface IAuthorizationRequest {
+	readonly type: typeof AUTHORIZATION_REQUEST;
+	payload: TRegistrationAnswer;
+}
+
+export function getAuthorization(
+	value: TValue,
+	location: string,
+	navigate: NavigateFunction
+) {
 	return function (dispatch) {
-		console.log(5, location);
 		getAuthorizationOnServer(value)
 			.then((data) => {
 				setCookie("accessToken", data.accessToken, {

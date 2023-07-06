@@ -1,5 +1,23 @@
 import { ReactNode } from "react";
 
+export type TRegistrationAnswer = {
+	success: boolean;
+	accessToken: string;
+	refreshToken: string;
+	user: {
+		email: string;
+		name: string;
+	};
+};
+
+export type TUserInfo = {
+	success: boolean;
+	user: {
+		email: string;
+		name: string;
+	};
+};
+
 export type TReset = {
 	email: "" | string;
 };
@@ -72,6 +90,13 @@ export type TItemOrderFeed = {
 	_id: string | undefined;
 };
 
+export type TFeed = {
+	success: boolean;
+	orders: TItemOrderFeed[];
+	total: number;
+	totalToday: number;
+};
+
 export type TConstructorElement = {
 	index: number;
 	element: TElement;
@@ -82,4 +107,17 @@ export type TConstructorElement = {
 export type TProtectedRoute = {
 	authOnly?: false | true;
 	children: ReactNode;
+};
+
+export type TIngredients = {
+	readonly success: boolean;
+	readonly data: TElement[];
+};
+
+export type TIdsList = {
+	ingredients: (string | undefined)[];
+};
+
+export type TIds = {
+	ingredients: (string | undefined)[];
 };

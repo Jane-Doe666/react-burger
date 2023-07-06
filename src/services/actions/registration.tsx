@@ -1,9 +1,18 @@
+import { NavigateFunction } from "react-router";
 import { createRegistrationOnServer } from "../api";
+import { TRegistrationAnswer, TValue } from "../utile/types";
+import { AppDispatch, AppThunk, useAppDispatch } from "../utile/typesRedux";
 import { setCookie } from "../utile/utile";
 
-export const REGISTRATION_REQUEST = "REGISTRATION/REGISTRATION_REQUEST";
+export const REGISTRATION_REQUEST: "REGISTRATION/REGISTRATION_REQUEST" =
+	"REGISTRATION/REGISTRATION_REQUEST";
 
-export function getRegistration(value, navigate) {
+export type TRegistrationRequest = {
+	type: typeof REGISTRATION_REQUEST;
+	payload: TRegistrationAnswer;
+};
+
+export const getRegistration = (value: TValue, navigate: NavigateFunction) => {
 	return function (dispatch) {
 		createRegistrationOnServer(value)
 			.then((res) => {
@@ -21,4 +30,4 @@ export function getRegistration(value, navigate) {
 				console.error(`Ошибка: ${err}`);
 			});
 	};
-}
+};

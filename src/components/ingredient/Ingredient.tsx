@@ -5,7 +5,7 @@ import {
 import styles from "./ingredient.module.css";
 import { useDrag } from "react-dnd";
 import { counterByIdSelectorCreator } from "../../services/selectors/selector";
-import { FC } from "react";
+import React, { FC } from "react";
 import { TElement } from "../../services/utile/types";
 import { useAppSelector } from "../../services/utile/typesRedux";
 
@@ -24,16 +24,24 @@ export const Ingredient: FC<TIngredientProps> = ({ item, id, onClick }) => {
 		item: { id },
 	});
 
+	const ingredientQty = React.useMemo(() => {
+		let counter = 0;
+		counterById.forEach((element) => {
+			if (element._id === id) {
+				counter = counter + 1;
+			}
+		});
+		return counter;
+	}, [counterById]);
+
 	return (
 		<>
 			<li className={styles.li} onClick={onClick}>
-				{counterById
-					.filter((item) => item.id === id)
-					.map((item, index) => (
-						<div className={styles.counter} key={index}>
-							<Counter count={item.count} size="default" extraClass="m-1" />
-						</div>
-					))}
+				{ingredientQty > 0 && (
+					<div className={styles.counter} key={item._id}>
+						<Counter count={ingredientQty} size="default" extraClass="m-1" />
+					</div>
+				)}
 				<div>
 					{" "}
 					<img ref={dragRef} src={item.image} alt="картинка ингредиента" />

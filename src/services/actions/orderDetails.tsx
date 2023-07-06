@@ -1,14 +1,37 @@
 import { getIdOrderFromServer, getRefreshTokenOnServer } from "../api";
+import { TElement, TIds } from "../utile/types";
 import { setCookie } from "../utile/utile";
+import { ICloseModal } from "./app";
 import { CLEAR_CONSTRUCTOR } from "./burgerConstructor";
 import { REFRESH_TOKEN } from "./refreshToken";
 
-export const OPEN_ORDER = "ORDER_DETAILS/OPEN_ORDER";
-export const GET_ORDER_REQUEST = "ORDER_DETAILS/GET_ORDER_REQUEST";
-export const GET_ORDER_SUCCESS = "ORDER_DETAILS/GET_ORDER_SUCCESS";
-export const GET_ORDER_ERROR = "ORDER_DETAILS/GET_ORDER_ERROR";
+export const GET_ORDER_REQUEST: "ORDER_DETAILS/GET_ORDER_REQUEST" =
+	"ORDER_DETAILS/GET_ORDER_REQUEST";
+export const GET_ORDER_SUCCESS: "ORDER_DETAILS/GET_ORDER_SUCCESS" =
+	"ORDER_DETAILS/GET_ORDER_SUCCESS";
+export const GET_ORDER_ERROR: "ORDER_DETAILS/GET_ORDER_ERROR" =
+	"ORDER_DETAILS/GET_ORDER_ERROR";
 
-export function getOrder(idList) {
+export interface IGetOrderRequest {
+	type: typeof GET_ORDER_REQUEST;
+}
+
+export interface IGetOrderSuccess {
+	type: typeof GET_ORDER_SUCCESS;
+	items: TElement[];
+}
+
+export interface IGetOrderError {
+	type: typeof GET_ORDER_ERROR;
+}
+
+export type TOrderDetailsActions =
+	| IGetOrderRequest
+	| IGetOrderSuccess
+	| IGetOrderError
+	| ICloseModal;
+
+export function getOrder(idList: TIds) {
 	return function (dispatch) {
 		dispatch({
 			type: GET_ORDER_REQUEST,

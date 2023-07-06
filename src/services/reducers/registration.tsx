@@ -1,13 +1,24 @@
-import { AUTHORIZATION_REQUEST } from "../actions/authorization";
-import { GET_USER_INFO } from "../actions/getUserInfo";
-import { LOGOUT } from "../actions/logout";
-import { RESET_PASSWORD } from "../actions/passwordReset";
-import { RESTORE_PASSWORD } from "../actions/passwordRestore";
-import { REFRESH_TOKEN } from "../actions/refreshToken";
-import { REGISTRATION_REQUEST } from "../actions/registration";
-import { UPDATE_USER_INFO } from "../actions/updateUrerInfo";
-import { AUTH_CHECKED, USER_SUCCESS } from "../actions/user";
-import { TAuth } from "../utile/types";
+import {
+	AUTHORIZATION_REQUEST,
+	IAuthorizationRequest,
+} from "../actions/authorization";
+import { GET_USER_INFO, TGetUserInfo } from "../actions/getUserInfo";
+import { LOGOUT, TLogOut } from "../actions/logout";
+import { RESET_PASSWORD, TResetPasswordAction } from "../actions/passwordReset";
+import {
+	RESTORE_PASSWORD,
+	TRestorePasswordAction,
+} from "../actions/passwordRestore";
+import { REFRESH_TOKEN, TRefreshTokenAction } from "../actions/refreshToken";
+import {
+	REGISTRATION_REQUEST,
+	TRegistrationRequest,
+} from "../actions/registration";
+import {
+	TApdateUserInfoAction,
+	UPDATE_USER_INFO,
+} from "../actions/updateUrerInfo";
+import { AUTH_CHECKED, TUserActions, USER_SUCCESS } from "../actions/user";
 
 type TUser = {
 	email: string;
@@ -36,7 +47,21 @@ const initialState: TInitialState = {
 	user: false,
 };
 
-export const registrationReducer = (state = initialState, action: any) => {
+export type TRegistrationActions =
+	| IAuthorizationRequest
+	| TRegistrationRequest
+	| TGetUserInfo
+	| TLogOut
+	| TResetPasswordAction
+	| TRestorePasswordAction
+	| TRefreshTokenAction
+	| TApdateUserInfoAction
+	| TUserActions;
+
+export const registrationReducer = (
+	state = initialState,
+	action: TRegistrationActions
+) => {
 	switch (action.type) {
 		case REGISTRATION_REQUEST: {
 			return {

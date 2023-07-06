@@ -15,7 +15,7 @@ export function Login() {
 	type TIcon = "ShowIcon" | "HideIcon";
 	type TImput = "password" | "text";
 	const navigate = useNavigate();
-	const dispatch: any = useDispatch();
+	const dispatch = useDispatch();
 	const location = useLocation();
 	const { values, handleChange } = useForm<TValue>({
 		email: "",
@@ -27,7 +27,7 @@ export function Login() {
 
 	const handleAuthorization = (evt: React.FormEvent<HTMLFormElement>) => {
 		evt.preventDefault();
-		const loc = location?.state?.from?.pathname;
+		const loc: string = location?.state?.from?.pathname;
 		dispatch(getAuthorization(values, loc, navigate));
 	};
 

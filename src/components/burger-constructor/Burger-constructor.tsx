@@ -32,6 +32,10 @@ export default function BurgerConstructor() {
 	const isCookie = getCookie("refreshToken");
 	const isLoading = useAppSelector((state) => state.orderDetails.isLoader);
 
+	const xxx = useAppSelector((state) => state.orderDetails);
+
+	console.log(222, xxx);
+
 	const closePopup = useCallback(() => dispatch(closeModal()), [dispatch]);
 
 	const iDIngredientsInOrder = useAppSelector((state) =>
@@ -39,7 +43,12 @@ export default function BurgerConstructor() {
 	);
 
 	const handleOpenedOrder = () => {
-		const ids = { ingredients: iDIngredientsInOrder };
+		let ids = { ingredients: iDIngredientsInOrder };
+
+		ids.ingredients = ids.ingredients.filter((item) => !!item);
+
+		console.log(ids);
+
 		return isCookie === undefined
 			? navigate("/login")
 			: dispatch(getOrder(ids));
@@ -48,7 +57,7 @@ export default function BurgerConstructor() {
 	const [, dropTarget] = useDrop({
 		accept: "ingredient",
 		drop(item: TElement) {
-			dispatch(pushIngredientToConstructor(item));
+			dispatch(pushIngredientToConstructor(item.id));
 		},
 	});
 

@@ -1,5 +1,5 @@
-import { CLOSE_MODAL } from "../actions/app";
-import { OPEN_INGREDIENT } from "../actions/ingredientDetails";
+import { CLOSE_MODAL, ICloseModal } from "../actions/app";
+import { OPEN_INGREDIENT, TOpenIngredient } from "../actions/ingredientDetails";
 import { TElement } from "../utile/types";
 
 type TInitialState = {
@@ -12,9 +12,16 @@ const initialState: TInitialState = {
 	setModal: false,
 };
 
-export const ingredientDetailsReducer = (state = initialState, action: any) => {
+export type TIngredientDetailsActions = TOpenIngredient | ICloseModal;
+
+export const ingredientDetailsReducer = (
+	state = initialState,
+	action: TIngredientDetailsActions
+) => {
 	switch (action.type) {
 		case OPEN_INGREDIENT: {
+			console.log(action);
+
 			return {
 				...state,
 				info: action.info,

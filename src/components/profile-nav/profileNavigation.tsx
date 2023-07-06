@@ -5,7 +5,7 @@ import { getLogout } from "../../services/actions/logout";
 import { useLocation } from "react-router";
 
 export function ProfileNavigation() {
-	const dispatch: any = useDispatch();
+	const dispatch = useDispatch();
 	const handleLogOut = () => {
 		dispatch(getLogout());
 	};

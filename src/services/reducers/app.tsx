@@ -2,6 +2,7 @@ import {
 	GET_INGREDIENTS_REQUEST,
 	GET_INGREDIENTS_SUCCESS,
 	GET_INGREDIENTS_ERROR,
+	TGetIngredientsActions,
 } from "../actions/app";
 import { TElement } from "../utile/types";
 
@@ -19,7 +20,10 @@ const initialState: TInitialState = {
 	itemsFailed: false,
 };
 
-export const burgerIngredientsReducer = (state = initialState, action: any) => {
+export const burgerIngredientsReducer = (
+	state = initialState,
+	action: TGetIngredientsActions
+) => {
 	switch (action.type) {
 		case GET_INGREDIENTS_REQUEST: {
 			return {

@@ -2,14 +2,15 @@ import styles from "./ingredientDetails.module.css";
 import { useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { TElement } from "../../services/utile/types";
+import { useAppSelector } from "../../services/utile/typesRedux";
 
 export default function IngredientDetails() {
-	const ingredients = useSelector((state: any) => state.app.items);
+	const ingredients = useAppSelector((state) => state.app.items);
 	const { id } = useParams();
 	const location = useLocation();
 	const data = ingredients.find((item: TElement) => item._id === id);
 
-	let details = useSelector((state: any) => state.ingredientDetails.info);
+	let details = useAppSelector((state) => state.ingredientDetails.info);
 	details = details === undefined ? (details = data) : details;
 
 	return details === undefined ? (

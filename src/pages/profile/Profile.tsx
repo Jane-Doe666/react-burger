@@ -4,7 +4,7 @@ import {
 	Input,
 	Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getUserInfo } from "../../services/actions/getUserInfo";
 import { changeUserInfoProfile } from "../../services/actions/updateUrerInfo";
 import { useForm } from "../../services/hooks/hooks";
@@ -12,13 +12,14 @@ import { TValue } from "../../services/utile/types";
 import { useLocation } from "react-router";
 import { ProfileNavigation } from "../../components/profile-nav/profileNavigation";
 import { OrdersProfile } from "../orders-profile/OrdersProfile";
+import { useAppSelector } from "../../services/utile/typesRedux";
 
 export function Profile() {
 	type TLoader = Boolean;
-	const dispatch: any = useDispatch();
+	const dispatch = useDispatch();
 	const loc = useLocation();
 
-	const user = useSelector((state: any) => state.registration.getUser.user);
+	const user = useAppSelector((state) => state.registration.getUser.user);
 	const [isLoader, setIsLoader] = useState<TLoader>(true);
 	const { values, handleChange, setValues } = useForm<TValue>({
 		email: "",

@@ -1,9 +1,21 @@
 import { getRefreshTokenOnServer, getUserInfoOnServer } from "../api";
+import { TUserInfo } from "../utile/types";
 import { getCookie, setCookie } from "../utile/utile";
-import { getRefreshToken, REFRESH_TOKEN } from "./refreshToken";
+import { REFRESH_TOKEN } from "./refreshToken";
 
-export const AUTH_CHECKED = "AUTH_CHECKED";
-export const USER_SUCCESS = "USER_SUCCESS";
+export const AUTH_CHECKED: "AUTH_CHECKED" = "AUTH_CHECKED";
+export const USER_SUCCESS: "USER_SUCCESS" = "USER_SUCCESS";
+
+export interface IAuthChecked {
+	type: typeof AUTH_CHECKED;
+}
+
+export interface IUserSuccess {
+	type: typeof USER_SUCCESS;
+	payload: TUserInfo;
+}
+
+export type TUserActions = IAuthChecked | IUserSuccess;
 
 export const checkAuth = () => {
 	return function (dispatch) {

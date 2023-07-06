@@ -6,7 +6,9 @@ import { createPortal } from "react-dom";
 import React, { FC, ReactNode, useEffect } from "react";
 import { ModalOverlay } from "../modal-overlay/ModalOverlay";
 
-const portalModalOverLay: any = document.querySelector("#portalOverlay");
+const portalModalOverLay = document.querySelector(
+	"#portalOverlay"
+) as HTMLElement;
 
 type TModal = {
 	children: ReactNode;

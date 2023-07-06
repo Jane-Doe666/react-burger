@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import styles from "./app.module.css";
 import AppHeader from "../components/header/AppHeader";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getIngredients } from "../services/actions/app";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Main from "../pages/main/main";
@@ -24,6 +24,7 @@ import { useAppSelector } from "../services/utile/typesRedux";
 function App() {
 	const dispatch = useDispatch();
 	const data = useAppSelector((state) => state.app.items);
+	const isLoading = useAppSelector((state) => state.app.isLoading);
 	const { state } = useLocation();
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -40,7 +41,7 @@ function App() {
 
 	return (
 		<>
-			{data.isLoading ? (
+			{isLoading ? (
 				<h2>...is loading</h2>
 			) : (
 				<div className={styles.App}>

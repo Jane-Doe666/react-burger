@@ -1,31 +1,23 @@
 import styles from "./orders.module.css";
 import { useDispatch } from "react-redux";
-import {
-	socketMiddlewareOrders,
-	WS_CONNECTION_CLOSED,
-	WS_CONNECTION_START,
-} from "../../services/actions/socketMiddlewareOrders";
 import { OrderFeed } from "../../components/order-feed/orderFeed";
-import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
-	ORDER_HISTORY_CLOSED_BY_USER,
-	ORDER_HISTORY_START,
+	orderHistoryClosedByUser,
+	orderHistoryStart,
 } from "../../services/actions/orderHistory";
-import { useLocation } from "react-router";
+import { useAppSelector } from "../../services/utile/typesRedux";
+import { TItemOrderFeed } from "../../services/utile/types";
 
 export function Orders() {
 	const dispatch = useDispatch();
-	const location = useLocation();
-	const listOfOrders = useSelector((state) => state.wsOrders.messages);
+	const listOfOrders = useAppSelector((state) => state.orderHistory.messages);
 	const { orders, total, totalToday } = listOfOrders;
 
 	useEffect(() => {
-		dispatch({
-			type: ORDER_HISTORY_START,
-		});
+		dispatch(orderHistoryStart());
 		return () => {
-			dispatch({ type: ORDER_HISTORY_CLOSED_BY_USER });
+			dispatch(orderHistoryClosedByUser());
 		};
 	}, [dispatch]);
 
@@ -36,8 +28,8 @@ export function Orders() {
 			</h1>
 			<div className={styles.main}>
 				<div className={styles.scroll + " pr-2"}>
-					{orders.map((item) => {
-						return <OrderFeed key={item._id} item={item} />;
+					{orders.map((item: TItemOrderFeed) => {
+						return <OrderFeed key={item?._id} item={item} />;
 					})}
 				</div>
 
@@ -50,7 +42,7 @@ export function Orders() {
 								className={
 									styles.scrollReady + " text text_type_digits-default"
 								}>
-								{orders.map((item) => {
+								{orders.map((item: TItemOrderFeed) => {
 									return item.status === "done" ? (
 										<li className={styles.li_ready} key={item._id}>
 											{item.number}
@@ -68,7 +60,7 @@ export function Orders() {
 								className={
 									styles.inProgress + " text text_type_digits-default"
 								}>
-								{orders.map((item) => {
+								{orders.map((item: TItemOrderFeed) => {
 									return item.status === "pending" ? (
 										<li className={styles.li_ready} key={item._id}>
 											{item.number}

@@ -1,25 +1,26 @@
 import { useLocation } from "react-router";
 import { TElement, TItemOrderFeed } from "../../services/utile/types";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./orderFeedById.module.css";
+import styles from "./order.module.css";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { createDataOrder } from "../../services/utile/utile";
 import { getIngredients } from "../../services/actions/app";
 import {
-	ORDER_PROFILE_CLOSED_BY_USER,
-	ORDER_PROFILE_START,
+	orderProfileClosed,
+	orderProfileStart,
 } from "../../services/actions/orderProfile";
+import { useAppSelector } from "../../services/utile/typesRedux";
 
 export function OrderProfileById() {
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const paramsID = useParams().id;
 
-	const ingredientsDataBaseInfo = useSelector((state: any) => state.app.items);
-	const listOfOrders = useSelector((state: any) => state.wsOrders.messages);
+	const ingredientsDataBaseInfo = useAppSelector((state) => state.app.items);
+	const listOfOrders = useAppSelector((state) => state.orderInProfile.messages);
 
 	const order = listOfOrders?.orders?.find(
 		(item: TItemOrderFeed) => item._id === paramsID
@@ -53,12 +54,10 @@ export function OrderProfileById() {
 
 	useEffect(() => {
 		if (!location?.state) {
-			dispatch({
-				type: ORDER_PROFILE_START,
-			});
+			dispatch(orderProfileStart());
 			dispatch(getIngredients());
 			return () => {
-				dispatch({ type: ORDER_PROFILE_CLOSED_BY_USER });
+				dispatch(orderProfileClosed());
 			};
 		}
 	}, []);

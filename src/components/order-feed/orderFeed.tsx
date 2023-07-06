@@ -1,24 +1,33 @@
 import { Link } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../../pages/orders/orders.module.css";
-import { useSelector } from "react-redux";
-import { TElement, TItem } from "../../services/utile/types";
+import { TElement, TItemOrderFeed } from "../../services/utile/types";
 import { createDataOrder } from "../../services/utile/utile";
 import { useLocation } from "react-router";
+import { useAppSelector } from "../../services/utile/typesRedux";
 
-export function OrderFeed(item: TItem, path: string) {
-	const { number, name, updatedAt, ingredients, _id, status } = item.item; // ID
-	const ingredientsBD = useSelector((state: any) => state.app.items);
+type TItem = {
+	item: TItemOrderFeed;
+};
+
+export function OrderFeed({ item }: TItem) {
+	const { number, name, updatedAt, ingredients, _id, status } = item;
+	const ingredientsBD = useAppSelector((state) => state.app.items);
 	const ingredientsInOrder = ingredients.map((element) =>
 		ingredientsBD.find((item: TElement) => item._id === element)
 	);
-
 	const location = useLocation().pathname;
+	let totalCostOrder: number = 0;
 
-	const totalCostOrder = ingredientsInOrder.reduce((acc, item) => {
-		const total = acc + item?.price;
-		return total;
-	}, 0);
+	if (!!ingredientsInOrder) {
+		ingredientsInOrder.filter((item) => {
+			if (!!item) {
+				totalCostOrder = totalCostOrder + item.price;
+
+				return totalCostOrder;
+			}
+		});
+	}
 
 	const ingredientsQty = ingredientsInOrder.length - 6;
 	let orderDay = createDataOrder(updatedAt);
@@ -77,26 +86,26 @@ export function OrderFeed(item: TItem, path: string) {
 
 						{ingredientsInOrder.length == 6 && (
 							<div
-								key={ingredientsInOrder[5].index}
+								key={ingredientsInOrder[5]?.index}
 								className={styles.image_div}
 								style={{ zIndex: 4 }}>
 								<img
 									className={styles.image}
-									src={ingredientsInOrder[5].image_mobile}
-									alt={ingredientsInOrder[5].name}
+									src={ingredientsInOrder[5]?.image_mobile}
+									alt={ingredientsInOrder[5]?.name}
 								/>
 							</div>
 						)}
 
 						{ingredientsInOrder.length > 6 && (
 							<div
-								key={ingredientsInOrder[5].index}
+								key={ingredientsInOrder[5]?.index}
 								className={styles.image_div}
 								style={{ zIndex: 4 }}>
 								<img
 									className={styles.image}
-									src={ingredientsInOrder[5].image_mobile}
-									alt={ingredientsInOrder[5].name}
+									src={ingredientsInOrder[5]?.image_mobile}
+									alt={ingredientsInOrder[5]?.name}
 								/>
 								<div className={styles.last_image}>
 									<p className="text text_type_main-small">+{ingredientsQty}</p>

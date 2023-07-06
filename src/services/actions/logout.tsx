@@ -1,7 +1,11 @@
 import { setLogOutOnServer } from "../api";
 import { deleteCookie } from "../utile/utile";
 
-export const LOGOUT = "PROFILE/LOGOUT";
+export const LOGOUT: "PROFILE/LOGOUT" = "PROFILE/LOGOUT";
+
+export type TLogOut = {
+	type: typeof LOGOUT;
+};
 
 export const getLogout = () => {
 	return function (dispatch) {

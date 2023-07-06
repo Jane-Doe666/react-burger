@@ -1,7 +1,13 @@
 import { getRefreshTokenOnServer } from "../api";
 import { getCookie, setCookie } from "../utile/utile";
 
-export const REFRESH_TOKEN = "LOGIN/REFRESH_TOKEN_SUCCESS";
+export const REFRESH_TOKEN: "LOGIN/REFRESH_TOKEN_SUCCESS" =
+	"LOGIN/REFRESH_TOKEN_SUCCESS";
+
+export type TRefreshTokenAction = {
+	type: typeof REFRESH_TOKEN;
+	payload: { success: boolean };
+};
 
 export function getRefreshToken() {
 	return function (dispatch) {

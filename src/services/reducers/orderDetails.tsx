@@ -3,6 +3,7 @@ import {
 	GET_ORDER_REQUEST,
 	GET_ORDER_SUCCESS,
 	GET_ORDER_ERROR,
+	TOrderDetailsActions,
 } from "../actions/orderDetails";
 
 type TInitialState = {
@@ -21,7 +22,10 @@ const initialState: TInitialState = {
 	isLoader: false,
 };
 
-export const orderDetailsReducer = (state = initialState, action: any) => {
+export const orderDetailsReducer = (
+	state = initialState,
+	action: TOrderDetailsActions
+) => {
 	switch (action.type) {
 		case GET_ORDER_REQUEST: {
 			return {

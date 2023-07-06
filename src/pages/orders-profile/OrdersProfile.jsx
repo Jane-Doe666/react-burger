@@ -1,23 +1,21 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { OrderFeed } from "../../components/order-feed/orderFeed";
 import {
-	ORDER_PROFILE_CLOSED_BY_USER,
-	ORDER_PROFILE_START,
+	orderProfileClosed,
+	orderProfileStart,
 } from "../../services/actions/orderProfile";
+import { useAppSelector } from "../../services/utile/typesRedux";
 import styles from "../orders/orders.module.css";
 
 export function OrdersProfile() {
 	const dispatch = useDispatch();
-	const listOfOrders = useSelector((state) => state.wsOrders.messages);
+	const listOfOrders = useAppSelector((state) => state.orderInProfile.messages);
 
 	useEffect(() => {
-		dispatch({
-			type: ORDER_PROFILE_START,
-		});
+		dispatch(orderProfileStart());
 		return () => {
-			dispatch({ type: ORDER_PROFILE_CLOSED_BY_USER });
+			dispatch(orderProfileClosed());
 		};
 	}, [dispatch]);
 

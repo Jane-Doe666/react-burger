@@ -6,10 +6,11 @@ import {
 	ORDER_HISTORY_SUCCESS,
 	TOrderHistoryActions,
 } from "../actions/orderHistory";
+import { TFeed } from "../utile/types";
 
 export type TOrderHistory = {
 	wsConnected: boolean;
-	messages: [];
+	messages: TFeed[];
 
 	error?: Event;
 };

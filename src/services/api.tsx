@@ -1,24 +1,18 @@
 import { getCookie } from "./utile/utile";
-import {
-	TAuth,
-	TIngredirntsArray,
-	TPasswordResetReset,
-	TRegister,
-	TReset,
-} from "./utile/types";
+import { TIds, TRegister, TValue } from "./utile/types";
 
 const config = {
 	BASE_URL: "https://norma.nomoreparties.space/api/",
 	headers: { "Content-Type": "application/json" },
 };
 
-async function checkResponse(response: any) {
+const checkResponse = <T,>(response: Response): Promise<T> => {
 	if (response.ok) {
 		return response.json();
 	} else {
-		return response.json().then((err: any) => Promise.reject(err));
+		return response.json().then((err: Response) => Promise.reject(err));
 	}
-}
+};
 
 const checkSuccess = (res: any) => {
 	if (res && res.success) {
@@ -27,15 +21,19 @@ const checkSuccess = (res: any) => {
 	return Promise.reject(`Ответ не success: ${res}`);
 };
 
-const request: any = (endpoint: string, options: any) => {
+export const request = <T,>(
+	endpoint: string,
+	options?: RequestInit
+): Promise<T> => {
 	return fetch(`${config.BASE_URL}${endpoint}`, options)
 		.then(checkResponse)
 		.then(checkSuccess);
 };
 
-export const getBurgerIngredientsFromServer = () => request(`ingredients`);
+export const getBurgerIngredientsFromServer = (): Promise<any> =>
+	request(`ingredients`);
 
-export const getIdOrderFromServer = (array: TIngredirntsArray) => {
+export const getIdOrderFromServer = (array: TIds): Promise<any> => {
 	return request(`orders`, {
 		method: "POST",
 		headers: config.headers,
@@ -43,7 +41,7 @@ export const getIdOrderFromServer = (array: TIngredirntsArray) => {
 	});
 };
 
-export const createRegistrationOnServer = (object: TRegister) => {
+export const createRegistrationOnServer = (object: TValue): Promise<any> => {
 	return request("auth/register", {
 		method: "POST",
 		headers: config.headers,
@@ -51,7 +49,7 @@ export const createRegistrationOnServer = (object: TRegister) => {
 	});
 };
 
-export const getAuthorizationOnServer = (object: TAuth) => {
+export const getAuthorizationOnServer = (object: TValue): Promise<any> => {
 	return request(`auth/login`, {
 		method: "POST",
 		headers: config.headers,
@@ -59,7 +57,7 @@ export const getAuthorizationOnServer = (object: TAuth) => {
 	});
 };
 
-export const getResetPasswordOnServer = (object: TReset) => {
+export const getResetPasswordOnServer = (object: TValue): Promise<any> => {
 	return request(`password-reset`, {
 		method: "POST",
 		headers: config.headers,
@@ -67,7 +65,7 @@ export const getResetPasswordOnServer = (object: TReset) => {
 	});
 };
 
-export const setNewPasswordOnServer = (object: TPasswordResetReset) => {
+export const setNewPasswordOnServer = (object: TValue): Promise<any> => {
 	return request(`password-reset/reset`, {
 		method: "POST",
 		headers: config.headers,
@@ -75,7 +73,7 @@ export const setNewPasswordOnServer = (object: TPasswordResetReset) => {
 	});
 };
 
-export const getRefreshTokenOnServer = () => {
+export const getRefreshTokenOnServer = (): Promise<any> => {
 	console.log("run api getRefreshTokenOnServer");
 	return request(`auth/token`, {
 		method: "POST",
@@ -86,7 +84,7 @@ export const getRefreshTokenOnServer = () => {
 	});
 };
 
-export const getUserInfoOnServer = () => {
+export const getUserInfoOnServer = (): Promise<any> => {
 	return request(`auth/user`, {
 		method: "GET",
 		headers: {
@@ -96,7 +94,7 @@ export const getUserInfoOnServer = () => {
 	});
 };
 
-export const setLogOutOnServer = () => {
+export const setLogOutOnServer = (): Promise<any> => {
 	return request(`auth/logout`, {
 		method: "POST",
 		headers: config.headers,
@@ -106,7 +104,7 @@ export const setLogOutOnServer = () => {
 	});
 };
 
-export const putchUpdateUserInfoOnServer = (object: TAuth) => {
+export const putchUpdateUserInfoOnServer = (object: TValue): Promise<any> => {
 	return request(`auth/user`, {
 		method: "PATCH",
 		headers: {

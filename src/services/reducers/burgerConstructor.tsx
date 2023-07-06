@@ -3,6 +3,7 @@ import {
 	CHANGE_ORDER,
 	CLEAR_CONSTRUCTOR,
 	DELETE,
+	TBurgerConstructor,
 } from "../actions/burgerConstructor";
 import { TElement } from "../utile/types";
 
@@ -22,7 +23,7 @@ const initialState: TInitialStateBurgerConstructor = {
 
 export const burgerConstructorReducer = (
 	state = initialState,
-	action: any
+	action: TBurgerConstructor
 ): TInitialStateBurgerConstructor => {
 	switch (action.type) {
 		case ADD: {
@@ -60,6 +61,8 @@ export const burgerConstructorReducer = (
 			};
 		}
 		case CHANGE_ORDER: {
+			console.log(1888, action);
+
 			return {
 				...state,
 				list: action.payload,

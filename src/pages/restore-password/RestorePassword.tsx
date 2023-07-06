@@ -12,7 +12,7 @@ import styles from "./restore-pass.module.css";
 
 export function RestorePassword() {
 	const navigate = useNavigate();
-	const dispatch: any = useDispatch();
+	const dispatch = useDispatch();
 
 	const { values, handleChange } = useForm<TValue>({
 		email: "",

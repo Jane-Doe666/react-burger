@@ -3,7 +3,7 @@ import {
 	Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import styles from "./registration.module.css";
 import { getRegistration } from "../../services/actions/registration";
 import { useDispatch } from "react-redux";
@@ -13,7 +13,7 @@ export function Registration() {
 	type TIcon = "HideIcon" | "ShowIcon";
 	type TInput = "text" | "password";
 
-	const dispatch: any = useDispatch();
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const [value, setValue] = useState<TValue>({
@@ -35,7 +35,7 @@ export function Registration() {
 	};
 
 	const handleRegistration = () => {
-		dispatch(getRegistration(value), navigate);
+		dispatch(getRegistration(value, navigate));
 	};
 
 	return (

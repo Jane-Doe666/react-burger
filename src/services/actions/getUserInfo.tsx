@@ -1,7 +1,12 @@
 import { getUserInfoOnServer } from "../api";
+import { TUserInfo } from "../utile/types";
 import { getRefreshToken } from "./refreshToken";
 
-export const GET_USER_INFO = "PROFILE/GET_USER_INFO";
+export const GET_USER_INFO: "PROFILE/GET_USER_INFO" = "PROFILE/GET_USER_INFO";
+export type TGetUserInfo = {
+	type: typeof GET_USER_INFO;
+	payload: TUserInfo;
+};
 
 export function getUserInfo() {
 	return function (dispatch) {

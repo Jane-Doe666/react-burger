@@ -14,7 +14,7 @@ export function PasswordReset() {
 	type TInput = "password" | "text";
 	type TIcon = "HideIcon" | "ShowIcon";
 	const navigate = useNavigate();
-	const dispatch: any = useDispatch();
+	const dispatch = useDispatch();
 
 	const { values, handleChange } = useForm<TValue>({
 		password: "",

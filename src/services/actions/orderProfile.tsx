@@ -1,3 +1,5 @@
+import { TWsActions } from "./socketMiddlewareOrders";
+
 export const ORDER_PROFILE_START: "ORDER_PROFILE_START" = "ORDER_PROFILE_START";
 export const ORDER_PROFILE_SUCCESS: "ORDER_PROFILE_SUCCESS" =
 	"ORDER_PROFILE_SUCCESS";
@@ -40,10 +42,9 @@ export interface IOrderProfileGetMessage {
 	readonly payload: any;
 }
 
-export const orderProfileStart = (Url: string) => {
+export const orderProfileStart = () => {
 	return {
 		type: ORDER_PROFILE_START,
-		payload: Url,
 	};
 };
 
@@ -60,3 +61,12 @@ export type TOrdersInProfileActions =
 	| IOrderProfileError
 	| IOrderProfileClosed
 	| IOrderProfileGetMessage;
+
+export const orderProfileActions: TWsActions = {
+	start: ORDER_PROFILE_START,
+	success: ORDER_PROFILE_SUCCESS,
+	close: ORDER_PROFILE_CLOSED,
+	error: ORDER_PROFILE_ERROR,
+	close_by_user: ORDER_PROFILE_CLOSED_BY_USER,
+	message: ORDER_PROFILE_GET_MESSAGE,
+};

@@ -1,3 +1,5 @@
+import { TWsActions } from "./socketMiddlewareOrders";
+
 export const ORDER_HISTORY_START: "ORDER_HISTORY_START" = "ORDER_HISTORY_START";
 export const ORDER_HISTORY_SUCCESS: "ORDER_HISTORY_SUCCESS" =
 	"ORDER_HISTORY_SUCCESS";
@@ -37,10 +39,9 @@ export interface IOrderHistoryGetMessage {
 	readonly payload: any;
 }
 
-export const orderHistoryStart = (Url: string) => {
+export const orderHistoryStart = () => {
 	return {
 		type: ORDER_HISTORY_START,
-		payload: Url,
 	};
 };
 
@@ -57,3 +58,12 @@ export type TOrderHistoryActions =
 	| IOrderHistoryError
 	| IOrderHistoryClosed
 	| IOrderHistoryGetMessage;
+
+export const orderHistoryActions: TWsActions = {
+	start: ORDER_HISTORY_START,
+	success: ORDER_HISTORY_SUCCESS,
+	close: ORDER_HISTORY_CLOSED,
+	error: ORDER_HISTORY_ERROR,
+	close_by_user: ORDER_HISTORY_CLOSED_BY_USER,
+	message: ORDER_HISTORY_GET_MESSAGE,
+};
