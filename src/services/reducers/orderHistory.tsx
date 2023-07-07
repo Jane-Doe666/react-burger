@@ -10,14 +10,14 @@ import { TWsMessage } from "../utile/types";
 
 export type TOrderHistory = {
 	wsConnected: boolean;
-	messages: TWsMessage | [];
+	messages: TWsMessage | null;
 
 	error?: Event;
 };
 
 const initialState: TOrderHistory = {
 	wsConnected: false,
-	messages: [],
+	messages: null,
 };
 
 export const orderHistoryReducer = (

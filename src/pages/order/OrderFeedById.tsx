@@ -17,38 +17,42 @@ export function OrderFeedById() {
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const paramsID = useParams().id;
+	let orderDay;
+	let ingredientsInOrder;
+	let arrayUnique;
+	let totalCostOrder;
 
 	const ingredientsDataBaseInfo = useAppSelector((state) => state.app.items);
 	const listOfOrders = useAppSelector((state) => state.orderHistory.messages);
-	const order = listOfOrders?.orders?.find(
-		(item: TItemOrderFeed) => item._id === paramsID
+
+	const order = listOfOrders?.orders.find(
+		(item) => item._id === paramsID && !!item
 	);
 
-	const ingredientsInOrder = order?.ingredients.map((element: string) =>
-		ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
-	);
+	if (!!order) {
+		orderDay = createDataOrder(order?.updatedAt);
 
-	const totalCostOrder = ingredientsInOrder?.reduce(
-		(acc: 0, item: TElement) => {
+		ingredientsInOrder = order?.ingredients.map((element: string) =>
+			ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
+		);
+
+		totalCostOrder = ingredientsInOrder?.reduce((acc: 0, item: TElement) => {
 			const total = acc + item?.price;
 			return total;
-		},
-		0
-	);
+		}, 0);
 
-	const orderDay = createDataOrder(order?.updatedAt);
-
-	const arrayUnique = ingredientsInOrder?.reduce(
-		(acc: Array<TElement>, item: TElement) => {
-			if (acc.includes(item) && !!item) {
-				item.qty++;
-				return [...acc];
-			}
-			item.qty = 1;
-			return [...acc, item];
-		},
-		[]
-	);
+		arrayUnique = ingredientsInOrder?.reduce(
+			(acc: Array<TElement>, item: TElement) => {
+				if (acc.includes(item)) {
+					item.qty++;
+					return [...acc];
+				}
+				item.qty = 1;
+				return [...acc, item];
+			},
+			[]
+		);
+	}
 
 	useEffect(() => {
 		if (!location?.state) {
@@ -60,13 +64,13 @@ export function OrderFeedById() {
 		}
 	}, []);
 
-	return listOfOrders.success ? (
+	return listOfOrders?.success ? (
 		<>
 			<div className={styles.main}>
-				<p className="text text_type_digits-default"># {order.number}</p>
+				<p className="text text_type_digits-default"># {order?.number}</p>
 
 				<p className={styles.text + " text text_type_main-medium mt-10"}>
-					{order.name}
+					{order?.name}
 				</p>
 
 				{order?.status === "done" && (
@@ -129,9 +133,9 @@ export function OrderFeedById() {
 					</p>
 					<div className={styles.totalFoot}>
 						{" "}
-						<p className="text text_type_digits-default pl-6 mr-2">
+						{/* <p className="text text_type_digits-default pl-6 mr-2">
 							{totalCostOrder}
-						</p>
+						</p> */}
 						<CurrencyIcon type="primary" />
 					</div>
 				</div>

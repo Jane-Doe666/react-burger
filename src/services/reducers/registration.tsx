@@ -19,28 +19,26 @@ import {
 	UPDATE_USER_INFO,
 } from "../actions/updateUrerInfo";
 import { AUTH_CHECKED, TUserActions, USER_SUCCESS } from "../actions/user";
-import { TAuth, TUser, TUserInfo } from "../utile/types";
+import { TUserInfo } from "../utile/types";
 
 type TRgistrationState = {
-	getUser: TUserInfo | "";
+	getUser: TUserInfo | null;
 	userName: string;
 	email: string;
 	isAuth: boolean;
 	isLoader: boolean;
 	isAuthChecked: boolean;
 	isLogged: boolean;
-	// user: { success: boolean; user: { email: string; name: string } } | null;
 };
 
 const initialState: TRgistrationState = {
-	getUser: "",
+	getUser: null,
 	userName: "",
 	email: "",
 	isAuth: false,
 	isLoader: false,
 	isAuthChecked: false,
 	isLogged: false,
-	// user: null,
 };
 
 export type TRegistrationActions =
@@ -76,7 +74,6 @@ export const registrationReducer = (
 			};
 		}
 		case USER_SUCCESS: {
-			console.log(1, action.payload);
 			return {
 				...state,
 				isAuthChecked: true,
@@ -102,7 +99,6 @@ export const registrationReducer = (
 		}
 
 		case GET_USER_INFO: {
-			console.log(2, action.payload);
 			return {
 				...state,
 				getUser: action.payload,

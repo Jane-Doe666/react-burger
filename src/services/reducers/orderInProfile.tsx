@@ -10,14 +10,14 @@ import { TWsMessage } from "../utile/types";
 
 export type TWsOrdersInProfile = {
 	wsConnected: boolean;
-	messages: TWsMessage | [];
+	messages: TWsMessage | null;
 
 	error?: Event;
 };
 
 const initialState: TWsOrdersInProfile = {
 	wsConnected: false,
-	messages: [],
+	messages: null,
 };
 
 export const orderInProfileReducer = (
