@@ -13,7 +13,7 @@ export interface IAuthChecked {
 
 export interface IUserSuccess {
 	type: typeof USER_SUCCESS;
-	payload: { success: boolean; user: { email: string; name: string } };
+	payload: TUserInfo;
 }
 
 export type TUserActions = IAuthChecked | IUserSuccess;

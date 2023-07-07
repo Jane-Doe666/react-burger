@@ -20,8 +20,6 @@ export const ingredientDetailsReducer = (
 ): TIngredientDetailsState => {
 	switch (action.type) {
 		case OPEN_INGREDIENT: {
-			console.log(action);
-
 			return {
 				...state,
 				info: action.info,

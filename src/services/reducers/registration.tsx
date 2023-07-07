@@ -22,7 +22,7 @@ import { AUTH_CHECKED, TUserActions, USER_SUCCESS } from "../actions/user";
 import { TAuth, TUser, TUserInfo } from "../utile/types";
 
 type TRgistrationState = {
-	getUser: { success: boolean; user: { email: string; name: string } } | "";
+	getUser: TUserInfo | "";
 	userName: string;
 	email: string;
 	isAuth: boolean;

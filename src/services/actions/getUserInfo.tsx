@@ -6,7 +6,7 @@ import { getRefreshToken } from "./refreshToken";
 export const GET_USER_INFO: "PROFILE/GET_USER_INFO" = "PROFILE/GET_USER_INFO";
 export type TGetUserInfo = {
 	type: typeof GET_USER_INFO;
-	payload: { success: boolean; user: { email: string; name: string } };
+	payload: TUserInfo;
 };
 
 export const getUserInfo: AppThunk = () => {
