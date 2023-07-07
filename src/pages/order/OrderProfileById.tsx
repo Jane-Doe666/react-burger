@@ -3,7 +3,6 @@ import { TElement, TItemOrderFeed } from "../../services/utile/types";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order.module.css";
 import { useDispatch } from "react-redux";
-
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { createDataOrder } from "../../services/utile/utile";
@@ -35,10 +34,13 @@ export function OrderProfileById() {
 		ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
 	);
 
-	const totalCostOrder = ingredientsInOrder?.reduce((acc: 0, item: any) => {
-		const total = acc + item?.price;
-		return total;
-	}, 0);
+	const totalCostOrder = ingredientsInOrder?.reduce(
+		(acc: number, item: any) => {
+			const total = acc + item?.price;
+			return total;
+		},
+		0
+	);
 
 	const arrayUnique = ingredientsInOrder?.reduce(
 		(acc: Array<TElement>, item: any) => {

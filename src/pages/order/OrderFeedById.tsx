@@ -25,8 +25,6 @@ export function OrderFeedById() {
 		(item: TItemOrderFeed) => item._id === paramsID
 	);
 
-	console.log(1, order);
-
 	const ingredientsInOrder = order?.ingredients.map((element: string) =>
 		ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
 	);
