@@ -25,8 +25,6 @@ export const checkAuth = () => {
 		}
 		getUserInfoOnServer()
 			.then((data) => {
-				console.log(222, "TUser: ", data);
-
 				dispatch({ type: USER_SUCCESS, payload: data });
 			})
 			.catch((err) => {

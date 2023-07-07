@@ -76,6 +76,7 @@ export const registrationReducer = (
 			};
 		}
 		case USER_SUCCESS: {
+			console.log(1, action.payload);
 			return {
 				...state,
 				isAuthChecked: true,
@@ -101,6 +102,7 @@ export const registrationReducer = (
 		}
 
 		case GET_USER_INFO: {
+			console.log(2, action.payload);
 			return {
 				...state,
 				getUser: action.payload,

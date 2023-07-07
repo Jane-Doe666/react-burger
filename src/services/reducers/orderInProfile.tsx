@@ -21,7 +21,7 @@ const initialState: TWsOrdersInProfile = {
 };
 
 export const orderInProfileReducer = (
-	state = initialState,
+	state: TWsOrdersInProfile = initialState,
 	action: TOrdersInProfileActions
 ): TWsOrdersInProfile => {
 	switch (action.type) {
