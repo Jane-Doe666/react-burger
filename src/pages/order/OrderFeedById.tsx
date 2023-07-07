@@ -25,9 +25,7 @@ export function OrderFeedById() {
 	const ingredientsDataBaseInfo = useAppSelector((state) => state.app.items);
 	const listOfOrders = useAppSelector((state) => state.orderHistory.messages);
 
-	const order = listOfOrders?.orders.find(
-		(item) => item._id === paramsID && !!item
-	);
+	const order = listOfOrders?.orders.find((item) => item._id === paramsID);
 
 	if (!!order) {
 		orderDay = createDataOrder(order?.updatedAt);
@@ -36,13 +34,18 @@ export function OrderFeedById() {
 			ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
 		);
 
-		totalCostOrder = ingredientsInOrder?.reduce((acc: 0, item: TElement) => {
-			const total = acc + item?.price;
-			return total;
-		}, 0);
+		// ingredientsInOrder = ingredientsInOrder.find(item => item !== undefined)
 
-		arrayUnique = ingredientsInOrder?.reduce(
-			(acc: Array<TElement>, item: TElement) => {
+		totalCostOrder = ingredientsInOrder?.reduce(
+			(acc: number, item: TElement) => {
+				const total = acc + item?.price;
+				return total;
+			},
+			0
+		);
+
+		arrayUnique = ingredientsInOrder.reduce(
+			(acc: Array<TElement>, item: any) => {
 				if (acc.includes(item)) {
 					item.qty++;
 					return [...acc];
