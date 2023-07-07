@@ -18,30 +18,30 @@ export function OrderProfileById() {
 	const location = useLocation();
 	const dispatch = useDispatch();
 	const paramsID = useParams().id;
+	let orderDay: string = "";
 
 	const ingredientsDataBaseInfo = useAppSelector((state) => state.app.items);
 	const listOfOrders = useAppSelector((state) => state.orderInProfile.messages);
 
 	const order = listOfOrders?.orders?.find(
-		(item: TItemOrderFeed) => item._id === paramsID
+		(item: TItemOrderFeed) => item._id === paramsID && !!item
 	);
+
+	if (!!order) {
+		orderDay = createDataOrder(order.updatedAt);
+	}
 
 	const ingredientsInOrder = order?.ingredients.map((element: string) =>
 		ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
 	);
 
-	const totalCostOrder = ingredientsInOrder?.reduce(
-		(acc: 0, item: TElement) => {
-			const total = acc + item?.price;
-			return total;
-		},
-		0
-	);
-
-	const orderDay = createDataOrder(order?.updatedAt);
+	const totalCostOrder = ingredientsInOrder?.reduce((acc: 0, item: any) => {
+		const total = acc + item?.price;
+		return total;
+	}, 0);
 
 	const arrayUnique = ingredientsInOrder?.reduce(
-		(acc: Array<TElement>, item: TElement) => {
+		(acc: Array<TElement>, item: any) => {
 			if (acc.includes(item)) {
 				item.qty++;
 				return [...acc];
@@ -62,16 +62,16 @@ export function OrderProfileById() {
 		}
 	}, []);
 
-	return listOfOrders.success ? (
+	return listOfOrders?.success ? (
 		<>
 			<div className={styles.main}>
-				<p className="text text_type_digits-default"># {order.number}</p>
+				<p className="text text_type_digits-default"># {order?.number}</p>
 
 				<p className={styles.text + " text text_type_main-medium mt-10"}>
-					{order.name}
+					{order?.name}
 				</p>
 
-				{order.status === "done" && (
+				{order?.status === "done" && (
 					<p
 						className={styles.text + " text text_type_main-default mt-3"}
 						style={{ color: "#0cc" }}>
@@ -79,7 +79,7 @@ export function OrderProfileById() {
 					</p>
 				)}
 
-				{order.status === "pending" && (
+				{order?.status === "pending" && (
 					<p
 						className={styles.text + " text text_type_main-default mt-3"}
 						style={{ color: "white" }}>
@@ -87,7 +87,7 @@ export function OrderProfileById() {
 					</p>
 				)}
 
-				{order.status === "delete" && (
+				{order?.status === "delete" && (
 					<p
 						className={styles.text + " text text_type_main-default mt-3"}
 						style={{ color: "red" }}>
@@ -99,7 +99,7 @@ export function OrderProfileById() {
 					Состав:
 				</p>
 				<ul className={styles.ul}>
-					{arrayUnique.map((item: TElement, index: number) => (
+					{arrayUnique?.map((item: TElement, index: number) => (
 						<li className={styles.li} key={index}>
 							<div className={styles.image_div}>
 								<img

@@ -19,7 +19,7 @@ export function Profile() {
 	const dispatch = useDispatch();
 	const loc = useLocation();
 
-	const user = useAppSelector((state) => state.registration.getUser.user);
+	const user = useAppSelector((state) => state.registration.getUser?.user);
 
 	const [isLoader, setIsLoader] = useState<TLoader>(true);
 	const { values, handleChange, setValues } = useForm<TValue>({

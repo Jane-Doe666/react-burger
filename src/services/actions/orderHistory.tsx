@@ -60,7 +60,7 @@ export type TOrderHistoryActions =
 	| IOrderHistoryClosed
 	| IOrderHistoryGetMessage;
 
-export const orderHistoryActions: TWsActions = {
+export const orderHistoryActions = {
 	start: ORDER_HISTORY_START,
 	success: ORDER_HISTORY_SUCCESS,
 	close: ORDER_HISTORY_CLOSED,

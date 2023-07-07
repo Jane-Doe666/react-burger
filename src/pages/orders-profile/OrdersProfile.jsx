@@ -19,7 +19,7 @@ export function OrdersProfile() {
 		};
 	}, [dispatch]);
 
-	return listOfOrders.success ? (
+	return listOfOrders ? (
 		<div className={styles.mainOrdersFeed}>
 			{" "}
 			<div className={styles.scroll + " pr-2"}>

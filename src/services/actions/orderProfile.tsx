@@ -63,7 +63,7 @@ export type TOrdersInProfileActions =
 	| IOrderProfileClosed
 	| IOrderProfileGetMessage;
 
-export const orderProfileActions: TWsActions = {
+export const orderProfileActions = {
 	start: ORDER_PROFILE_START,
 	success: ORDER_PROFILE_SUCCESS,
 	close: ORDER_PROFILE_CLOSED,

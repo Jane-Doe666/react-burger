@@ -16,46 +16,39 @@ import { useAppSelector } from "../../services/utile/typesRedux";
 export function OrderFeedById() {
 	const location = useLocation();
 	const dispatch = useDispatch();
-	const paramsID = useParams().id;
-	let orderDay;
-	let ingredientsInOrder;
-	let arrayUnique;
-	let totalCostOrder;
+	const paramsID = useParams()?.id;
 
 	const ingredientsDataBaseInfo = useAppSelector((state) => state.app.items);
 	const listOfOrders = useAppSelector((state) => state.orderHistory.messages);
 
-	const order = listOfOrders?.orders.find((item) => item._id === paramsID);
+	const order = listOfOrders?.orders?.find(
+		(item: TItemOrderFeed) => item._id === paramsID
+	);
 
-	if (!!order) {
-		orderDay = createDataOrder(order?.updatedAt);
+	console.log(1, order);
 
-		ingredientsInOrder = order?.ingredients.map((element: string) =>
-			ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
-		);
+	const ingredientsInOrder = order?.ingredients.map((element: string) =>
+		ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
+	);
 
-		// ingredientsInOrder = ingredientsInOrder.find(item => item !== undefined)
+	const totalCostOrder = ingredientsInOrder?.reduce(
+		(acc: number, item: any) => {
+			const total = acc + item?.price;
+			return total;
+		},
+		0
+	);
 
-		totalCostOrder = ingredientsInOrder?.reduce(
-			(acc: number, item: TElement) => {
-				const total = acc + item?.price;
-				return total;
-			},
-			0
-		);
+	const arrayUnique = ingredientsInOrder?.reduce((acc: any, item: any) => {
+		if (acc.includes(item)) {
+			item.qty++;
+			return [...acc];
+		}
+		item.qty = 1;
+		return [...acc, item];
+	}, []);
 
-		arrayUnique = ingredientsInOrder.reduce(
-			(acc: Array<TElement>, item: any) => {
-				if (acc.includes(item)) {
-					item.qty++;
-					return [...acc];
-				}
-				item.qty = 1;
-				return [...acc, item];
-			},
-			[]
-		);
-	}
+	const orderDay = !!order ? createDataOrder(order.updatedAt) : "";
 
 	useEffect(() => {
 		if (!location?.state) {
@@ -136,9 +129,9 @@ export function OrderFeedById() {
 					</p>
 					<div className={styles.totalFoot}>
 						{" "}
-						{/* <p className="text text_type_digits-default pl-6 mr-2">
+						<p className="text text_type_digits-default pl-6 mr-2">
 							{totalCostOrder}
-						</p> */}
+						</p>
 						<CurrencyIcon type="primary" />
 					</div>
 				</div>

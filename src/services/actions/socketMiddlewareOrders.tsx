@@ -1,14 +1,11 @@
 import type { Middleware, MiddlewareAPI } from "redux";
 import { AppDispatch, RootState } from "../utile/typesRedux";
+import { orderHistoryActions } from "./orderHistory";
+import { orderProfileActions } from "./orderProfile";
 
-export type TWsActions = {
-	start: string;
-	success: string;
-	close_by_user: string;
-	error: string;
-	close: string;
-	message: string;
-};
+export type TWsActions =
+	| typeof orderHistoryActions
+	| typeof orderProfileActions;
 
 export const socketMiddlewareOrders = (
 	webSocketActions: TWsActions,

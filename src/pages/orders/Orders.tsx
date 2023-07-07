@@ -57,7 +57,7 @@ export function Orders() {
 							<h2 className="text text_type_main-medium mb-6">В работе:</h2>
 							<ul
 								className={
-									styles.inProgress + " text text_type_digits-default"
+									styles.scrollProgress + " text text_type_digits-default"
 								}>
 								{listOfOrders.orders.map((item: TItemOrderFeed) => {
 									return item.status === "pending" ? (
@@ -71,6 +71,7 @@ export function Orders() {
 							</ul>
 						</div>
 					</div>
+
 					<div className="text text_type_main-medium mt-15">
 						Выполнено за все время:
 					</div>
