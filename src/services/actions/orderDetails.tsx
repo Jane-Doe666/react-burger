@@ -46,7 +46,7 @@ export const getOrder: AppThunk = (idList: TIds) => {
 
 				dispatch({ type: REFRESH_TOKEN, payload: data });
 			})
-			.then(
+			.then(() => {
 				getIdOrderFromServer(idList)
 					.then((res) => {
 						dispatch({
@@ -62,8 +62,8 @@ export const getOrder: AppThunk = (idList: TIds) => {
 						dispatch({
 							type: GET_ORDER_ERROR,
 						});
-					})
-			)
+					});
+			})
 			.catch((err) => console.log(err));
 	};
 };

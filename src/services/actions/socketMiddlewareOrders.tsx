@@ -11,7 +11,7 @@ export type TWsActions = {
 };
 
 export const socketMiddlewareOrders = (
-	TWsActions: TWsActions,
+	webSocketActions: TWsActions,
 	url: string
 ): Middleware => {
 	return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
@@ -21,30 +21,30 @@ export const socketMiddlewareOrders = (
 			const { dispatch } = store;
 			const { type } = action;
 
-			if (type === TWsActions.start) {
+			if (type === webSocketActions.start) {
 				socket = new WebSocket(url);
 			}
 
 			if (socket) {
 				socket.onopen = (event) => {
-					dispatch({ type: TWsActions.success, payload: event });
+					dispatch({ type: webSocketActions.success, payload: event });
 				};
 
 				socket.onerror = (event) => {
-					dispatch({ type: TWsActions.error, payload: event });
+					dispatch({ type: webSocketActions.error, payload: event });
 				};
 
 				socket.onmessage = (event) => {
 					const { data } = event;
 					const orders = JSON.parse(data);
-					dispatch({ type: TWsActions.message, payload: orders });
+					dispatch({ type: webSocketActions.message, payload: orders });
 				};
 
 				socket.onclose = (event) => {
-					dispatch({ type: TWsActions.close, payload: event });
+					dispatch({ type: webSocketActions.close, payload: event });
 				};
 
-				if (action.type === TWsActions.close_by_user) {
+				if (action.type === webSocketActions.close_by_user) {
 					socket.close(1000);
 				}
 			}
