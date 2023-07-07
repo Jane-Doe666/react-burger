@@ -1,5 +1,5 @@
 import { getRefreshTokenOnServer, getUserInfoOnServer } from "../api";
-import { TUserInfo } from "../utile/types";
+import { TUser, TUserInfo } from "../utile/types";
 import { getCookie, setCookie } from "../utile/utile";
 import { REFRESH_TOKEN } from "./refreshToken";
 
@@ -12,7 +12,7 @@ export interface IAuthChecked {
 
 export interface IUserSuccess {
 	type: typeof USER_SUCCESS;
-	payload: TUserInfo;
+	payload: { success: boolean; user: { email: string; name: string } };
 }
 
 export type TUserActions = IAuthChecked | IUserSuccess;
@@ -25,6 +25,8 @@ export const checkAuth = () => {
 		}
 		getUserInfoOnServer()
 			.then((data) => {
+				console.log(222, "TUser: ", data);
+
 				dispatch({ type: USER_SUCCESS, payload: data });
 			})
 			.catch((err) => {

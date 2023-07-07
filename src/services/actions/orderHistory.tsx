@@ -1,3 +1,4 @@
+import { TWsMessage } from "../utile/types";
 import { TWsActions } from "./socketMiddlewareOrders";
 
 export const ORDER_HISTORY_START: "ORDER_HISTORY_START" = "ORDER_HISTORY_START";
@@ -36,7 +37,7 @@ export interface IOrderHistoryClosed {
 
 export interface IOrderHistoryGetMessage {
 	readonly type: typeof ORDER_HISTORY_GET_MESSAGE;
-	readonly payload: any;
+	readonly payload: TWsMessage;
 }
 
 export const orderHistoryStart = () => {

@@ -31,7 +31,7 @@ export type TOrderDetailsActions =
 	| IGetOrderError
 	| ICloseModal;
 
-export function getOrder(idList: TIds) {
+export const getOrder = (idList: TIds) => {
 	return function (dispatch) {
 		dispatch({
 			type: GET_ORDER_REQUEST,
@@ -65,4 +65,4 @@ export function getOrder(idList: TIds) {
 			)
 			.catch((err) => console.log(err));
 	};
-}
+};

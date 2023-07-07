@@ -6,14 +6,14 @@ import {
 } from "../actions/app";
 import { TElement } from "../utile/types";
 
-type TInitialState = {
+type TAppState = {
 	items: TElement[];
 	isLoading: boolean;
 	itemsRequest: boolean;
 	itemsFailed: boolean;
 };
 
-const initialState: TInitialState = {
+const initialState: TAppState = {
 	items: [],
 	isLoading: true,
 	itemsRequest: false,
@@ -23,7 +23,7 @@ const initialState: TInitialState = {
 export const burgerIngredientsReducer = (
 	state = initialState,
 	action: TGetIngredientsActions
-) => {
+): TAppState => {
 	switch (action.type) {
 		case GET_INGREDIENTS_REQUEST: {
 			return {

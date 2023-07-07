@@ -1,14 +1,15 @@
 import { getUserInfoOnServer } from "../api";
-import { TUserInfo } from "../utile/types";
+import { TUserInfo, TUser } from "../utile/types";
+import { AppThunk } from "../utile/typesRedux";
 import { getRefreshToken } from "./refreshToken";
 
 export const GET_USER_INFO: "PROFILE/GET_USER_INFO" = "PROFILE/GET_USER_INFO";
 export type TGetUserInfo = {
 	type: typeof GET_USER_INFO;
-	payload: TUserInfo;
+	payload: { success: boolean; user: { email: string; name: string } };
 };
 
-export function getUserInfo() {
+export const getUserInfo = () => {
 	return function (dispatch) {
 		getUserInfoOnServer()
 			.then((data) => {
@@ -21,4 +22,4 @@ export function getUserInfo() {
 				dispatch(getUserInfo());
 			});
 	};
-}
+};

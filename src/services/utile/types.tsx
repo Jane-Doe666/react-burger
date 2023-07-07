@@ -65,7 +65,7 @@ export type TElement = {
 	readonly _id: string;
 	index: number;
 	id: string;
-	qty?: any;
+	qty?: number | any;
 };
 
 export type TItem = {
@@ -105,7 +105,7 @@ export type TConstructorElement = {
 };
 
 export type TProtectedRoute = {
-	authOnly?: false | true;
+	authOnly?: boolean;
 	children: ReactNode;
 };
 
@@ -120,4 +120,16 @@ export type TIdsList = {
 
 export type TIds = {
 	ingredients: (string | undefined)[];
+};
+
+export type TWsMessage = {
+	success: boolean;
+	orders: TItemOrderFeed[];
+	total: number;
+	totalToday: number;
+};
+
+export type TUser = {
+	success: boolean;
+	user: { email: string; name: string };
 };

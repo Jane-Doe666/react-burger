@@ -1,3 +1,4 @@
+import { TWsMessage } from "../utile/types";
 import { TWsActions } from "./socketMiddlewareOrders";
 
 export const ORDER_PROFILE_START: "ORDER_PROFILE_START" = "ORDER_PROFILE_START";
@@ -39,7 +40,7 @@ export interface IOrderProfileClosed {
 
 export interface IOrderProfileGetMessage {
 	readonly type: typeof ORDER_PROFILE_GET_MESSAGE;
-	readonly payload: any;
+	readonly payload: TWsMessage;
 }
 
 export const orderProfileStart = () => {

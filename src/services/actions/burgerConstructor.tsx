@@ -20,7 +20,7 @@ export interface IBurgerConstructorDelete {
 
 export interface IBurgerConstructorChange {
 	readonly type: typeof CHANGE_ORDER;
-	payload: any;
+	payload: TElement[];
 }
 
 export interface IBurgerConstructorClear {

@@ -40,7 +40,7 @@ export function OrderFeedById() {
 
 	const arrayUnique = ingredientsInOrder?.reduce(
 		(acc: Array<TElement>, item: TElement) => {
-			if (acc.includes(item)) {
+			if (acc.includes(item) && !!item) {
 				item.qty++;
 				return [...acc];
 			}

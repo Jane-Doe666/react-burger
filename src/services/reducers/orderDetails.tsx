@@ -5,18 +5,19 @@ import {
 	GET_ORDER_ERROR,
 	TOrderDetailsActions,
 } from "../actions/orderDetails";
+import { TElement } from "../utile/types";
 
-type TInitialState = {
+type TOrderDetailsState = {
 	isModal: boolean;
-	items: number | undefined;
+	items: TElement[] | [];
 	itemsRequest: boolean;
 	itemsFailed: boolean;
 	isLoader: boolean;
 };
 
-const initialState: TInitialState = {
+const initialState: TOrderDetailsState = {
 	isModal: false,
-	items: undefined,
+	items: [],
 	itemsRequest: false,
 	itemsFailed: false,
 	isLoader: false,
@@ -25,7 +26,7 @@ const initialState: TInitialState = {
 export const orderDetailsReducer = (
 	state = initialState,
 	action: TOrderDetailsActions
-) => {
+): TOrderDetailsState => {
 	switch (action.type) {
 		case GET_ORDER_REQUEST: {
 			return {

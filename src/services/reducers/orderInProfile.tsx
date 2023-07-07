@@ -6,10 +6,11 @@ import {
 	ORDER_PROFILE_SUCCESS,
 	TOrdersInProfileActions,
 } from "../actions/orderProfile";
+import { TWsMessage } from "../utile/types";
 
 export type TWsOrdersInProfile = {
 	wsConnected: boolean;
-	messages: [];
+	messages: TWsMessage | [];
 
 	error?: Event;
 };
@@ -22,7 +23,7 @@ const initialState: TWsOrdersInProfile = {
 export const orderInProfileReducer = (
 	state = initialState,
 	action: TOrdersInProfileActions
-) => {
+): TWsOrdersInProfile => {
 	switch (action.type) {
 		case ORDER_PROFILE_SUCCESS:
 			return {

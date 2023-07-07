@@ -61,8 +61,6 @@ export const burgerConstructorReducer = (
 			};
 		}
 		case CHANGE_ORDER: {
-			console.log(1888, action);
-
 			return {
 				...state,
 				list: action.payload,

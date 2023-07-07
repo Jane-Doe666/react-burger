@@ -23,18 +23,15 @@ import { useAppSelector } from "../../services/utile/typesRedux";
 export default function BurgerConstructor() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const openedModal = useAppSelector((state) => state.orderDetails.isModal);
+
 	const ingredients = useAppSelector((state) => state.burgerConstructor.list);
 	const bunTop = useAppSelector((state) => state.burgerConstructor.bunTop);
 	const bunBottom = useAppSelector(
 		(state) => state.burgerConstructor.bunBottom
 	);
 	const isCookie = getCookie("refreshToken");
+	const openedModal = useAppSelector((state) => state.orderDetails.isModal);
 	const isLoading = useAppSelector((state) => state.orderDetails.isLoader);
-
-	const xxx = useAppSelector((state) => state.orderDetails);
-
-	console.log(222, xxx);
 
 	const closePopup = useCallback(() => dispatch(closeModal()), [dispatch]);
 
@@ -44,11 +41,7 @@ export default function BurgerConstructor() {
 
 	const handleOpenedOrder = () => {
 		let ids = { ingredients: iDIngredientsInOrder };
-
 		ids.ingredients = ids.ingredients.filter((item) => !!item);
-
-		console.log(ids);
-
 		return isCookie === undefined
 			? navigate("/login")
 			: dispatch(getOrder(ids));

@@ -19,24 +19,20 @@ import {
 	UPDATE_USER_INFO,
 } from "../actions/updateUrerInfo";
 import { AUTH_CHECKED, TUserActions, USER_SUCCESS } from "../actions/user";
+import { TAuth, TUser, TUserInfo } from "../utile/types";
 
-type TUser = {
-	email: string;
-	name: string;
-};
-
-type TInitialState = {
-	getUser: TUser | "";
+type TRgistrationState = {
+	getUser: { success: boolean; user: { email: string; name: string } } | "";
 	userName: string;
 	email: string;
 	isAuth: boolean;
 	isLoader: boolean;
 	isAuthChecked: boolean;
 	isLogged: boolean;
-	user: boolean;
+	// user: { success: boolean; user: { email: string; name: string } } | null;
 };
 
-const initialState: TInitialState = {
+const initialState: TRgistrationState = {
 	getUser: "",
 	userName: "",
 	email: "",
@@ -44,7 +40,7 @@ const initialState: TInitialState = {
 	isLoader: false,
 	isAuthChecked: false,
 	isLogged: false,
-	user: false,
+	// user: null,
 };
 
 export type TRegistrationActions =
@@ -59,9 +55,9 @@ export type TRegistrationActions =
 	| TUserActions;
 
 export const registrationReducer = (
-	state = initialState,
+	state: TRgistrationState = initialState,
 	action: TRegistrationActions
-) => {
+): TRgistrationState => {
 	switch (action.type) {
 		case REGISTRATION_REQUEST: {
 			return {
@@ -84,7 +80,7 @@ export const registrationReducer = (
 				...state,
 				isAuthChecked: true,
 				isLogged: action.payload.success,
-				user: action.payload.user,
+				getUser: action.payload,
 			};
 		}
 		case AUTHORIZATION_REQUEST: {
@@ -109,7 +105,7 @@ export const registrationReducer = (
 				...state,
 				getUser: action.payload,
 				isAuth: true,
-				isLogged: action?.payload?.success,
+				isLogged: action.payload.success,
 				isAuthChecked: true,
 			};
 		}

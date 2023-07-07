@@ -16,6 +16,7 @@ export function UserForm() {
 	const dispatch = useDispatch();
 
 	const user = useAppSelector((state) => state.registration.getUser.user);
+
 	const [isLoader, setIsLoader] = useState<TLoader>(true);
 	const { values, handleChange, setValues } = useForm<TValue>({
 		email: "",

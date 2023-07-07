@@ -20,6 +20,7 @@ export function Profile() {
 	const loc = useLocation();
 
 	const user = useAppSelector((state) => state.registration.getUser.user);
+
 	const [isLoader, setIsLoader] = useState<TLoader>(true);
 	const { values, handleChange, setValues } = useForm<TValue>({
 		email: "",
