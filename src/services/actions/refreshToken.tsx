@@ -1,4 +1,5 @@
 import { getRefreshTokenOnServer } from "../api";
+import { AppThunk } from "../utile/typesRedux";
 import { getCookie, setCookie } from "../utile/utile";
 
 export const REFRESH_TOKEN: "LOGIN/REFRESH_TOKEN_SUCCESS" =
@@ -9,7 +10,7 @@ export type TRefreshTokenAction = {
 	payload: { success: boolean };
 };
 
-export function getRefreshToken() {
+export const getRefreshToken: AppThunk = () => {
 	return function (dispatch) {
 		if (!getCookie("accessToken")) {
 			console.log("user do not have access");
@@ -30,4 +31,4 @@ export function getRefreshToken() {
 				});
 		}
 	};
-}
+};

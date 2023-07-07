@@ -9,7 +9,7 @@ export type TGetUserInfo = {
 	payload: { success: boolean; user: { email: string; name: string } };
 };
 
-export const getUserInfo = () => {
+export const getUserInfo: AppThunk = () => {
 	return function (dispatch) {
 		getUserInfoOnServer()
 			.then((data) => {

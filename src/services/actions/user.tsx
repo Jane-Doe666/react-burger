@@ -1,5 +1,6 @@
 import { getRefreshTokenOnServer, getUserInfoOnServer } from "../api";
 import { TUser, TUserInfo } from "../utile/types";
+import { AppThunk } from "../utile/typesRedux";
 import { getCookie, setCookie } from "../utile/utile";
 import { REFRESH_TOKEN } from "./refreshToken";
 
@@ -17,7 +18,7 @@ export interface IUserSuccess {
 
 export type TUserActions = IAuthChecked | IUserSuccess;
 
-export const checkAuth = () => {
+export const checkAuth: AppThunk = () => {
 	return function (dispatch) {
 		if (!getCookie("accessToken")) {
 			dispatch({ type: AUTH_CHECKED });

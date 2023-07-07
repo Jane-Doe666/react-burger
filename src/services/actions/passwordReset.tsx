@@ -1,6 +1,7 @@
 import { NavigateFunction } from "react-router";
 import { setNewPasswordOnServer } from "../api";
 import { TValue } from "../utile/types";
+import { AppThunk } from "../utile/typesRedux";
 
 export const RESET_PASSWORD: "PASSWORD_RESET/RESET_PASSWORD" =
 	"PASSWORD_RESET/RESET_PASSWORD";
@@ -9,7 +10,10 @@ export type TResetPasswordAction = {
 	type: typeof RESET_PASSWORD;
 };
 
-export function getRefreshPassword(value: TValue, navigate: NavigateFunction) {
+export const getRefreshPassword: AppThunk = (
+	value: TValue,
+	navigate: NavigateFunction
+) => {
 	return function (dispatch) {
 		setNewPasswordOnServer(value)
 			.then((data) => {
@@ -22,4 +26,4 @@ export function getRefreshPassword(value: TValue, navigate: NavigateFunction) {
 				console.error(`Ошибка: ${err}`);
 			});
 	};
-}
+};

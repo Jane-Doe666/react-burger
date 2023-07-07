@@ -1,6 +1,7 @@
 import { NavigateFunction } from "react-router";
 import { getAuthorizationOnServer } from "../api";
 import { TRegistrationAnswer, TValue } from "../utile/types";
+import { AppThunk } from "../utile/typesRedux";
 import { setCookie } from "../utile/utile";
 
 export const AUTHORIZATION_REQUEST: "LOGIN/AUTHORIZATION_REQUEST" =
@@ -11,11 +12,11 @@ export interface IAuthorizationRequest {
 	payload: TRegistrationAnswer;
 }
 
-export function getAuthorization(
+export const getAuthorization: AppThunk = (
 	value: TValue,
 	location: string,
 	navigate: NavigateFunction
-) {
+) => {
 	return function (dispatch) {
 		getAuthorizationOnServer(value)
 			.then((data) => {
@@ -33,4 +34,4 @@ export function getAuthorization(
 				console.error(`Ошибка: ${err}`);
 			});
 	};
-}
+};

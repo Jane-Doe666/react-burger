@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { TElement } from "../utile/types";
+import { AppThunk } from "../utile/typesRedux";
 
 export const ADD: "BURGER_CONSTRUCTOR/ADD" = "BURGER_CONSTRUCTOR/ADD";
 export const DELETE: "BURGER_CONSTRUCTOR/DELETE" = "BURGER_CONSTRUCTOR/DELETE";
@@ -48,16 +49,14 @@ export const changeOrderInConstructor = (payload: any) => ({
 	payload: payload,
 });
 
-export function pushIngredientToConstructor(id: string) {
+export const pushIngredientToConstructor: AppThunk = (id: string) => {
 	return function (dispatch, getstate) {
 		const currentState = getstate();
-
 		const pushElement = currentState.app.items.find(
 			(item: TElement) => item._id === id
 		);
 		pushElement.newId = uuidv4();
 		pushElement.key = pushElement.newId;
-
 		dispatch(addIngredientToConstructor(pushElement));
 	};
-}
+};

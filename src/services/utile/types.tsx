@@ -129,6 +129,13 @@ export type TWsMessage = {
 	totalToday: number;
 };
 
+export type TWsTest = {
+	success: boolean;
+	orders: TItemOrderFeed[];
+	total: number;
+	totalToday: number;
+};
+
 export type TUser = {
 	success: boolean;
 	user: { email: string; name: string };

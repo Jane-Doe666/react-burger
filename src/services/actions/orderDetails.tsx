@@ -1,5 +1,6 @@
 import { getIdOrderFromServer, getRefreshTokenOnServer } from "../api";
 import { TElement, TIds } from "../utile/types";
+import { AppThunk } from "../utile/typesRedux";
 import { setCookie } from "../utile/utile";
 import { ICloseModal } from "./app";
 import { CLEAR_CONSTRUCTOR } from "./burgerConstructor";
@@ -31,7 +32,7 @@ export type TOrderDetailsActions =
 	| IGetOrderError
 	| ICloseModal;
 
-export const getOrder = (idList: TIds) => {
+export const getOrder: AppThunk = (idList: TIds) => {
 	return function (dispatch) {
 		dispatch({
 			type: GET_ORDER_REQUEST,

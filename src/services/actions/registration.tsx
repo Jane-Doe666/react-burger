@@ -12,7 +12,10 @@ export type TRegistrationRequest = {
 	payload: TRegistrationAnswer;
 };
 
-export const getRegistration = (value: TValue, navigate: NavigateFunction) => {
+export const getRegistration: AppThunk = (
+	value: TValue,
+	navigate: NavigateFunction
+) => {
 	return function (dispatch) {
 		createRegistrationOnServer(value)
 			.then((res) => {

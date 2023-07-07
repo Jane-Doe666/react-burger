@@ -37,7 +37,7 @@ export const closeModal = () => ({
 	type: CLOSE_MODAL,
 });
 
-export const getIngredients = () => {
+export const getIngredients: AppThunk = () => {
 	return function (dispatch) {
 		dispatch({
 			type: GET_INGREDIENTS_REQUEST,
