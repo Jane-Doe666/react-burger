@@ -5,7 +5,7 @@ import {
 	GET_ORDER_ERROR,
 	TOrderDetailsActions,
 } from "../actions/orderDetails";
-import { TElement } from "../utile/types";
+import { TElement } from "../types/types";
 
 type TOrderDetailsState = {
 	isModal: boolean;

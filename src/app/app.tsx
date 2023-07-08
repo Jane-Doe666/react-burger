@@ -11,15 +11,17 @@ import { Registration } from "../pages/registration/Registration";
 import { RestorePassword } from "../pages/restore-password/RestorePassword";
 import { PasswordReset } from "../pages/password-reset/PasswordReset";
 import { Profile } from "../pages/profile/Profile";
-import { Orders } from "../pages/orders/Orders";
+
 import { ProtectedRoute } from "../components/HOC/ProtectedRoute";
 import IngredientDetails from "../components/ingredient-details/IngredientDetails";
 import { checkAuth } from "../services/actions/user";
 import { Modal } from "../components/modal/Modal";
 import { OrderFeedById } from "../pages/order/OrderFeedById";
-import { OrdersProfile } from "../pages/orders-profile/OrdersProfile";
+// import { OrdersProfile } from "../pages/orders-private/OrdersPrivate";
 import { OrderProfileById } from "../pages/order/OrderProfileById";
-import { useAppSelector } from "../services/utile/typesRedux";
+import { useAppSelector } from "../services/types/typesRedux";
+import { OrdersPublic } from "../pages/orders-public/OrdersPublic";
+import { OrdersPrivate } from "../pages/orders-private/OrdersPrivate";
 
 function App() {
 	const dispatch = useDispatch();
@@ -60,7 +62,7 @@ function App() {
 						<Route path="/forgot-password" element={<RestorePassword />} />
 						<Route path="/reset-password" element={<PasswordReset />} />
 						<Route path="*" element={<NotFound404 />} />
-						<Route path="/feed" element={<Orders />} />
+						<Route path="/feed" element={<OrdersPublic />} />
 						<Route path="/feed/:id" element={<OrderFeedById />} />
 
 						<Route
@@ -71,7 +73,7 @@ function App() {
 								</ProtectedRoute>
 							}>
 							<Route path="/profile/" element={<Profile />} />
-							<Route path="/profile/orders" element={<OrdersProfile />} />
+							<Route path="/profile/orders" element={<OrdersPrivate />} />
 						</Route>
 
 						<Route

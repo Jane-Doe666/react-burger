@@ -1,6 +1,6 @@
 import { getUserInfoOnServer } from "../api";
-import { TUserInfo, TUser } from "../utile/types";
-import { AppThunk } from "../utile/typesRedux";
+import { TUserInfo, TUser } from "../types/types";
+import { AppThunk } from "../types/typesRedux";
 import { getRefreshToken } from "./refreshToken";
 
 export const GET_USER_INFO: "PROFILE/GET_USER_INFO" = "PROFILE/GET_USER_INFO";

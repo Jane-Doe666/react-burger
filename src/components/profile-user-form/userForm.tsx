@@ -8,8 +8,8 @@ import { useDispatch } from "react-redux";
 import { getUserInfo } from "../../services/actions/getUserInfo";
 import { changeUserInfoProfile } from "../../services/actions/updateUrerInfo";
 import { useForm } from "../../services/hooks/hooks";
-import { TValue } from "../../services/utile/types";
-import { useAppSelector } from "../../services/utile/typesRedux";
+import { TValue } from "../../services/types/types";
+import { useAppSelector } from "../../services/types/typesRedux";
 
 export function UserForm() {
 	type TLoader = Boolean;

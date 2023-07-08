@@ -6,7 +6,7 @@ import {
 	ORDER_PROFILE_SUCCESS,
 	TOrdersInProfileActions,
 } from "../actions/orderProfile";
-import { TWsMessage } from "../utile/types";
+import { TWsMessage } from "../types/types";
 
 export type TWsOrdersInProfile = {
 	wsConnected: boolean;

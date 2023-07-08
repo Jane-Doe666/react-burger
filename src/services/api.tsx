@@ -1,5 +1,5 @@
 import { getCookie } from "./utile/utile";
-import { TIds, TRegister, TValue } from "./utile/types";
+import { TIds, TRegister, TValue } from "./types/types";
 
 const config = {
 	BASE_URL: "https://norma.nomoreparties.space/api/",

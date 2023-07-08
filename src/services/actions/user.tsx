@@ -1,6 +1,6 @@
 import { getRefreshTokenOnServer, getUserInfoOnServer } from "../api";
-import { TUser, TUserInfo } from "../utile/types";
-import { AppThunk } from "../utile/typesRedux";
+import { TUser, TUserInfo } from "../types/types";
+import { AppThunk } from "../types/typesRedux";
 import { getCookie, setCookie } from "../utile/utile";
 import { REFRESH_TOKEN } from "./refreshToken";
 

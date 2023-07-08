@@ -2,8 +2,12 @@ import { FC, ReactNode, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, Navigate } from "react-router-dom";
 import { checkAuth } from "../../services/actions/user";
-import { TProtectedRoute } from "../../services/utile/types";
-import { useAppSelector } from "../../services/utile/typesRedux";
+import { useAppSelector } from "../../services/types/typesRedux";
+
+type TProtectedRoute = {
+	authOnly?: boolean;
+	children: ReactNode;
+};
 
 export const ProtectedRoute: FC<TProtectedRoute> = ({ children, authOnly }) => {
 	const dispatch = useDispatch();
@@ -25,5 +29,5 @@ export const ProtectedRoute: FC<TProtectedRoute> = ({ children, authOnly }) => {
 		return <Navigate to="/login" state={{ from: location }} />;
 	}
 
-	return children as any;
+	return <> {children} </>;
 };

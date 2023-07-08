@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getRefreshPassword } from "../../services/actions/passwordReset";
 import { useForm } from "../../services/hooks/hooks";
-import { TValue } from "../../services/utile/types";
+import { TValue } from "../../services/types/types";
 import styles from "./password-reset.module.css";
 
 export function PasswordReset() {

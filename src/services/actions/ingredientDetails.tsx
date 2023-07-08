@@ -1,4 +1,4 @@
-import { TElement } from "../utile/types";
+import { TElement } from "../types/types";
 
 export const OPEN_INGREDIENT: "INGREDIENT_DETAILS/OPEN_INGREDIENT" =
 	"INGREDIENT_DETAILS/OPEN_INGREDIENT";

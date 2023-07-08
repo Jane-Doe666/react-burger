@@ -1,15 +1,15 @@
 import styles from "./orders.module.css";
 import { useDispatch } from "react-redux";
-import { OrderFeed } from "../../components/order-feed/orderFeed";
+import { OrderLink } from "../../components/order-link/OrderLink";
 import { useEffect } from "react";
 import {
 	orderHistoryClosedByUser,
 	orderHistoryStart,
 } from "../../services/actions/orderHistory";
-import { useAppSelector } from "../../services/utile/typesRedux";
-import { TItemOrderFeed } from "../../services/utile/types";
+import { useAppSelector } from "../../services/types/typesRedux";
+import { TItemOrderFeed } from "../../services/types/types";
 
-export function Orders() {
+export function OrdersPublic() {
 	const dispatch = useDispatch();
 	const listOfOrders = useAppSelector((state) => state.orderHistory.messages);
 
@@ -28,7 +28,7 @@ export function Orders() {
 			<div className={styles.main}>
 				<div className={styles.scroll + " pr-2"}>
 					{listOfOrders.orders.map((item: TItemOrderFeed) => {
-						return <OrderFeed key={item?._id} item={item} />;
+						return <OrderLink key={item?._id} item={item} />;
 					})}
 				</div>
 

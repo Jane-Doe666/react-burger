@@ -16,9 +16,9 @@ import { getCookie } from "../../services/utile/utile";
 import { useNavigate } from "react-router-dom";
 import { closeModal } from "../../services/actions/app";
 import { Loader } from "../loader/Loader";
-import { TElement } from "../../services/utile/types";
+import { TElement } from "../../services/types/types";
 import { Modal } from "../modal/Modal";
-import { useAppSelector } from "../../services/utile/typesRedux";
+import { useAppSelector } from "../../services/types/typesRedux";
 
 export default function BurgerConstructor() {
 	const dispatch = useDispatch();

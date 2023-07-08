@@ -6,7 +6,7 @@ import {
 	ORDER_HISTORY_SUCCESS,
 	TOrderHistoryActions,
 } from "../actions/orderHistory";
-import { TWsMessage } from "../utile/types";
+import { TWsMessage } from "../types/types";
 
 export type TOrderHistory = {
 	wsConnected: boolean;

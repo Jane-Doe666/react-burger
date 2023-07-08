@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getAuthorization } from "../../services/actions/authorization";
 import { useForm } from "../../services/hooks/hooks";
-import { TValue } from "../../services/utile/types";
+import { TValue } from "../../services/types/types";
 import styles from "./login.module.css";
 
 export function Login() {

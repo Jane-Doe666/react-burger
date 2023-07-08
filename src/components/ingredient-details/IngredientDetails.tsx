@@ -1,8 +1,8 @@
 import styles from "./ingredientDetails.module.css";
 import { useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { TElement } from "../../services/utile/types";
-import { useAppSelector } from "../../services/utile/typesRedux";
+import { TElement } from "../../services/types/types";
+import { useAppSelector } from "../../services/types/typesRedux";
 
 export default function IngredientDetails() {
 	const ingredients = useAppSelector((state) => state.app.items);

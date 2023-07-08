@@ -8,11 +8,11 @@ import { useDispatch } from "react-redux";
 import { getUserInfo } from "../../services/actions/getUserInfo";
 import { changeUserInfoProfile } from "../../services/actions/updateUrerInfo";
 import { useForm } from "../../services/hooks/hooks";
-import { TValue } from "../../services/utile/types";
+import { TValue } from "../../services/types/types";
 import { useLocation } from "react-router";
-import { ProfileNavigation } from "../../components/profile-nav/profileNavigation";
-import { OrdersProfile } from "../orders-profile/OrdersProfile";
-import { useAppSelector } from "../../services/utile/typesRedux";
+import { ProfileNavigation } from "../../components/profile-nav/ProfileNavigation";
+import { OrdersPrivate } from "../orders-private/OrdersPrivate";
+import { useAppSelector } from "../../services/types/typesRedux";
 
 export function Profile() {
 	type TLoader = Boolean;
@@ -58,7 +58,7 @@ export function Profile() {
 			<div className={styles.profile}>
 				<ProfileNavigation />
 				{loc.pathname === "/profile/orders" ? (
-					<OrdersProfile />
+					<OrdersPrivate />
 				) : (
 					<form
 						onSubmit={updateUserInfo}

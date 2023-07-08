@@ -6,8 +6,8 @@ import styles from "./ingredient.module.css";
 import { useDrag } from "react-dnd";
 import { counterByIdSelectorCreator } from "../../services/selectors/selector";
 import React, { FC } from "react";
-import { TElement } from "../../services/utile/types";
-import { useAppSelector } from "../../services/utile/typesRedux";
+import { TElement } from "../../services/types/types";
+import { useAppSelector } from "../../services/types/typesRedux";
 
 type TIngredientProps = {
 	item: TElement;

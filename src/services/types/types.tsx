@@ -55,17 +55,18 @@ export type TElement = {
 	readonly image: string;
 	readonly image_large: string;
 	readonly image_mobile: string;
-	readonly key: string;
+
 	readonly name: string;
-	readonly newId: string | null;
 	readonly price: number;
 	readonly proteins: number;
 	readonly type: string;
 	__v: number;
 	readonly _id: string;
+	key: string;
+	newId?: string;
 	index: number;
 	id: string;
-	qty?: number | any;
+	qty?: number;
 };
 
 export type TItem = {

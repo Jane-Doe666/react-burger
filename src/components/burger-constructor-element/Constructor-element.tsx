@@ -10,8 +10,8 @@ import {
 	changeOrderInConstructor,
 	deleteIngredientFromConstructor,
 } from "../../services/actions/burgerConstructor";
-import { TElement, TConstructorElement } from "../../services/utile/types";
-import { useAppSelector } from "../../services/utile/typesRedux";
+import { TElement, TConstructorElement } from "../../services/types/types";
+import { useAppSelector } from "../../services/types/typesRedux";
 
 export const ConstructorElementContainer: FC<TConstructorElement> = ({
 	element,

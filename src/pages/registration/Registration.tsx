@@ -7,7 +7,7 @@ import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import styles from "./registration.module.css";
 import { getRegistration } from "../../services/actions/registration";
 import { useDispatch } from "react-redux";
-import { TValue } from "../../services/utile/types";
+import { TValue } from "../../services/types/types";
 
 export function Registration() {
 	type TIcon = "HideIcon" | "ShowIcon";

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import { TElement } from "../utile/types";
-import { AppThunk } from "../utile/typesRedux";
+import { TElement } from "../types/types";
+import { AppThunk } from "../types/typesRedux";
 
 export const ADD: "BURGER_CONSTRUCTOR/ADD" = "BURGER_CONSTRUCTOR/ADD";
 export const DELETE: "BURGER_CONSTRUCTOR/DELETE" = "BURGER_CONSTRUCTOR/DELETE";
@@ -44,7 +44,7 @@ export const deleteIngredientFromConstructor = (payload: TElement) => ({
 	payload: payload,
 });
 
-export const changeOrderInConstructor = (payload: any) => ({
+export const changeOrderInConstructor = (payload: TElement[]) => ({
 	type: CHANGE_ORDER,
 	payload: payload,
 });
@@ -55,8 +55,11 @@ export const pushIngredientToConstructor: AppThunk = (id: string) => {
 		const pushElement = currentState.app.items.find(
 			(item: TElement) => item._id === id
 		);
-		pushElement.newId = uuidv4();
-		pushElement.key = pushElement.newId;
-		dispatch(addIngredientToConstructor(pushElement));
+
+		if (!!pushElement) {
+			pushElement.newId = uuidv4();
+			pushElement.key = pushElement.newId;
+			dispatch(addIngredientToConstructor(pushElement));
+		}
 	};
 };

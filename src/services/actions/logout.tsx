@@ -1,5 +1,5 @@
 import { setLogOutOnServer } from "../api";
-import { AppThunk } from "../utile/typesRedux";
+import { AppThunk } from "../types/typesRedux";
 import { deleteCookie } from "../utile/utile";
 
 export const LOGOUT: "PROFILE/LOGOUT" = "PROFILE/LOGOUT";

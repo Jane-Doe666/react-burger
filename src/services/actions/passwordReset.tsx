@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router";
 import { setNewPasswordOnServer } from "../api";
-import { TValue } from "../utile/types";
-import { AppThunk } from "../utile/typesRedux";
+import { TValue } from "../types/types";
+import { AppThunk } from "../types/typesRedux";
 
 export const RESET_PASSWORD: "PASSWORD_RESET/RESET_PASSWORD" =
 	"PASSWORD_RESET/RESET_PASSWORD";

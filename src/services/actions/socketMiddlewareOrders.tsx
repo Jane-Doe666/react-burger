@@ -1,5 +1,5 @@
 import type { Middleware, MiddlewareAPI } from "redux";
-import { AppDispatch, RootState } from "../utile/typesRedux";
+import { AppDispatch, RootState } from "../types/typesRedux";
 import { orderHistoryActions } from "./orderHistory";
 import { orderProfileActions } from "./orderProfile";
 

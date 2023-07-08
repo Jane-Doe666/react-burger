@@ -1,5 +1,5 @@
 import { getRefreshTokenOnServer } from "../api";
-import { AppThunk } from "../utile/typesRedux";
+import { AppThunk } from "../types/typesRedux";
 import { getCookie, setCookie } from "../utile/utile";
 
 export const REFRESH_TOKEN: "LOGIN/REFRESH_TOKEN_SUCCESS" =

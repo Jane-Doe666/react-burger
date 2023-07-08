@@ -1,5 +1,5 @@
 import { useLocation } from "react-router";
-import { TElement, TItemOrderFeed } from "../../services/utile/types";
+import { TElement, TItemOrderFeed } from "../../services/types/types";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order.module.css";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ import {
 	orderHistoryClosedByUser,
 	orderHistoryStart,
 } from "../../services/actions/orderHistory";
-import { useAppSelector } from "../../services/utile/typesRedux";
+import { useAppSelector } from "../../services/types/typesRedux";
 
 export function OrderFeedById() {
 	const location = useLocation();
@@ -29,22 +29,24 @@ export function OrderFeedById() {
 		ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
 	);
 
-	const totalCostOrder = ingredientsInOrder?.reduce(
-		(acc: number, item: any) => {
-			const total = acc + item?.price;
-			return total;
-		},
-		0
-	);
+	const totalCostOrder = !!ingredientsInOrder
+		? ingredientsInOrder?.reduce((acc: number, item: any) => {
+				const total = acc + item?.price;
+				return total;
+		  }, 0)
+		: "";
 
-	const arrayUnique = ingredientsInOrder?.reduce((acc: any, item: any) => {
-		if (acc.includes(item)) {
-			item.qty++;
-			return [...acc];
-		}
-		item.qty = 1;
-		return [...acc, item];
-	}, []);
+	const arrayUnique = ingredientsInOrder?.reduce(
+		(acc: TElement[], item: any) => {
+			if (acc.includes(item)) {
+				item.qty++;
+				return [...acc];
+			}
+			item.qty = 1;
+			return [...acc, item];
+		},
+		[]
+	);
 
 	const orderDay = !!order ? createDataOrder(order.updatedAt) : "";
 

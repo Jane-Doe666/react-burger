@@ -5,7 +5,7 @@ import {
 	DELETE,
 	TBurgerConstructor,
 } from "../actions/burgerConstructor";
-import { TElement } from "../utile/types";
+import { TElement } from "../types/types";
 
 export type TInitialStateBurgerConstructor = {
 	bunTop: TElement | null;

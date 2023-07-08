@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router";
 import { getAuthorizationOnServer } from "../api";
-import { TRegistrationAnswer, TValue } from "../utile/types";
-import { AppThunk } from "../utile/typesRedux";
+import { TRegistrationAnswer, TValue } from "../types/types";
+import { AppThunk } from "../types/typesRedux";
 import { setCookie } from "../utile/utile";
 
 export const AUTHORIZATION_REQUEST: "LOGIN/AUTHORIZATION_REQUEST" =

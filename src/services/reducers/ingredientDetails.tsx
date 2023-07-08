@@ -1,6 +1,6 @@
 import { CLOSE_MODAL, ICloseModal } from "../actions/app";
 import { OPEN_INGREDIENT, TOpenIngredient } from "../actions/ingredientDetails";
-import { TElement } from "../utile/types";
+import { TElement } from "../types/types";
 
 type TIngredientDetailsState = {
 	info: TElement | undefined;

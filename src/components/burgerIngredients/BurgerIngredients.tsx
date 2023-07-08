@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { openIngredientInfo } from "../../services/actions/ingredientDetails";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
-import { TElement } from "../../services/utile/types";
+import { TElement } from "../../services/types/types";
 import { Ingredient } from "../ingredient/Ingredient";
-import { useAppSelector } from "../../services/utile/typesRedux";
+import { useAppSelector } from "../../services/types/typesRedux";
 
 export default function BurgerIngredients() {
 	type TActiveState = "one" | "two" | "three";

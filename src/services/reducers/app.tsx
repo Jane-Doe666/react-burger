@@ -4,7 +4,7 @@ import {
 	GET_INGREDIENTS_ERROR,
 	TGetIngredientsActions,
 } from "../actions/app";
-import { TElement } from "../utile/types";
+import { TElement } from "../types/types";
 
 type TAppState = {
 	items: TElement[];

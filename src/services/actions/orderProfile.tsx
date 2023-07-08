@@ -1,4 +1,4 @@
-import { TWsMessage } from "../utile/types";
+import { TWsMessage } from "../types/types";
 import { TWsActions } from "./socketMiddlewareOrders";
 
 export const ORDER_PROFILE_START: "ORDER_PROFILE_START" = "ORDER_PROFILE_START";

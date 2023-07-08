@@ -1,5 +1,5 @@
 import { useLocation } from "react-router";
-import { TElement, TItemOrderFeed } from "../../services/utile/types";
+import { TElement, TItemOrderFeed } from "../../services/types/types";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order.module.css";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ import {
 	orderProfileClosed,
 	orderProfileStart,
 } from "../../services/actions/orderProfile";
-import { useAppSelector } from "../../services/utile/typesRedux";
+import { useAppSelector } from "../../services/types/typesRedux";
 
 export function OrderProfileById() {
 	const location = useLocation();

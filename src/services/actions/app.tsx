@@ -1,6 +1,6 @@
 import { getBurgerIngredientsFromServer } from "../api";
-import { TElement, TIngredients } from "../utile/types";
-import { AppThunk } from "../utile/typesRedux";
+import { TElement, TIngredients } from "../types/types";
+import { AppThunk } from "../types/typesRedux";
 
 export const CLOSE_MODAL: "APP/CLOSE_MODAL" = "APP/CLOSE_MODAL";
 export const GET_INGREDIENTS_REQUEST: "APP/GETGET_INGREDIENTS_REQUEST" =

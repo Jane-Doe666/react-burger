@@ -1,6 +1,6 @@
 import { putchUpdateUserInfoOnServer } from "../api";
-import { TValue } from "../utile/types";
-import { AppThunk } from "../utile/typesRedux";
+import { TValue } from "../types/types";
+import { AppThunk } from "../types/typesRedux";
 
 export const UPDATE_USER_INFO: "PROFILE/UPDATE_USER_INFO" =
 	"PROFILE/UPDATE_USER_INFO";

@@ -1,6 +1,6 @@
 import styles from "./orderDetails.module.css";
 import flag from "../../images/doneflag.png";
-import { useAppSelector } from "../../services/utile/typesRedux";
+import { useAppSelector } from "../../services/types/typesRedux";
 
 export default function OrderDetails() {
 	const orderDetails = useAppSelector((state) => state.orderDetails.items);

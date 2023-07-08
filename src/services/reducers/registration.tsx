@@ -19,7 +19,7 @@ import {
 	UPDATE_USER_INFO,
 } from "../actions/updateUrerInfo";
 import { AUTH_CHECKED, TUserActions, USER_SUCCESS } from "../actions/user";
-import { TUserInfo } from "../utile/types";
+import { TUserInfo } from "../types/types";
 
 type TRgistrationState = {
 	getUser: TUserInfo | null;

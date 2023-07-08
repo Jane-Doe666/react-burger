@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "../../pages/orders/orders.module.css";
-import { TElement, TItemOrderFeed } from "../../services/utile/types";
+import styles from "../../pages/orders-public/orders.module.css";
+import { TElement, TItemOrderFeed } from "../../services/types/types";
 import { createDataOrder } from "../../services/utile/utile";
 import { useLocation } from "react-router";
-import { useAppSelector } from "../../services/utile/typesRedux";
+import { useAppSelector } from "../../services/types/typesRedux";
 
 type TItem = {
 	item: TItemOrderFeed;
 };
 
-export function OrderFeed({ item }: TItem) {
+export function OrderLink({ item }: TItem) {
 	const { number, name, updatedAt, ingredients, _id, status } = item;
 	const ingredientsBD = useAppSelector((state) => state.app.items);
 	const ingredientsInOrder = ingredients.map((element) =>

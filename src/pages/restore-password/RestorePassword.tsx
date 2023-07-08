@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getRestorePassword } from "../../services/actions/passwordRestore";
 import { useForm } from "../../services/hooks/hooks";
-import { TValue } from "../../services/utile/types";
+import { TValue } from "../../services/types/types";
 import styles from "./restore-pass.module.css";
 
 export function RestorePassword() {
