@@ -28,6 +28,18 @@ describe("burgerConstructorReducer reducer", () => {
 		});
 	});
 
+	it("run CHANGE_ORDER", () => {
+		expect(
+			burgerConstructorReducer(initialState, {
+				type: types.CHANGE_ORDER,
+				payload: testArray,
+			})
+		).toEqual({
+			...initialState,
+			list: testArray,
+		});
+	});
+
 	it("run DELETE", () => {
 		expect(
 			burgerConstructorReducer(
@@ -47,18 +59,6 @@ describe("burgerConstructorReducer reducer", () => {
 			bunTop: null,
 			indexDragOrder: null,
 			list: testArrayDelete.filter((item) => item.newId !== mainTest1.newId),
-		});
-	});
-
-	it("run CHANGE_ORDER", () => {
-		expect(
-			burgerConstructorReducer(initialState, {
-				type: types.CHANGE_ORDER,
-				payload: testArray,
-			})
-		).toEqual({
-			...initialState,
-			list: testArray,
 		});
 	});
 });
