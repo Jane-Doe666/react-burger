@@ -13,7 +13,7 @@ type TAppState = {
 	itemsFailed: boolean;
 };
 
-const initialState: TAppState = {
+export const initialState: TAppState = {
 	items: [],
 	isLoading: true,
 	itemsRequest: false,

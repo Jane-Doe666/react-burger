@@ -14,7 +14,7 @@ import { TOrderHistoryActions } from "../actions/orderHistory";
 import { TBurgerConstructor } from "../actions/burgerConstructor";
 import { TGetIngredientsActions } from "../actions/app";
 import { TOrderDetailsActions } from "../actions/orderDetails";
-import { TWsActions } from "../actions/socketMiddlewareOrders";
+import { TWsActions } from "../middleware/socketMiddlewareOrders";
 
 export const rootReducer = combineReducers({
 	app: burgerIngredientsReducer,

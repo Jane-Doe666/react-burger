@@ -10,9 +10,9 @@ import { changeUserInfoProfile } from "../../services/actions/updateUrerInfo";
 import { useForm } from "../../services/hooks/hooks";
 import { TValue } from "../../services/types/types";
 import { useLocation } from "react-router";
-import { ProfileNavigation } from "../../components/profile-nav/ProfileNavigation";
 import { OrdersPrivate } from "../orders-private/OrdersPrivate";
 import { useAppSelector } from "../../services/types/typesRedux";
+import { ProfileNavigation } from "../../components/profile-nav/profileNavigation";
 
 export function Profile() {
 	type TLoader = Boolean;

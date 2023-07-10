@@ -3,7 +3,7 @@ import { TElement, TItemOrderFeed } from "../../services/types/types";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order.module.css";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useParams } from "react-router";
 import { createDataOrder } from "../../services/utile/utile";
 import { getIngredients } from "../../services/actions/app";
@@ -25,28 +25,31 @@ export function OrderFeedById() {
 		(item: TItemOrderFeed) => item._id === paramsID
 	);
 
-	const ingredientsInOrder = order?.ingredients.map((element: string) =>
-		ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
-	);
+	const ingredientsInOrder = React.useMemo(() => {
+		return order?.ingredients.map((element: string) =>
+			ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
+		);
+	}, [order]);
 
-	const totalCostOrder = !!ingredientsInOrder
-		? ingredientsInOrder?.reduce((acc: number, item: any) => {
-				const total = acc + item?.price;
-				return total;
-		  }, 0)
-		: "";
+	const totalCostOrder = React.useMemo(() => {
+		return !!ingredientsInOrder
+			? ingredientsInOrder?.reduce((acc: number, item: any) => {
+					const total = acc + item?.price;
+					return total;
+			  }, 0)
+			: "";
+	}, [ingredientsInOrder]);
 
-	const arrayUnique = ingredientsInOrder?.reduce(
-		(acc: TElement[], item: any) => {
+	const arrayUnique = React.useMemo(() => {
+		return ingredientsInOrder?.reduce((acc: TElement[], item: any) => {
 			if (acc.includes(item)) {
 				item.qty++;
 				return [...acc];
 			}
 			item.qty = 1;
 			return [...acc, item];
-		},
-		[]
-	);
+		}, []);
+	}, [ingredientsInOrder]);
 
 	const orderDay = !!order ? createDataOrder(order.updatedAt) : "";
 

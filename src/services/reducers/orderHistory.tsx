@@ -15,7 +15,7 @@ export type TOrderHistory = {
 	error?: Event;
 };
 
-const initialState: TOrderHistory = {
+export const initialState: TOrderHistory = {
 	wsConnected: false,
 	messages: null,
 };

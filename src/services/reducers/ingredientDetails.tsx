@@ -7,7 +7,7 @@ type TIngredientDetailsState = {
 	setModal: boolean;
 };
 
-const initialState: TIngredientDetailsState = {
+export const initialState: TIngredientDetailsState = {
 	info: undefined,
 	setModal: false,
 };

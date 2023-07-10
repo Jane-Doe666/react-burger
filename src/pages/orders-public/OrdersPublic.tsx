@@ -8,10 +8,17 @@ import {
 } from "../../services/actions/orderHistory";
 import { useAppSelector } from "../../services/types/typesRedux";
 import { TItemOrderFeed } from "../../services/types/types";
+import { Loader } from "../../components/loader/Loader";
 
 export function OrdersPublic() {
 	const dispatch = useDispatch();
 	const listOfOrders = useAppSelector((state) => state.orderHistory.messages);
+
+	function compare(a: TItemOrderFeed, b: TItemOrderFeed) {
+		var dateA: any = new Date(a.createdAt);
+		var dateB: any = new Date(b.createdAt);
+		return dateA - dateB;
+	}
 
 	useEffect(() => {
 		dispatch(orderHistoryStart());
@@ -27,7 +34,7 @@ export function OrdersPublic() {
 			</h1>
 			<div className={styles.main}>
 				<div className={styles.scroll + " pr-2"}>
-					{listOfOrders.orders.map((item: TItemOrderFeed) => {
+					{listOfOrders?.orders?.sort(compare).map((item) => {
 						return <OrderLink key={item?._id} item={item} />;
 					})}
 				</div>
@@ -88,6 +95,6 @@ export function OrdersPublic() {
 			</div>
 		</div>
 	) : (
-		<>Loading....</>
+		<Loader />
 	);
 }

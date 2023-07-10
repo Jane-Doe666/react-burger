@@ -1,9 +1,10 @@
 import { getUserInfoOnServer } from "../api";
-import { TUserInfo, TUser } from "../types/types";
+import { TUserInfo } from "../types/types";
 import { AppThunk } from "../types/typesRedux";
 import { getRefreshToken } from "./refreshToken";
 
 export const GET_USER_INFO: "PROFILE/GET_USER_INFO" = "PROFILE/GET_USER_INFO";
+
 export type TGetUserInfo = {
 	type: typeof GET_USER_INFO;
 	payload: TUserInfo;

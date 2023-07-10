@@ -15,7 +15,7 @@ export type TWsOrdersInProfile = {
 	error?: Event;
 };
 
-const initialState: TWsOrdersInProfile = {
+export const initialState: TWsOrdersInProfile = {
 	wsConnected: false,
 	messages: null,
 };

@@ -31,7 +31,7 @@ type TRgistrationState = {
 	isLogged: boolean;
 };
 
-const initialState: TRgistrationState = {
+export const initialState: TRgistrationState = {
 	getUser: null,
 	userName: "",
 	email: "",
@@ -58,11 +58,13 @@ export const registrationReducer = (
 ): TRgistrationState => {
 	switch (action.type) {
 		case REGISTRATION_REQUEST: {
+			console.log(2, state);
+			console.log(1, action);
 			return {
 				...state,
 				userName: action.payload.user.name,
 				email: action.payload.user.email,
-				isLogged: action?.payload?.success,
+				isLogged: true,
 				isAuth: true,
 				isAuthChecked: true,
 			};
@@ -77,7 +79,7 @@ export const registrationReducer = (
 			return {
 				...state,
 				isAuthChecked: true,
-				isLogged: action.payload.success,
+				isLogged: true,
 				getUser: action.payload,
 			};
 		}
@@ -87,7 +89,7 @@ export const registrationReducer = (
 				userName: action.payload.user.name,
 				email: action.payload.user.email,
 				isAuth: true,
-				isLogged: action.payload.success,
+				isLogged: true,
 				isAuthChecked: true,
 			};
 		}
@@ -103,8 +105,8 @@ export const registrationReducer = (
 				...state,
 				getUser: action.payload,
 				isAuth: true,
-				isLogged: action.payload.success,
 				isAuthChecked: true,
+				isLogged: true,
 			};
 		}
 

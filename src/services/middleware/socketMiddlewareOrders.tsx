@@ -1,7 +1,7 @@
 import type { Middleware, MiddlewareAPI } from "redux";
 import { AppDispatch, RootState } from "../types/typesRedux";
-import { orderHistoryActions } from "./orderHistory";
-import { orderProfileActions } from "./orderProfile";
+import { orderHistoryActions } from "../actions/orderHistory";
+import { orderProfileActions } from "../actions/orderProfile";
 
 export type TWsActions =
 	| typeof orderHistoryActions

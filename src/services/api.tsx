@@ -1,7 +1,7 @@
 import { getCookie } from "./utile/utile";
-import { TIds, TRegister, TValue } from "./types/types";
+import { TIds, TValue } from "./types/types";
 
-const config = {
+export const config = {
 	BASE_URL: "https://norma.nomoreparties.space/api/",
 	headers: { "Content-Type": "application/json" },
 };
@@ -36,7 +36,10 @@ export const getBurgerIngredientsFromServer = (): Promise<any> =>
 export const getIdOrderFromServer = (array: TIds): Promise<any> => {
 	return request(`orders`, {
 		method: "POST",
-		headers: config.headers,
+		headers: {
+			"Content-Type": "application/json",
+			authorization: getCookie("accessToken"),
+		},
 		body: JSON.stringify(array),
 	});
 };

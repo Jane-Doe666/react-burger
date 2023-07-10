@@ -15,7 +15,7 @@ type TOrderDetailsState = {
 	isLoader: boolean;
 };
 
-const initialState: TOrderDetailsState = {
+export const initialState: TOrderDetailsState = {
 	isModal: false,
 	items: [],
 	itemsRequest: false,

@@ -1,5 +1,5 @@
 import { TWsMessage } from "../types/types";
-import { TWsActions } from "./socketMiddlewareOrders";
+import { TWsActions } from "../middleware/socketMiddlewareOrders";
 
 export const ORDER_HISTORY_START: "ORDER_HISTORY_START" = "ORDER_HISTORY_START";
 export const ORDER_HISTORY_SUCCESS: "ORDER_HISTORY_SUCCESS" =

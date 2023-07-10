@@ -1,7 +1,7 @@
 import { NavigateFunction } from "react-router";
 import { createRegistrationOnServer } from "../api";
 import { TRegistrationAnswer, TValue } from "../types/types";
-import { AppDispatch, AppThunk, useAppDispatch } from "../types/typesRedux";
+import { AppThunk } from "../types/typesRedux";
 import { setCookie } from "../utile/utile";
 
 export const REGISTRATION_REQUEST: "REGISTRATION/REGISTRATION_REQUEST" =

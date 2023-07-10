@@ -42,9 +42,8 @@ export default function BurgerConstructor() {
 	const handleOpenedOrder = () => {
 		let ids = { ingredients: iDIngredientsInOrder };
 		ids.ingredients = ids.ingredients.filter((item) => !!item);
-		return isCookie === undefined
-			? navigate("/login")
-			: dispatch(getOrder(ids));
+
+		return !isCookie ? navigate("/login") : dispatch(getOrder(ids));
 	};
 
 	const [, dropTarget] = useDrop({
@@ -133,7 +132,9 @@ export default function BurgerConstructor() {
 
 			<>
 				{isLoading ? (
-					<Loader />
+					<div>
+						<Loader />
+					</div>
 				) : (
 					openedModal && (
 						<Modal handleClose={closePopup}>

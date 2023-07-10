@@ -14,7 +14,7 @@ export type TInitialStateBurgerConstructor = {
 	indexDragOrder: null;
 };
 
-const initialState: TInitialStateBurgerConstructor = {
+export const initialState: TInitialStateBurgerConstructor = {
 	bunTop: null,
 	list: [],
 	bunBottom: null,
@@ -55,6 +55,9 @@ export const burgerConstructorReducer = (
 		}
 
 		case DELETE: {
+			console.log(1, state);
+			console.log(2, action);
+
 			return {
 				...state,
 				list: state.list.filter((item) => item.newId !== action.payload.newId),

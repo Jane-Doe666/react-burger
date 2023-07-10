@@ -2,7 +2,7 @@ import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import { rootReducer } from "../reducers";
 import { compose } from "redux";
-import { socketMiddlewareOrders } from "../actions/socketMiddlewareOrders";
+import { socketMiddlewareOrders } from "../middleware/socketMiddlewareOrders";
 import { orderHistoryActions } from "../actions/orderHistory";
 import { orderProfileActions } from "../actions/orderProfile";
 import { wsOrderUrlPrivate, wsOrderUrlPublic } from "../utile/constants";

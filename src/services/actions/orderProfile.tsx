@@ -1,5 +1,5 @@
 import { TWsMessage } from "../types/types";
-import { TWsActions } from "./socketMiddlewareOrders";
+import { TWsActions } from "../middleware/socketMiddlewareOrders";
 
 export const ORDER_PROFILE_START: "ORDER_PROFILE_START" = "ORDER_PROFILE_START";
 export const ORDER_PROFILE_SUCCESS: "ORDER_PROFILE_SUCCESS" =
