@@ -1,16 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-<<<<<<< HEAD
 import App from "./app/app";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "./services/types/store";
-=======
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
->>>>>>> eeb606942e0e3d63bc8b11379d2ce810484b9504
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
@@ -18,15 +13,11 @@ const root = ReactDOM.createRoot(
 
 root.render(
 	<React.StrictMode>
-<<<<<<< HEAD
 		<Provider store={store}>
 			<BrowserRouter>
 				<App />
 			</BrowserRouter>
 		</Provider>
-=======
-		<App />
->>>>>>> eeb606942e0e3d63bc8b11379d2ce810484b9504
 	</React.StrictMode>
 );
 
