@@ -1,21 +1,25 @@
-const modalWindowElement = "[class^=burgerIngredients_section]";
+import { getIdOrderFromServer } from "../../../src/services/api";
+const testUrl = "http://localhost:3000/";
+const modalWindowElement = "[class^=ingredient_li]";
 const closeWindow = '[class^="modal_cross"]';
+const tab = ".tab";
+const tabActiveClass = "tab_type_current";
 const constructorContainer = "[class^=burger-constructor_section]";
 const ingredientContainer = "[class^=burgerIngredients_scrollbar]";
 const button = "button";
-const tab = ".tab";
+const textField = ".input";
 
 describe("main page test", () => {
-	beforeEach(() => {
-		cy.visit("http://localhost:3000/");
+	beforeEach("open app", () => {
+		cy.visit(testUrl);
 	});
 
 	it("modal window ingredient test ", () => {
-		cy.get(modalWindowElement).click();
+		cy.get(modalWindowElement).eq(1).click();
 		cy.get(closeWindow).should("exist");
-		cy.get(closeWindow).children().click();
+		cy.get(closeWindow).click();
 		cy.get(closeWindow).should("not.exist");
-		cy.get(modalWindowElement).click();
+		cy.get(modalWindowElement).eq(6).click();
 		cy.get("body").type("{esc}");
 		cy.get(closeWindow).should("not.exist");
 	});
@@ -33,8 +37,9 @@ describe("main page test", () => {
 	});
 
 	it("active tab test", () => {
-		cy.get(`.burgerIngredients_nav> :nth-child(3)`).click();
-		cy.get(`.burgerIngredients_nav> :nth-child(1)`).click();
+		cy.get(tab).eq(1).click().should("have.class", tabActiveClass);
+		cy.get(tab).eq(2).click().should("have.class", tabActiveClass);
+		cy.get(tab).eq(0).click().should("have.class", tabActiveClass);
 	});
 
 	it("test drag ang drop", function () {
@@ -53,5 +58,9 @@ describe("main page test", () => {
 
 		cy.get(button).contains("Оформить заказ").click();
 		cy.location("pathname").should("eq", "/login");
+		cy.get(textField).eq(0).type("vigoweg521@carpetra.com");
+		cy.get(textField).eq(1).type("cc");
+		cy.get(button).contains("Войти").click();
+		cy.get(button).contains("Оформить заказ");
 	});
 });
