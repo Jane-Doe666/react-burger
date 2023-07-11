@@ -32,16 +32,6 @@ export function OrderLink({ item }: TItem) {
 	const ingredientsQty = ingredientsInOrder.length - 6;
 	let orderDay = createDataOrder(updatedAt);
 
-	const statusOrder =
-		status === "done"
-			? "Выполнен"
-			: status === "pending"
-			? "Готовится"
-			: "Отменен";
-
-	const statusColor =
-		status === "done" ? "white" : status === "pending" ? "#0cc" : "red";
-
 	return item ? (
 		<div className={styles.container_order + " p-6 mb-4"}>
 			{" "}
@@ -60,20 +50,34 @@ export function OrderLink({ item }: TItem) {
 					</p>
 				</div>
 				<p className="text text_type_main-medium mt-6 mb-6">{name}</p>
-				<p
-					className=" text text_type_main-default mt-6 mb-6"
-					style={{ color: statusColor }}>
-					{statusOrder}
-				</p>
+				{status === "done" && (
+					<p className="text text_type_main-default mt-6 mb-6">Выполнен</p>
+				)}
+				{status === "pending" && (
+					<p
+						className={
+							styles.statusPending + " text text_type_main-default mt-6 mb-6"
+						}>
+						Готовится
+					</p>
+				)}
+				{status === "delete" && (
+					<p
+						className={
+							styles.statusDelete + " text text_type_main-default mt-6 mb-6"
+						}>
+						Отменен
+					</p>
+				)}
+				{status === "created" && (
+					<p className="text text_type_main-default mt-6 mb-6">Создан</p>
+				)}
 				<div className={styles.images}>
 					<div className={styles.image_container}>
 						{ingredientsInOrder.map((item, index) => {
 							if (index < 5) {
 								return (
-									<div
-										key={index}
-										className={styles.image_div}
-										style={{ zIndex: 10 - index }}>
+									<div key={index} className={styles.image_div}>
 										<img
 											className={styles.image}
 											src={item?.image_mobile}
@@ -87,8 +91,7 @@ export function OrderLink({ item }: TItem) {
 						{ingredientsInOrder.length == 6 && (
 							<div
 								key={ingredientsInOrder[5]?.index}
-								className={styles.image_div}
-								style={{ zIndex: 4 }}>
+								className={styles.image_div}>
 								<img
 									className={styles.image}
 									src={ingredientsInOrder[5]?.image_mobile}
@@ -100,8 +103,7 @@ export function OrderLink({ item }: TItem) {
 						{ingredientsInOrder.length > 6 && (
 							<div
 								key={ingredientsInOrder[5]?.index}
-								className={styles.image_div}
-								style={{ zIndex: 4 }}>
+								className={styles.image_div}>
 								<img
 									className={styles.image}
 									src={ingredientsInOrder[5]?.image_mobile}

@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import styles from "./app.module.css";
 import AppHeader from "../components/header/AppHeader";
-import { useDispatch } from "react-redux";
 import { getIngredients } from "../services/actions/app";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Main from "../pages/main/main";
@@ -17,18 +16,17 @@ import { checkAuth } from "../services/actions/user";
 import { Modal } from "../components/modal/Modal";
 import { OrderFeedById } from "../pages/order/OrderFeedById";
 import { OrderProfileById } from "../pages/order/OrderProfileById";
-import { useAppSelector } from "../services/types/typesRedux";
+import { useAppDispatch, useAppSelector } from "../services/types/typesRedux";
 import { OrdersPublic } from "../pages/orders-public/OrdersPublic";
 import { OrdersPrivate } from "../pages/orders-private/OrdersPrivate";
 
 function App() {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const isLoading = useAppSelector((state) => state.app.isLoading);
 	const { state } = useLocation();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const background = location?.state?.background;
-
 	const handleClose = () => {
 		navigate(-1);
 	};

@@ -1,8 +1,9 @@
-const modalWindowElement = "[class^=burgerIngredients_section__SytOj]";
-const closeWindow = '[class^="modal_cross__rtx2i"]';
-const constructorContainer = "[class^=burger-constructor_section__IR4uo]";
-const ingredientContainer = "[class^=burgerIngredients_scrollbar__sQPqU]";
+const modalWindowElement = "[class^=burgerIngredients_section]";
+const closeWindow = '[class^="modal_cross"]';
+const constructorContainer = "[class^=burger-constructor_section]";
+const ingredientContainer = "[class^=burgerIngredients_scrollbar]";
 const button = "button";
+const tab = ".tab";
 
 describe("main page test", () => {
 	beforeEach(() => {
@@ -32,9 +33,8 @@ describe("main page test", () => {
 	});
 
 	it("active tab test", () => {
-		cy.get(`.burgerIngredients_nav__hr6Na > :nth-child(2)`).click();
-		cy.get(`.burgerIngredients_nav__hr6Na > :nth-child(3)`).click();
-		cy.get(`.burgerIngredients_nav__hr6Na > :nth-child(1)`).click();
+		cy.get(`.burgerIngredients_nav> :nth-child(3)`).click();
+		cy.get(`.burgerIngredients_nav> :nth-child(1)`).click();
 	});
 
 	it("test drag ang drop", function () {

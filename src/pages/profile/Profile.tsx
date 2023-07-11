@@ -4,19 +4,21 @@ import {
 	Input,
 	Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
 import { getUserInfo } from "../../services/actions/getUserInfo";
 import { changeUserInfoProfile } from "../../services/actions/updateUrerInfo";
 import { useForm } from "../../services/hooks/hooks";
 import { TValue } from "../../services/types/types";
 import { useLocation } from "react-router";
 import { OrdersPrivate } from "../orders-private/OrdersPrivate";
-import { useAppSelector } from "../../services/types/typesRedux";
+import {
+	useAppDispatch,
+	useAppSelector,
+} from "../../services/types/typesRedux";
 import { ProfileNavigation } from "../../components/profile-nav/profileNavigation";
 
 export function Profile() {
 	type TLoader = Boolean;
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const loc = useLocation();
 
 	const user = useAppSelector((state) => state.registration.getUser?.user);

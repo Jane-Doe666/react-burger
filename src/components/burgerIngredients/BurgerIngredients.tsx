@@ -1,17 +1,19 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect, useRef, useState } from "react";
 import styles from "./burgerIngredients.module.css";
-import { useDispatch, useSelector } from "react-redux";
 import { openIngredientInfo } from "../../services/actions/ingredientDetails";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
 import { TElement } from "../../services/types/types";
 import { Ingredient } from "../ingredient/Ingredient";
-import { useAppSelector } from "../../services/types/typesRedux";
+import {
+	useAppDispatch,
+	useAppSelector,
+} from "../../services/types/typesRedux";
 
 export default function BurgerIngredients() {
 	type TActiveState = "one" | "two" | "three";
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const data = useAppSelector((state) => state.app.items);
 	const openIngredient = (item: TElement) => {
 		dispatch(openIngredientInfo(item));
@@ -130,6 +132,7 @@ export default function BurgerIngredients() {
 									}}
 									state={{
 										state: { modal: true },
+										background: "/",
 									}}
 									className={styles.div}
 									key={item._id}>
@@ -162,6 +165,7 @@ export default function BurgerIngredients() {
 									}}
 									state={{
 										state: { modal: true },
+										background: "/",
 									}}>
 									<Ingredient
 										item={item}

@@ -4,18 +4,18 @@ import {
 	Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getAuthorization } from "../../services/actions/authorization";
 import { useForm } from "../../services/hooks/hooks";
 import { TValue } from "../../services/types/types";
+import { useAppDispatch } from "../../services/types/typesRedux";
 import styles from "./login.module.css";
 
 export function Login() {
 	type TIcon = "ShowIcon" | "HideIcon";
 	type TImput = "password" | "text";
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const location = useLocation();
 	const { values, handleChange } = useForm<TValue>({
 		email: "",

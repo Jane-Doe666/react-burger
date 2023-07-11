@@ -11,9 +11,5 @@ export type AppThunk<TReturn = void> = ActionCreator<
 	ThunkAction<TReturn, RootState, Action, TAllActionsTypes>
 >;
 
-{
-	/* <ThunkAction<TReturn, Action, RootState, TAllActionsTypes>>; */
-}
-
 export const useAppDispatch = () => useDispatch<AppDispatch & AppThunk>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

@@ -20,6 +20,7 @@ export const socketMiddlewareOrders = (
 
 			if (type === webSocketActions.start) {
 				socket = new WebSocket(url);
+				console.log(socket);
 			}
 
 			if (socket) {

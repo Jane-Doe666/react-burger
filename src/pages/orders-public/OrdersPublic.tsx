@@ -1,17 +1,19 @@
 import styles from "./orders.module.css";
-import { useDispatch } from "react-redux";
 import { OrderLink } from "../../components/order-link/OrderLink";
 import { useEffect } from "react";
 import {
 	orderHistoryClosedByUser,
 	orderHistoryStart,
 } from "../../services/actions/orderHistory";
-import { useAppSelector } from "../../services/types/typesRedux";
+import {
+	useAppDispatch,
+	useAppSelector,
+} from "../../services/types/typesRedux";
 import { TItemOrderFeed } from "../../services/types/types";
 import { Loader } from "../../components/loader/Loader";
 
 export function OrdersPublic() {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const listOfOrders = useAppSelector((state) => state.orderHistory.messages);
 
 	function compare(a: TItemOrderFeed, b: TItemOrderFeed) {

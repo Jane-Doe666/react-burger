@@ -1,16 +1,18 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { Loader } from "../../components/loader/Loader";
 import { OrderLink } from "../../components/order-link/OrderLink";
 import {
 	orderProfileClosed,
 	orderProfileStart,
 } from "../../services/actions/orderProfile";
-import { useAppSelector } from "../../services/types/typesRedux";
+import {
+	useAppSelector,
+	useAppDispatch,
+} from "../../services/types/typesRedux";
 import styles from "../orders-public/orders.module.css";
 
 export function OrdersPrivate() {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const listOfOrders = useAppSelector((state) => state.orderInProfile.messages);
 
 	function compare(a, b) {

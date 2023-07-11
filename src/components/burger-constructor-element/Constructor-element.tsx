@@ -2,22 +2,24 @@ import {
 	ConstructorElement,
 	DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { DetailedHTMLProps, FC, useCallback, useRef } from "react";
+import React, { FC, useCallback, useRef } from "react";
 import { useDrag, useDrop, XYCoord } from "react-dnd";
-import { useDispatch } from "react-redux";
 import styles from "../burger-constructor/burger-constructor.module.css";
 import {
 	changeOrderInConstructor,
 	deleteIngredientFromConstructor,
 } from "../../services/actions/burgerConstructor";
 import { TElement, TConstructorElement } from "../../services/types/types";
-import { useAppSelector } from "../../services/types/typesRedux";
+import {
+	useAppDispatch,
+	useAppSelector,
+} from "../../services/types/typesRedux";
 
 export const ConstructorElementContainer: FC<TConstructorElement> = ({
 	element,
 	index,
 }) => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const ingredients = useAppSelector((state) => state.burgerConstructor.list);
 	const ref = useRef<HTMLDivElement | null>(null);
 	const [, dragRef] = useDrag({

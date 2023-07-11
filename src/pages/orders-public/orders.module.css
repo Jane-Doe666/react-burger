@@ -38,6 +38,14 @@
 	gap: 36px;
 }
 
+.statusDelete {
+	color: red;
+}
+
+.statusPending {
+	color: #0cc;
+}
+
 .scrollReady {
 	max-width: 240px;
 	list-style: none;
@@ -123,6 +131,40 @@
 		linear-gradient(0deg, #131316, #131316);
 	border-image-source: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%);
 	margin-left: -20px;
+}
+
+.image_div:nth-child(1) {
+	z-index: 11;
+}
+.image_div:nth-child(2) {
+	z-index: 10;
+}
+.image_div:nth-child(3) {
+	z-index: 9;
+}
+
+.image_div:nth-child(4) {
+	z-index: 8;
+}
+
+.image_div:nth-child(5) {
+	z-index: 7;
+}
+.image_div:nth-child(6) {
+	z-index: 6;
+}
+
+.image_div:nth-child(7) {
+	z-index: 5;
+}
+.image_div:nth-child(8) {
+	z-index: 4;
+}
+.image_div:nth-child(9) {
+	z-index: 3;
+}
+.image_div:nth-child(10) {
+	z-index: 2;
 }
 
 .image {

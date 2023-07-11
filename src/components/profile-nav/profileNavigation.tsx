@@ -1,29 +1,35 @@
 import { NavLink } from "react-router-dom";
 import styles from "../../pages/profile/profile.module.css";
-import { useDispatch } from "react-redux";
 import { getLogout } from "../../services/actions/logout";
 import { useLocation } from "react-router";
+import { useAppDispatch } from "../../services/types/typesRedux";
 
 export function ProfileNavigation() {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const handleLogOut = () => {
 		dispatch(getLogout());
 	};
-
-	const { pathname } = useLocation();
 
 	return (
 		<div className={styles.page}>
 			<NavLink
 				to="/profile"
-				className={styles.p + " text text_type_main-medium"}
-				style={{ color: pathname === "/profile" ? "white" : "#8585ad" }}>
+				end
+				className={({ isActive }) =>
+					isActive
+						? `${styles.link_active + " text text_type_main-medium"}`
+						: `${styles.link_iNactive + " text text_type_main-medium"}`
+				}>
 				Профиль
 			</NavLink>
 			<NavLink
 				to="/profile/orders"
-				className={styles.p + " text text_type_main-medium"}
-				style={{ color: pathname === "/profile/orders" ? "white" : "#8585ad" }}>
+				end
+				className={({ isActive }) =>
+					isActive
+						? `${styles.link_active + " text text_type_main-medium"}`
+						: `${styles.link_iNactive + " text text_type_main-medium"}`
+				}>
 				История заказов
 			</NavLink>
 			<NavLink

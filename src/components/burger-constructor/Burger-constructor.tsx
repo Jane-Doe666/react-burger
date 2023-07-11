@@ -5,7 +5,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import OrderDetails from "../order-details/OrderDetails";
-import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { useCallback, useMemo } from "react";
 import { iDInOrderSelectorCreator } from "../../services/selectors/selector";
@@ -18,10 +17,13 @@ import { closeModal } from "../../services/actions/app";
 import { Loader } from "../loader/Loader";
 import { TElement } from "../../services/types/types";
 import { Modal } from "../modal/Modal";
-import { useAppSelector } from "../../services/types/typesRedux";
+import {
+	useAppDispatch,
+	useAppSelector,
+} from "../../services/types/typesRedux";
 
 export default function BurgerConstructor() {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
 	const ingredients = useAppSelector((state) => state.burgerConstructor.list);

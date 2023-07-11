@@ -20,9 +20,20 @@
 	color: #8585ad;
 }
 
-.isActive {
-	composes: p;
+.link_active {
+	min-height: 64px;
+	display: flex;
+	align-items: center;
+	text-decoration: none;
 	color: white;
+}
+
+.link_iNactive {
+	min-height: 64px;
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color: #8585ad;
 }
 
 .profileInfo {

@@ -1,10 +1,4 @@
 import React, { useState } from "react";
-import {
-	TypedUseSelectorHook,
-	useDispatch as dispatchHook,
-	useSelector as selectorHook,
-} from "react-redux";
-import { AppDispatch, AppThunk, RootState } from "../types/typesRedux";
 import type {} from "redux-thunk/extend-redux";
 
 export function useForm<TValue>(inputValues: TValue) {
@@ -16,7 +10,3 @@ export function useForm<TValue>(inputValues: TValue) {
 
 	return { values, handleChange, setValues };
 }
-export const useDispatch = () =>
-	dispatchHook<AppDispatch>() || dispatchHook<AppThunk>();
-
-export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;

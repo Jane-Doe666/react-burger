@@ -1,6 +1,5 @@
 import styles from "./ingredientDetails.module.css";
 import { useLocation, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { TElement } from "../../services/types/types";
 import { useAppSelector } from "../../services/types/typesRedux";
 

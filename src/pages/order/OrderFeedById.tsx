@@ -1,40 +1,39 @@
 import { useLocation } from "react-router";
-import { TElement, TItemOrderFeed } from "../../services/types/types";
+import { TElement } from "../../services/types/types";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order.module.css";
-import { useDispatch } from "react-redux";
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import { createDataOrder } from "../../services/utile/utile";
-import { getIngredients } from "../../services/actions/app";
 import {
 	orderHistoryClosedByUser,
 	orderHistoryStart,
 } from "../../services/actions/orderHistory";
-import { useAppSelector } from "../../services/types/typesRedux";
+import {
+	useAppDispatch,
+	useAppSelector,
+} from "../../services/types/typesRedux";
 
 export function OrderFeedById() {
 	const location = useLocation();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const paramsID = useParams()?.id;
 
 	const ingredientsDataBaseInfo = useAppSelector((state) => state.app.items);
 	const listOfOrders = useAppSelector((state) => state.orderHistory.messages);
 
-	const order = listOfOrders?.orders?.find(
-		(item: TItemOrderFeed) => item._id === paramsID
-	);
+	const order = listOfOrders?.orders?.find((item) => item._id === paramsID);
 
 	const ingredientsInOrder = React.useMemo(() => {
-		return order?.ingredients.map((element: string) =>
-			ingredientsDataBaseInfo?.find((item: TElement) => item._id === element)
+		return order?.ingredients.map((element) =>
+			ingredientsDataBaseInfo?.find((item) => item._id === element)
 		);
 	}, [order]);
 
 	const totalCostOrder = React.useMemo(() => {
 		return !!ingredientsInOrder
-			? ingredientsInOrder?.reduce((acc: number, item: any) => {
-					const total = acc + item?.price;
+			? ingredientsInOrder?.reduce((acc, item) => {
+					const total = !!item ? acc + item.price : acc;
 					return total;
 			  }, 0)
 			: "";
@@ -56,7 +55,7 @@ export function OrderFeedById() {
 	useEffect(() => {
 		if (!location?.state) {
 			dispatch(orderHistoryStart());
-			dispatch(getIngredients());
+
 			return () => {
 				dispatch(orderHistoryClosedByUser());
 			};
@@ -73,25 +72,20 @@ export function OrderFeedById() {
 				</p>
 
 				{order?.status === "done" && (
-					<p
-						className={styles.text + " text text_type_main-default mt-3"}
-						style={{ color: "#0cc" }}>
+					<p className={styles.textDone + " text text_type_main-default mt-3"}>
 						Выполнен
 					</p>
 				)}
 
 				{order?.status === "pending" && (
-					<p
-						className={styles.text + " text text_type_main-default mt-3"}
-						style={{ color: "white" }}>
+					<p className={styles.text + " text text_type_main-default mt-3"}>
 						Готовится
 					</p>
 				)}
 
 				{order?.status === "delete" && (
 					<p
-						className={styles.text + " text text_type_main-default mt-3"}
-						style={{ color: "red" }}>
+						className={styles.textDelete + " text text_type_main-default mt-3"}>
 						Отменен
 					</p>
 				)}
@@ -100,7 +94,7 @@ export function OrderFeedById() {
 					Состав:
 				</p>
 				<ul className={styles.ul}>
-					{arrayUnique?.map((item: TElement, index: number) => (
+					{arrayUnique?.map((item, index) => (
 						<li className={styles.li} key={index}>
 							<div className={styles.image_div}>
 								<img

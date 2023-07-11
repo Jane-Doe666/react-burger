@@ -4,19 +4,19 @@ import {
 	Input,
 	Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
 import { getUserInfo } from "../../services/actions/getUserInfo";
 import { changeUserInfoProfile } from "../../services/actions/updateUrerInfo";
 import { useForm } from "../../services/hooks/hooks";
 import { TValue } from "../../services/types/types";
-import { useAppSelector } from "../../services/types/typesRedux";
+import {
+	useAppDispatch,
+	useAppSelector,
+} from "../../services/types/typesRedux";
 
 export function UserForm() {
 	type TLoader = Boolean;
-	const dispatch = useDispatch();
-
+	const dispatch = useAppDispatch();
 	const user = useAppSelector((state) => state.registration.getUser?.user);
-
 	const [isLoader, setIsLoader] = useState<TLoader>(true);
 	const { values, handleChange, setValues } = useForm<TValue>({
 		email: "",
