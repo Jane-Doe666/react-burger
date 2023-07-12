@@ -1,0 +1,13 @@
+.loader {
+	color: #4fa94d;
+}
+
+.box {
+	margin: auto;
+	padding-top: 40px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}

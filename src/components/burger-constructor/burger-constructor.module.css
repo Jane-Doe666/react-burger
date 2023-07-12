@@ -1,0 +1,81 @@
+.section {
+	box-sizing: border-box;
+	max-width: 100%;
+	padding-top: 100px;
+	height: 100vh;
+}
+
+.element {
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	min-width: 0;
+	scroll-snap-align: start;
+	flex-wrap: nowrap;
+	margin-bottom: 10px;
+}
+
+.elementTop {
+	cursor: pointer;
+	overflow: hidden;
+	overflow-wrap: break-word;
+	hyphens: auto;
+	margin-bottom: 10px;
+}
+
+.elementBottom {
+	cursor: pointer;
+	overflow: hidden;
+	margin-top: 10px;
+}
+
+.total {
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+	align-items: center;
+}
+
+.scrollbar {
+	max-height: 464px;
+	overflow: auto;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: none;
+	border: 3px solid #8585ad;
+}
+
+::-webkit-scrollbar-thumb {
+	height: 292px;
+	border: 3px solid #8585ad;
+	background: #8585ad;
+}
+
+@media screen and (max-width: 850px) {
+	.button {
+		margin: auto;
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
+	.total {
+		padding-top: 10px;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin: auto;
+	}
+	.span {
+		box-sizing: border-box;
+	}
+	.but {
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}

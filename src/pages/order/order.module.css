@@ -1,0 +1,132 @@
+.main {
+	margin: auto;
+	padding-left: 25px;
+	padding-right: 25px;
+	padding-bottom: 45px;
+	margin-top: 80px;
+	width: 600px;
+	text-align: center;
+}
+.text {
+	text-align: left;
+}
+
+.textDone {
+	text-align: left;
+	color: #0cc;
+}
+
+.textDelete {
+	text-align: left;
+	color: red;
+}
+
+.ul {
+	margin: 0;
+	padding: 0;
+	max-height: 350px;
+	margin-top: 24px;
+	text-decoration: none;
+	overflow-y: scroll;
+}
+
+.li {
+	margin: 0 0 16px 0;
+	padding: 0;
+	text-decoration: none;
+	display: flex;
+	flex-direction: row;
+	text-align: left;
+	align-items: center;
+}
+
+.total {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	white-space: nowrap;
+	margin-left: auto;
+}
+
+.totalFoot {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	white-space: nowrap;
+	margin-left: auto;
+}
+
+.image_div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 74px;
+	height: 74px;
+	background: #131316;
+	border-radius: 100px;
+	background: linear-gradient(63.18deg, #801ab3 0%, #4c4cff 100%),
+		linear-gradient(0deg, #131316, #131316);
+}
+
+.image {
+	background-color: #131316;
+	border-radius: 100px;
+	height: 70px;
+	width: 70px;
+	object-fit: cover;
+}
+
+::-webkit-scrollbar-track {
+	background-color: #1c1c1e;
+	border: none;
+}
+
+::-webkit-scrollbar-thumb {
+	height: 150px;
+	background: #8585ad;
+}
+
+@media screen and (max-width: 629px) {
+	.text {
+		margin-top: 20px;
+		text-align: center;
+	}
+	.ul {
+		margin-top: 20px;
+	}
+
+	.ul_wo_scroll {
+		padding: 0;
+		padding-left: 10px;
+		max-height: 1000px;
+		margin-top: 24px;
+		text-decoration: none;
+	}
+
+	.total {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		white-space: nowrap;
+		margin-left: auto;
+	}
+
+	.main {
+		margin: auto;
+		margin: 10px;
+	}
+
+	.li {
+		margin: 0 0 16px 0;
+		padding: 0;
+		text-decoration: none;
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		align-items: center;
+	}
+	.total {
+		margin: auto;
+		padding-right: 5px;
+	}
+}
