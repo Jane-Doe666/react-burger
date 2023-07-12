@@ -9,7 +9,7 @@ export type TWsActions =
 
 export const socketMiddlewareOrders = (
 	webSocketActions: TWsActions,
-	url: string
+	url?: string
 ): Middleware => {
 	return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
 		let socket: WebSocket | null = null;
@@ -19,8 +19,7 @@ export const socketMiddlewareOrders = (
 			const { type } = action;
 
 			if (type === webSocketActions.start) {
-				socket = new WebSocket(url);
-				console.log(socket);
+				socket = new WebSocket(url || action.payload);
 			}
 
 			if (socket) {

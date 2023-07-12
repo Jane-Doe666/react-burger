@@ -5,12 +5,13 @@ import styles from "./order.module.css";
 import { useDispatch } from "react-redux";
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
-import { createDataOrder } from "../../services/utile/utile";
+import { createDataOrder, getCookie } from "../../services/utile/utile";
 import {
 	orderProfileClosed,
 	orderProfileStart,
 } from "../../services/actions/orderProfile";
 import { useAppSelector } from "../../services/types/typesRedux";
+import { wsOrderUrl } from "../../services/utile/constants";
 
 export function OrderProfileById() {
 	const location = useLocation();
@@ -59,8 +60,10 @@ export function OrderProfileById() {
 	}, [ingredientsInOrder]);
 
 	useEffect(() => {
+		const accessToken = getCookie("accessToken").slice(7);
+		const wsOrderUrlPrivate = `${wsOrderUrl}?token=${accessToken}`;
 		if (!location?.state) {
-			dispatch(orderProfileStart());
+			dispatch(orderProfileStart(wsOrderUrlPrivate));
 
 			return () => {
 				dispatch(orderProfileClosed());

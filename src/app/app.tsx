@@ -103,12 +103,15 @@ function App() {
 									</Modal>
 								}
 							/>
+
 							<Route
 								path="/profile/orders/:id"
 								element={
-									<Modal handleClose={handleClose}>
-										<OrderProfileById />
-									</Modal>
+									<ProtectedRoute authOnly={true}>
+										<Modal handleClose={handleClose}>
+											<OrderProfileById />
+										</Modal>
+									</ProtectedRoute>
 								}
 							/>
 						</Routes>

@@ -9,6 +9,8 @@ import {
 	useAppSelector,
 	useAppDispatch,
 } from "../../services/types/typesRedux";
+import { wsOrderUrl } from "../../services/utile/constants";
+import { getCookie } from "../../services/utile/utile";
 import styles from "../orders-public/orders.module.css";
 
 export function OrdersPrivate() {
@@ -22,7 +24,9 @@ export function OrdersPrivate() {
 	}
 
 	useEffect(() => {
-		dispatch(orderProfileStart());
+		const accessToken = getCookie("accessToken").slice(7);
+		const wsOrderUrlPrivate = `${wsOrderUrl}?token=${accessToken}`;
+		dispatch(orderProfileStart(wsOrderUrlPrivate));
 		return () => {
 			dispatch(orderProfileClosed());
 		};

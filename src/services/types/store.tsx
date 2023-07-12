@@ -5,7 +5,7 @@ import { compose } from "redux";
 import { socketMiddlewareOrders } from "../middleware/socketMiddlewareOrders";
 import { orderHistoryActions } from "../actions/orderHistory";
 import { orderProfileActions } from "../actions/orderProfile";
-import { wsOrderUrlPrivate, wsOrderUrlPublic } from "../utile/constants";
+import { wsOrderUrlPublic } from "../utile/constants";
 
 declare global {
 	interface Window {
@@ -20,7 +20,7 @@ const enhancer = composeEnhancers(
 	applyMiddleware(
 		thunk,
 		socketMiddlewareOrders(orderHistoryActions, wsOrderUrlPublic),
-		socketMiddlewareOrders(orderProfileActions, wsOrderUrlPrivate)
+		socketMiddlewareOrders(orderProfileActions)
 	)
 );
 

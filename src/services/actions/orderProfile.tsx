@@ -43,9 +43,10 @@ export interface IOrderProfileGetMessage {
 	readonly payload: TWsMessage;
 }
 
-export const orderProfileStart = () => {
+export const orderProfileStart = (payload: string) => {
 	return {
 		type: ORDER_PROFILE_START,
+		payload,
 	};
 };
 
